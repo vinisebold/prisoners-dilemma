@@ -391,6 +391,29 @@ export default function App() {
         <div className="hanging-lamp-light" />
       </div>
 
+      {/* Elementos Atmosféricos do Fundo (Prisão) */}
+      <div className="prison-conduit" />
+      <div className="prison-window-shadow">
+        <svg viewBox="0 0 200 300" width="100%" height="100%">
+          <defs>
+            <filter id="prison-shadow-blur" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="7" />
+            </filter>
+            <mask id="window-mask">
+              <rect width="200" height="300" fill="black" />
+              <path d="M 30,100 A 70,70 0 0,1 170,100 L 170,280 L 30,280 Z" fill="white" />
+              <line x1="75" y1="30" x2="75" y2="280" stroke="black" strokeWidth="12" />
+              <line x1="125" y1="30" x2="125" y2="280" stroke="black" strokeWidth="12" />
+              <line x1="20" y1="100" x2="180" y2="100" stroke="black" strokeWidth="12" />
+              <line x1="20" y1="180" x2="180" y2="180" stroke="black" strokeWidth="12" />
+            </mask>
+          </defs>
+          <g filter="url(#prison-shadow-blur)">
+            <rect width="200" height="300" fill="rgba(200, 225, 255, 0.22)" mask="url(#window-mask)" />
+          </g>
+        </svg>
+      </div>
+
       {/* Superfície Física da Mesa (Z-Index Inferior) */}
       <div className="desk-surface" />
 

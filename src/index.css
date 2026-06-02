@@ -38,14 +38,46 @@
 
 /* Cenário de Fundo: Cela / Sala de Interrogatório */
 body {
-  background-color: #050607;
-  /* Textura de Parede de Bloco de Concreto Escura */
-  background-image: 
-    radial-gradient(circle at 50% 10%, rgba(255, 255, 220, 0.08) 0%, rgba(0, 0, 0, 0.95) 70%),
-    linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px),
-    linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
-    linear-gradient(90deg, #101113 0%, #050607 100%);
-  background-size: 100% 100%, 140px 140px, 140px 140px, 100% 100%;
+  background-color: #0c0d0f;
+  background-image:
+    /* 1. Iluminação Suave da Lâmpada Pendurada */
+    radial-gradient(circle at 50% -10%, rgba(255, 235, 180, 0.08) 0%, rgba(0, 0, 0, 0.85) 85%),
+    /* 2. Umidade, Infiltração e Manchas nos Cantos Inferiores */
+    radial-gradient(circle at 5% 95%, rgba(8, 20, 12, 0.75) 0%, transparent 60%),
+    radial-gradient(circle at 95% 95%, rgba(6, 12, 22, 0.75) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.9) 0%, transparent 70%),
+    /* 3. Furos de Tirante de Fôrma de Concreto nas pontas de cada bloco de 300x150 */
+    radial-gradient(circle at 25px 25px, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 2px, rgba(255,255,255,0.04) 3px, transparent 4px),
+    radial-gradient(circle at 275px 25px, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 2px, rgba(255,255,255,0.04) 3px, transparent 4px),
+    radial-gradient(circle at 25px 125px, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 2px, rgba(255,255,255,0.04) 3px, transparent 4px),
+    radial-gradient(circle at 275px 125px, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 2px, rgba(255,255,255,0.04) 3px, transparent 4px),
+    /* 4. Sombra das juntas de argamassa (friso inferior e direito do bloco) */
+    linear-gradient(to top, rgba(0, 0, 0, 0.85) 4px, transparent 4px),
+    linear-gradient(to left, rgba(0, 0, 0, 0.85) 4px, transparent 4px),
+    /* 5. Brilho do chanfro do concreto (friso superior e esquerdo do bloco) */
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 2px, transparent 2px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 2px, transparent 2px),
+    /* 6. Texturas finas de porosidade e imperfeição do concreto */
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.07) 0px, rgba(0, 0, 0, 0.07) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 4px),
+    /* 7. Fundo Sólido */
+    linear-gradient(180deg, #181a1d 0%, #0d0f11 100%);
+  background-size:
+    100% 100%, /* Lamp */
+    100% 100%, /* Moisture L */
+    100% 100%, /* Moisture R */
+    100% 100%, /* Bottom shadow */
+    300px 150px, /* Cone 1 */
+    300px 150px, /* Cone 2 */
+    300px 150px, /* Cone 3 */
+    300px 150px, /* Cone 4 */
+    300px 150px, /* Joint shadow bottom */
+    300px 150px, /* Joint shadow right */
+    300px 150px, /* Bevel top */
+    300px 150px, /* Bevel left */
+    100% 100%, /* Grain 1 */
+    100% 100%, /* Grain 2 */
+    100% 100%; /* Solid color */
   color: var(--crt-green);
   font-family: var(--font-mono);
   min-height: 100vh;
@@ -56,36 +88,6 @@ body {
   padding: 20px;
   overflow: hidden;
   position: relative;
-}
-
-/* Sombra das grades de metal da prisão projetadas na parede */
-body::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(90deg, 
-    rgba(0,0,0,0.65) 0%, 
-    rgba(0,0,0,0.65) 12%, 
-    transparent 12%, 
-    transparent 24%, 
-    rgba(0,0,0,0.65) 24%, 
-    rgba(0,0,0,0.65) 36%, 
-    transparent 36%, 
-    transparent 48%, 
-    rgba(0,0,0,0.65) 48%, 
-    rgba(0,0,0,0.65) 60%, 
-    transparent 60%, 
-    transparent 72%, 
-    rgba(0,0,0,0.65) 72%, 
-    rgba(0,0,0,0.65) 84%, 
-    transparent 84%, 
-    transparent 96%, 
-    rgba(0,0,0,0.65) 96%, 
-    rgba(0,0,0,0.65) 100%
-  );
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 2;
 }
 
 /* Lâmpada Pendurada */
@@ -128,6 +130,65 @@ body::before {
   z-index: 99;
 }
 
+/* Cano de Conduíte Metálico Vertical */
+.prison-conduit {
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 14px;
+  height: 100%;
+  background: linear-gradient(to right, 
+    #101010 0%, 
+    #444444 25%, 
+    #777777 45%, 
+    #3c3c3c 65%, 
+    #0a0a0a 100%
+  );
+  box-shadow: 
+    6px 0 12px rgba(0, 0, 0, 0.85),
+    inset -1px 0 2px rgba(255,255,255,0.08),
+    inset 1px 0 2px rgba(0,0,0,0.8);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Abraçadeiras do Conduíte com Parafusos */
+.prison-conduit::before, .prison-conduit::after {
+  content: '';
+  position: absolute;
+  width: 38px;
+  height: 10px;
+  left: -12px;
+  background: 
+    radial-gradient(circle at 5px 5px, #050505 1.5px, #666 2px, transparent 2.5px),
+    radial-gradient(circle at 33px 5px, #050505 1.5px, #666 2px, transparent 2.5px),
+    linear-gradient(to bottom, #444, #777 40%, #2b2b2b 100%);
+  border-radius: 2px;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.7),
+    inset 0 1px 1px rgba(255,255,255,0.15);
+}
+.prison-conduit::before {
+  top: 12%;
+}
+.prison-conduit::after {
+  top: 38%;
+}
+
+/* Projeção de Luz e Sombra da Janela da Prisão */
+.prison-window-shadow {
+  position: absolute;
+  top: 3%;
+  right: 14%;
+  width: 360px;
+  height: 450px;
+  pointer-events: none;
+  z-index: 1;
+  transform: rotate(7deg) skewX(5deg);
+  opacity: 0.85;
+  mix-blend-mode: screen; /* Mescla a luz com a textura do concreto */
+}
+
 /* Base da Mesa de Madeira da Prisão (Elemento DOM Independente) */
 .desk-surface {
   position: absolute;
@@ -163,7 +224,7 @@ body::before {
   box-shadow: 
     inset 0 8px 25px rgba(255,255,255,0.08),
     0 40px 80px rgba(0,0,0,0.95);
-  z-index: 1; /* Fica atrás dos dispositivos */
+  z-index: 2; /* Fica atrás dos dispositivos, mas cobre o fundo da cela e o conduíte */
   pointer-events: none;
 }
 
