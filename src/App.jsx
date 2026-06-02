@@ -121,6 +121,7 @@ export default function App() {
 
   // Jogar Etapa 1
   const handlePlayStep1 = (choice) => {
+    console.log("handlePlayStep1 chamado com escolha:", choice, "Estado atual:", step1PlayState);
     if (step1PlayState !== 'waiting') return;
     
     setStep1PlayerChoice(choice);
@@ -136,6 +137,7 @@ export default function App() {
 
   // Jogar Etapa 2
   const handlePlayStep2 = (choice) => {
+    console.log("handlePlayStep2 chamado com escolha:", choice, "Rodada:", step2RoundsPlayed);
     if (step2RoundsPlayed >= 5) return;
 
     const botChoice = getBotDecision('copycat', step2History);
@@ -164,6 +166,7 @@ export default function App() {
 
   // Jogar Etapa 3
   const handlePlayStep3 = (choice) => {
+    console.log("handlePlayStep3 chamado com escolha:", choice, "Oponente:", step3SelectedBot, "Rodada:", step3RoundsPlayed);
     if (step3RoundsPlayed >= 5) return;
 
     const botChoice = getBotDecision(step3SelectedBot, step3History);
@@ -192,6 +195,7 @@ export default function App() {
 
   // Jogar Etapa 4 (com Ruído Probabilístico)
   const handlePlayStep4 = (choice) => {
+    console.log("handlePlayStep4 chamado com escolha:", choice, "Ruído:", noiseProb, "Oponente:", step4SelectedBot, "Rodada:", step4RoundsPlayed);
     if (step4RoundsPlayed >= 7) return;
 
     const botIntended = getBotDecision(step4SelectedBot, step4History);
@@ -367,12 +371,14 @@ export default function App() {
 
   // --- Navegação entre Etapas ---
   const handleNextStep = () => {
+    console.log("handleNextStep chamado. Passo atual:", currentStep);
     if (currentStep < TOTAL_STEPS) {
       setCurrentStep(prev => prev + 1);
     }
   };
 
   const handlePrevStep = () => {
+    console.log("handlePrevStep chamado. Passo atual:", currentStep);
     if (currentStep > 1) {
       setCurrentStep(prev => prev - 1);
     }

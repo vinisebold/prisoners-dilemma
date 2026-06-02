@@ -58,6 +58,36 @@ body {
   position: relative;
 }
 
+/* Sombra das grades de metal da prisão projetadas na parede */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, 
+    rgba(0,0,0,0.65) 0%, 
+    rgba(0,0,0,0.65) 12%, 
+    transparent 12%, 
+    transparent 24%, 
+    rgba(0,0,0,0.65) 24%, 
+    rgba(0,0,0,0.65) 36%, 
+    transparent 36%, 
+    transparent 48%, 
+    rgba(0,0,0,0.65) 48%, 
+    rgba(0,0,0,0.65) 60%, 
+    transparent 60%, 
+    transparent 72%, 
+    rgba(0,0,0,0.65) 72%, 
+    rgba(0,0,0,0.65) 84%, 
+    transparent 84%, 
+    transparent 96%, 
+    rgba(0,0,0,0.65) 96%, 
+    rgba(0,0,0,0.65) 100%
+  );
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* Lâmpada Pendurada */
 .hanging-lamp {
   position: absolute;
@@ -86,14 +116,16 @@ body {
 }
 .hanging-lamp-light {
   position: absolute;
-  bottom: -320px;
-  left: -250px;
-  width: 500px;
-  height: 350px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 210, 0.09) 0%, rgba(255, 255, 210, 0) 70%);
-  clip-path: polygon(45% 0%, 55% 0%, 100% 100%, 0% 100%);
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 800px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.14) 0%, rgba(255, 255, 200, 0) 75%);
+  clip-path: polygon(48% 0%, 52% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
   animation: light-flicker 5s infinite;
+  z-index: 99;
 }
 
 /* Base da Mesa de Madeira da Prisão (Elemento DOM Independente) */
@@ -102,22 +134,91 @@ body {
   bottom: -100px;
   left: -100px;
   right: -100px;
-  height: 480px;
-  background: linear-gradient(to bottom, #1e1510 0%, #100b08 100%);
-  background-image: 
-    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 15%),
-    repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 4px, transparent 4px, transparent 40px);
-  border-top: 10px solid #2d1e16;
-  transform: perspective(1000px) rotateX(52deg);
+  height: 820px;
+  background: 
+    /* Luz da Lâmpada (Dramática no centro da mesa - mais intensa e ampla) */
+    radial-gradient(ellipse at 50% 0%, rgba(255, 240, 200, 0.38) 0%, rgba(0, 0, 0, 0.85) 90%),
+    /* Mancha de Caneca de Café no lado esquerdo */
+    radial-gradient(circle at 28% 35%, transparent 15px, rgba(40, 20, 5, 0.45) 16px, rgba(40, 20, 5, 0.35) 18px, transparent 20px),
+    radial-gradient(circle at 28% 35%, rgba(40, 20, 5, 0.1) 0%, rgba(40, 20, 5, 0.1) 15px, transparent 16px),
+    /* Arranhão / Risco na mesa */
+    linear-gradient(120deg, transparent 45%, rgba(255, 255, 255, 0.07) 45.2%, rgba(255, 255, 255, 0.07) 45.8%, transparent 46%),
+    linear-gradient(30deg, transparent 72%, rgba(0, 0, 0, 0.35) 72.1%, rgba(0, 0, 0, 0.35) 72.6%, transparent 72.8%),
+    /* Veios e ranhuras da madeira (horizontal) */
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 2px, transparent 2px, transparent 6px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px),
+    /* Divisões de tábuas de madeira rústica */
+    linear-gradient(90deg, 
+      transparent 18%, rgba(0,0,0,0.55) 18.2%, rgba(255,255,255,0.04) 18.5%, transparent 18.8%,
+      transparent 48%, rgba(0,0,0,0.55) 48.2%, rgba(255,255,255,0.04) 48.5%, transparent 48.8%,
+      transparent 78%, rgba(0,0,0,0.55) 78.2%, rgba(255,255,255,0.04) 78.5%, transparent 78.8%,
+      transparent 100%
+    ),
+    /* Gradiente base da madeira (Nogueira média/quente vibrante) */
+    linear-gradient(to bottom, #4c2f1f 0%, #200f07 100%);
+  background-blend-mode: multiply, normal, normal, normal, overlay, normal, normal, normal;
+  border-top: 12px solid #583724;
+  transform: perspective(1000px) rotateX(42deg);
   transform-origin: bottom center;
   box-shadow: 
-    inset 0 10px 30px rgba(255,255,255,0.03),
-    0 30px 60px rgba(0,0,0,0.8);
+    inset 0 8px 25px rgba(255,255,255,0.08),
+    0 40px 80px rgba(0,0,0,0.95);
   z-index: 1; /* Fica atrás dos dispositivos */
   pointer-events: none;
 }
 
-/* A MESA EM PERSPECTIVA 3D */
+/* Post-it Note no lado esquerdo da mesa */
+.desk-surface::before {
+  content: 'CONFESSAR = Nash?';
+  position: absolute;
+  top: 28%; /* Ajustado para a inclinação de 42deg e altura de 820px */
+  left: 18%;
+  width: 85px;
+  height: 85px;
+  background: #fff9b0; /* Amarelo Post-it clássico bem visível */
+  color: #4a3c10;
+  font-family: var(--font-typewriter);
+  font-size: 0.58rem;
+  font-weight: bold;
+  padding: 12px;
+  box-shadow: 
+    3px 6px 12px rgba(0,0,0,0.7),
+    inset 0 0 10px rgba(0,0,0,0.05);
+  transform: rotate(-10deg);
+  border-left: 2px solid #ebe18e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.25;
+  border-radius: 1px;
+}
+
+/* Lápis de Investigação no lado direito da mesa */
+.desk-surface::after {
+  content: '';
+  position: absolute;
+  top: 18%; /* Ajustado para a inclinação de 42deg e altura de 820px */
+  right: 25%;
+  width: 130px;
+  height: 7px;
+  /* Ponta de grafite, madeira crua raspada, corpo pintado de amarelo escolar vibrante, virola dourada, borracha rosa */
+  background: linear-gradient(to right, 
+    #151515 0%, #151515 3%, 
+    #dcbca3 3%, #dcbca3 8%, 
+    #ffcc00 8%, #ffcc00 85%, 
+    #a8acb2 85%, #a8acb2 90%, 
+    #ff9ea3 90%, #ff9ea3 100%
+  );
+  border-radius: 1px 3px 3px 1px;
+  transform: rotate(-18deg);
+  box-shadow: 
+    2px 4px 6px rgba(0,0,0,0.8),
+    inset 0 1px 1px rgba(255,255,255,0.3);
+  filter: blur(0.3px);
+}
+
+/* A MESA EM PERSPECTIVA (Estabilizada com Projeções 3D Individuais) */
 .investigator-table {
   display: flex;
   flex-direction: row;
@@ -128,31 +229,87 @@ body {
   max-width: 1200px;
   z-index: 10; /* Em cima da mesa física */
   position: relative;
-  
-  /* Ativa 3D nos dispositivos */
-  perspective: 1200px;
-  transform-style: preserve-3d;
   padding-bottom: 40px;
 }
 
-/* Colunas (Dispositivos dispostos na mesa inclinada) */
+/* Colunas (Dispositivos dispostos com perspectiva 3D local e z-index isolado) */
 .table-left {
   flex: 0 1 340px;
-  transform: rotateY(18deg) rotateX(15deg) rotateZ(-3deg);
-  transform-style: preserve-3d;
+  /* Alinhado exatamente à inclinação de 42deg da mesa, deitado plano e deslocado confortavelmente */
+  transform: perspective(1000px) rotateX(42deg) rotateZ(-5deg) translateY(55px) scale(0.85);
+  transform-origin: bottom center;
+  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 2;
+  position: relative;
+}
+.table-left::before {
+  content: '';
+  position: absolute;
+  bottom: 0px; /* Sombra de contato perfeita */
+  left: 5%;
+  right: 5%;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.95);
+  border-radius: 50%;
+  filter: blur(4px); /* Sombra bem nítida e escura na base */
+  z-index: -1;
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.45s ease, opacity 0.45s ease;
+}
+
+/* Ao passar o mouse, a prancheta "sobe" e se inclina para leitura */
+.table-left:hover {
+  transform: perspective(1000px) rotateX(15deg) rotateZ(-2deg) translateY(-20px) scale(1.0);
+  z-index: 12; /* Sobe por cima de tudo */
+}
+.table-left:hover::before {
+  filter: blur(16px); /* Sombra difusa indicando elevação */
+  transform: scale(1.1) translateY(20px);
+  opacity: 0.5;
 }
 
 .table-center {
   flex: 1 1 500px;
   max-width: 600px;
-  transform: rotateX(8deg);
-  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(18deg);
+  transition: transform 0.3s ease;
+  z-index: 5; /* Garante que o monitor interativo central fique por cima de qualquer overlap */
+  position: relative;
+}
+.table-center::before {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 4%;
+  right: 4%;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.95);
+  border-radius: 50%;
+  filter: blur(12px);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .table-right {
   flex: 0 1 240px;
-  transform: rotateY(-18deg) rotateX(15deg) rotateZ(3deg);
-  transform-style: preserve-3d;
+  /* Impressora deitada levemente para casar com a inclinação da mesa */
+  transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(2deg) translateY(25px);
+  transition: transform 0.3s ease;
+  z-index: 1;
+  position: relative;
+}
+.table-right::before {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 8%;
+  right: 8%;
+  height: 25px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 50%;
+  filter: blur(10px);
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* 1. DISPOSITIVO: Prancheta 3D */
@@ -162,11 +319,11 @@ body {
   border: 4px solid #3c2415;
   border-radius: 10px;
   padding: 18px;
-  /* Extrusão lateral */
+  /* Extrusão lateral e sombra projetada para a esquerda */
   box-shadow: 
     0 4px 0 #28180e,
     0 8px 0 #180f09,
-    0 15px 30px rgba(0,0,0,0.85);
+    -15px 25px 35px rgba(0,0,0,0.85);
   position: relative;
   min-height: 480px;
 }
@@ -281,11 +438,11 @@ body {
   background: linear-gradient(135deg, var(--panel-bg) 0%, var(--panel-bg-dark) 100%);
   border: 6px solid #1a1b1d;
   border-radius: 18px;
-  /* Extrusão lateral espessa */
+  /* Extrusão lateral espessa e sombra profunda */
   box-shadow: 
     0 5px 0 #18191b,
     0 10px 0 #101112,
-    0 15px 25px rgba(0, 0, 0, 0.85),
+    0 30px 45px rgba(0, 0, 0, 0.95),
     inset 0 4px 0 rgba(255, 255, 255, 0.12),
     inset 0 -4px 0 rgba(0, 0, 0, 0.4);
   padding: 18px;
@@ -344,7 +501,7 @@ body {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
-  z-index: 10;
+  z-index: 1;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -630,11 +787,11 @@ p.retro-p {
   background: #2a2c2e;
   border: 4px solid #1a1b1c;
   border-radius: 10px;
-  /* Extrusão lateral */
+  /* Extrusão lateral e sombra projetada para a direita */
   box-shadow: 
     0 4px 0 #18191a,
     0 8px 0 #0d0e0f,
-    0 15px 30px rgba(0,0,0,0.8),
+    15px 25px 35px rgba(0,0,0,0.8),
     inset 0 1px 2px rgba(255,255,255,0.1);
   padding: 14px;
   display: flex;
