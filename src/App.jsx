@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ConsoleFrame from './components/ConsoleFrame';
 import CrtScreen from './components/CrtScreen';
 import ControlPanel from './components/ControlPanel';
+import ClipboardDossier from './components/ClipboardDossier';
+import TicketPrinter from './components/TicketPrinter';
 import Step1Intro from './components/steps/Step1Intro';
 import Step2Repeated from './components/steps/Step2Repeated';
 import Step3Strategies from './components/steps/Step3Strategies';
@@ -71,7 +73,6 @@ export default function App() {
 
   // --- Lógica de Decisão das Estratégias ---
   const getBotDecision = (botType, myHistory) => {
-    // myHistory é a visão do bot da partida: array de {playerChoice, botChoice} onde as escolhas são as REALMENTE TRANSMITIDAS (visíveis)
     if (myHistory.length === 0) return 'cooperate';
 
     switch (botType) {
@@ -82,33 +83,27 @@ export default function App() {
         return 'defect';
 
       case 'copycat':
-        // Copia a jogada anterior transmitida pelo jogador
         return myHistory[myHistory.length - 1].playerChoice;
 
       case 'grudger':
-        // Delata se o jogador delatou uma única vez no histórico
         const hasPlayerDefected = myHistory.some(round => round.playerChoice === 'defect');
         return hasPlayerDefected ? 'defect' : 'cooperate';
 
       case 'detective':
         const roundNum = myHistory.length + 1;
-        // Sequência de abertura fixa: C, D, C, C
         if (roundNum === 1) return 'cooperate';
         if (roundNum === 2) return 'defect';
         if (roundNum === 3) return 'cooperate';
         if (roundNum === 4) return 'cooperate';
 
-        // Análise após rodada 4: se o jogador delatou em alguma das primeiras 4 rodadas, vira Copycat.
-        // Caso contrário, vira Sempre Delatar para explorar o ingênuo.
         const playedDefectedOpening = myHistory.slice(0, 4).some(round => round.playerChoice === 'defect');
         if (playedDefectedOpening) {
-          return myHistory[myHistory.length - 1].playerChoice; // Copycat
+          return myHistory[myHistory.length - 1].playerChoice;
         } else {
-          return 'defect'; // Traidor
+          return 'defect';
         }
 
       case 'copykitten':
-        // Só retalia se o jogador tiver delatado duas vezes seguidas
         if (myHistory.length < 2) return 'cooperate';
         const last1 = myHistory[myHistory.length - 1].playerChoice;
         const last2 = myHistory[myHistory.length - 2].playerChoice;
@@ -129,7 +124,7 @@ export default function App() {
     if (step1PlayState !== 'waiting') return;
     
     setStep1PlayerChoice(choice);
-    setStep1BotChoice('defect'); // Sempre delata no round 1 piloto
+    setStep1BotChoice('defect');
     setStep1PlayState('played');
 
     if (choice === 'cooperate') {
@@ -143,7 +138,6 @@ export default function App() {
   const handlePlayStep2 = (choice) => {
     if (step2RoundsPlayed >= 5) return;
 
-    // Bot misterioso é Copycat
     const botChoice = getBotDecision('copycat', step2History);
     const [pPayoff, bPayoff] = calculatePayoff(choice, botChoice);
 
@@ -200,10 +194,8 @@ export default function App() {
   const handlePlayStep4 = (choice) => {
     if (step4RoundsPlayed >= 7) return;
 
-    // 1. Determina a jogada pretendida pelo Bot com base no histórico transmitido
     const botIntended = getBotDecision(step4SelectedBot, step4History);
 
-    // 2. Aplica probabilidade de ruído nas duas transmissões
     let playerTransmitted = choice;
     let playerFlipped = false;
     if (Math.random() * 100 < noiseProb) {
@@ -218,10 +210,8 @@ export default function App() {
       botFlipped = true;
     }
 
-    // 3. Calcula Payoff com base nos valores transmitidos (reais)
     const [pPayoff, bPayoff] = calculatePayoff(playerTransmitted, botTransmitted);
 
-    // O histórico guarda a decisão transmitida para que sirva de input futuro
     const newHistory = [
       ...step4History,
       { 
@@ -240,7 +230,7 @@ export default function App() {
     setStep4RoundsPlayed(prev => prev + 1);
 
     if (playerFlipped || botFlipped) {
-      sound.playFailure(); // Som de erro elétrico
+      sound.playFailure();
     } else if (playerTransmitted === 'defect' || botTransmitted === 'defect') {
       sound.playFailure();
     } else {
@@ -312,6 +302,37 @@ export default function App() {
     setStep4BotScore(0);
   };
 
+  // --- Seleciona placar e histórico dinâmico para o TicketPrinter ---
+  const getActiveHistoryAndScores = () => {
+    if (currentStep === 1) {
+      const played = step1PlayState === 'played';
+      return {
+        history: played ? [{
+          playerChoice: step1PlayerChoice,
+          botChoice: step1BotChoice,
+          playerPayoff: step1PlayerChoice === 'cooperate' ? 5 : 3,
+          botPayoff: step1PlayerChoice === 'cooperate' ? 0 : 3,
+          playerFlipped: false,
+          botFlipped: false
+        }] : [],
+        playerScore: played ? (step1PlayerChoice === 'cooperate' ? 5 : 3) : 0,
+        botScore: played ? (step1PlayerChoice === 'cooperate' ? 0 : 3) : 0
+      };
+    }
+    if (currentStep === 2) {
+      return { history: step2History, playerScore: step2PlayerScore, botScore: step2BotScore };
+    }
+    if (currentStep === 3) {
+      return { history: step3History, playerScore: step3PlayerScore, botScore: step3BotScore };
+    }
+    if (currentStep === 4) {
+      return { history: step4History, playerScore: step4PlayerScore, botScore: step4BotScore };
+    }
+    return { history: [], playerScore: 0, botScore: 0 };
+  };
+
+  const { history: activeHistory, playerScore: activePlayerScore, botScore: activeBotScore } = getActiveHistoryAndScores();
+
   // --- Configuração dos Botões Dinâmicos no ControlPanel ---
   let showCooperateDefect = false;
   let cooperateDefectDisabled = false;
@@ -358,82 +379,114 @@ export default function App() {
   };
 
   return (
-    <ConsoleFrame isMuted={isMuted} onToggleMute={handleToggleMute}>
-      {/* Tela do Terminal CRT */}
-      <CrtScreen currentStep={currentStep} totalSteps={TOTAL_STEPS}>
-        {currentStep === 1 && (
-          <Step1Intro 
-            playState={step1PlayState}
-            playerChoice={step1PlayerChoice}
-            botChoice={step1BotChoice}
-          />
-        )}
-        {currentStep === 2 && (
-          <Step2Repeated 
-            roundsPlayed={step2RoundsPlayed}
-            history={step2History}
-            playerScore={step2PlayerScore}
-            botScore={step2BotScore}
-          />
-        )}
-        {currentStep === 3 && (
-          <Step3Strategies 
-            selectedBot={step3SelectedBot}
-            onBotChange={handleBotChangeStep3}
-            roundsPlayed={step3RoundsPlayed}
-            history={step3History}
-            playerScore={step3PlayerScore}
-            botScore={step3BotScore}
-            onResetMatch={handleResetStep3}
-          />
-        )}
-        {currentStep === 4 && (
-          <Step4Noise 
-            selectedBot={step4SelectedBot}
-            onBotChange={handleBotChangeStep4}
-            noiseProb={noiseProb}
-            roundsPlayed={step4RoundsPlayed}
-            history={step4History}
-            playerScore={step4PlayerScore}
-            botScore={step4BotScore}
-            onResetMatch={handleResetStep4}
-          />
-        )}
-        {currentStep === 5 && (
-          <Step5Evolution noiseProb={noiseProb} />
-        )}
-        {currentStep === 6 && (
-          <Step6Conclusion onRestart={handleFullReset} />
-        )}
-      </CrtScreen>
+    <>
+      {/* Luz Suspensa Dinâmica */}
+      <div className="hanging-lamp">
+        <div className="hanging-lamp-light" />
+      </div>
 
-      {/* Painel Físico na Base do Cabinet */}
-      <ControlPanel 
-        onCooperate={() => {
-          if (currentStep === 1) handlePlayStep1('cooperate');
-          else if (currentStep === 2) handlePlayStep2('cooperate');
-          else if (currentStep === 3) handlePlayStep3('cooperate');
-          else if (currentStep === 4) handlePlayStep4('cooperate');
-        }}
-        onDefect={() => {
-          if (currentStep === 1) handlePlayStep1('defect');
-          else if (currentStep === 2) handlePlayStep2('defect');
-          else if (currentStep === 3) handlePlayStep3('defect');
-          else if (currentStep === 4) handlePlayStep4('defect');
-        }}
-        onNext={handleNextStep}
-        onPrev={handlePrevStep}
-        onReset={handleFullReset}
-        showCooperateDefect={showCooperateDefect}
-        cooperateDefectDisabled={cooperateDefectDisabled}
-        showNext={showNext}
-        nextActive={nextActive}
-        noiseProb={noiseProb}
-        onNoiseChange={setNoiseProb}
-        showNoise={showNoise}
-        currentStep={currentStep}
-        totalSteps={TOTAL_STEPS}
-      />
-    </ConsoleFrame>
+      {/* Mesa do Investigador (Multi-Dispositivo) */}
+      <div className="investigator-table">
+        
+        {/* Coluna Esquerda: A Prancheta de Papel (Dossiê do Caso) */}
+        <div className="table-left">
+          <ClipboardDossier 
+            currentStep={currentStep} 
+            selectedBotStep3={step3SelectedBot}
+            selectedBotStep4={step4SelectedBot}
+          />
+        </div>
+
+        {/* Coluna Central: O Terminal CRT */}
+        <div className="table-center">
+          <ConsoleFrame isMuted={isMuted} onToggleMute={handleToggleMute}>
+            <CrtScreen currentStep={currentStep} totalSteps={TOTAL_STEPS}>
+              {currentStep === 1 && (
+                <Step1Intro 
+                  playState={step1PlayState}
+                  playerChoice={step1PlayerChoice}
+                  botChoice={step1BotChoice}
+                />
+              )}
+              {currentStep === 2 && (
+                <Step2Repeated 
+                  roundsPlayed={step2RoundsPlayed}
+                  playerScore={step2PlayerScore}
+                  botScore={step2BotScore}
+                />
+              )}
+              {currentStep === 3 && (
+                <Step3Strategies 
+                  selectedBot={step3SelectedBot}
+                  onBotChange={handleBotChangeStep3}
+                  roundsPlayed={step3RoundsPlayed}
+                  onResetMatch={handleResetStep3}
+                />
+              )}
+              {currentStep === 4 && (
+                <Step4Noise 
+                  selectedBot={step4SelectedBot}
+                  onBotChange={handleBotChangeStep4}
+                  noiseProb={noiseProb}
+                  roundsPlayed={step4RoundsPlayed}
+                  history={step4History}
+                  onResetMatch={handleResetStep4}
+                />
+              )}
+              {currentStep === 5 && (
+                <Step5Evolution noiseProb={noiseProb} />
+              )}
+              {currentStep === 6 && (
+                <Step6Conclusion onRestart={handleFullReset} />
+              )}
+            </CrtScreen>
+
+            <ControlPanel 
+              onCooperate={() => {
+                if (currentStep === 1) handlePlayStep1('cooperate');
+                else if (currentStep === 2) handlePlayStep2('cooperate');
+                else if (currentStep === 3) handlePlayStep3('cooperate');
+                else if (currentStep === 4) handlePlayStep4('cooperate');
+              }}
+              onDefect={() => {
+                if (currentStep === 1) handlePlayStep1('defect');
+                else if (currentStep === 2) handlePlayStep2('defect');
+                else if (currentStep === 3) handlePlayStep3('defect');
+                else if (currentStep === 4) handlePlayStep4('defect');
+              }}
+              onNext={handleNextStep}
+              onPrev={handlePrevStep}
+              onReset={handleFullReset}
+              showCooperateDefect={showCooperateDefect}
+              cooperateDefectDisabled={cooperateDefectDisabled}
+              showNext={showNext}
+              nextActive={nextActive}
+              noiseProb={noiseProb}
+              onNoiseChange={setNoiseProb}
+              showNoise={showNoise}
+              currentStep={currentStep}
+              totalSteps={TOTAL_STEPS}
+            />
+          </ConsoleFrame>
+        </div>
+
+        {/* Coluna Direita: O Registrador e Impressor (Ticket) */}
+        <div className="table-right">
+          <TicketPrinter 
+            currentStep={currentStep}
+            history={activeHistory}
+            playerScore={activePlayerScore}
+            botScore={activeBotScore}
+            roundsPlayed={
+              currentStep === 1 ? (step1PlayState === 'played' ? 1 : 0) :
+              currentStep === 2 ? step2RoundsPlayed :
+              currentStep === 3 ? step3RoundsPlayed :
+              currentStep === 4 ? step4RoundsPlayed : 0
+            }
+          />
+        </div>
+
+      </div>
+    </>
   );
 }

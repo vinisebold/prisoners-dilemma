@@ -33,27 +33,22 @@ export default function Step3Strategies({
   selectedBot,
   onBotChange,
   roundsPlayed,
-  history,
-  playerScore,
-  botScore,
-  onPlay,
   onResetMatch
 }) {
   const maxRounds = 5;
   const isFinished = roundsPlayed >= maxRounds;
-  const activeBot = BOT_DOSSIERS[selectedBot];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', animation: 'crt-flicker 0.15s infinite' }}>
       <h1 className="retro-h1">Galeria de Estratégias</h1>
       <p className="retro-p">
-        Nem todo mundo pensa igual. Teste suas táticas contra 5 bots com perfis diferentes. 
+        Selecione seu oponente para testar suas táticas em uma partida de 5 rodadas.
       </p>
 
       {/* Seleção do Bot */}
-      <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '12px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <label style={{ fontSize: '0.75rem', color: '#888', textTransform: 'uppercase' }}>Selecione o Oponente:</label>
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'center', margin: '14px 0', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'center' }}>
+          <label style={{ fontSize: '0.75rem', color: '#888', textTransform: 'uppercase' }}>Oponente Selecionado:</label>
           <select 
             value={selectedBot}
             onChange={(e) => {
@@ -61,7 +56,7 @@ export default function Step3Strategies({
               onBotChange(e.target.value);
             }}
             className="retro-select"
-            disabled={roundsPlayed > 0 && !isFinished} // Bloqueia troca no meio da partida
+            disabled={roundsPlayed > 0 && !isFinished}
           >
             {Object.keys(BOT_DOSSIERS).map(key => (
               <option key={key} value={key}>{BOT_DOSSIERS[key].name}</option>
@@ -72,70 +67,22 @@ export default function Step3Strategies({
         <button 
           className="retro-btn btn-action" 
           onClick={onResetMatch}
-          style={{ padding: '6px 12px', fontSize: '0.8rem', marginTop: '16px' }}
+          style={{ padding: '8px 14px', fontSize: '0.8rem', marginTop: '16px' }}
         >
           Reiniciar Partida
         </button>
       </div>
 
-      <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', flex: 1 }}>
-        {/* Painel Esquerdo: Dossiê do Bot */}
-        <div style={{ flex: '1 1 240px', background: 'rgba(0,0,0,0.25)', border: '1px solid var(--crt-green-dim)', borderRadius: '6px', padding: '12px' }}>
-          <h2 className="retro-h2" style={{ color: 'var(--crt-amber)', fontSize: '1.2rem', marginBottom: '4px' }}>Dossiê do Oponente</h2>
-          <div style={{ fontSize: '0.9rem', color: '#fff', fontWeight: 'bold', marginBottom: '6px' }}>{activeBot.name}</div>
-          <p className="retro-p" style={{ fontSize: '0.8rem', color: '#aaccbb', marginBottom: '8px' }}>
-            <strong>Comportamento:</strong> {activeBot.desc}
-          </p>
-          <p className="retro-p" style={{ fontSize: '0.75rem', color: 'var(--crt-green)', fontStyle: 'italic', borderTop: '1px dashed #333', paddingTop: '6px' }}>
-            <strong>Nota do Investigador:</strong> {activeBot.dossier}
-          </p>
-        </div>
+      <div className="crt-alert" style={{ borderStyle: 'solid', borderColor: 'var(--crt-amber)', background: 'rgba(255, 176, 0, 0.05)', color: 'var(--crt-amber)', fontSize: '0.85rem' }}>
+        <strong>INSTRUÇÃO:</strong> O perfil psicológico e a lógica detalhada do bot selecionado foram carregados na <strong>Prancheta (Esquerda)</strong>. 
+        Os resultados de cada rodada estão sendo impressos no <strong>Ticket (Direita)</strong>.
+      </div>
 
-        {/* Painel Central: Status da Partida */}
-        <div style={{ flex: '1 1 200px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div className="stat-box" style={{ background: '#111' }}>
-            <div style={{ fontSize: '0.75rem', color: '#888' }}>RODADA</div>
-            <div className="stat-box-val" style={{ color: 'var(--crt-amber)', fontSize: '1.2rem' }}>
-              {isFinished ? 'CONCLUÍDO' : `${roundsPlayed + 1} / ${maxRounds}`}
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <div className="stat-box" style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.7rem', color: '#888' }}>SEU PLACAR</div>
-              <div className="stat-box-val">{playerScore}y</div>
-            </div>
-            <div className="stat-box" style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.7rem', color: '#888' }}>BOT PLACAR</div>
-              <div className="stat-box-val">{botScore}y</div>
-            </div>
-          </div>
-
-          {!isFinished ? (
-            <div className="crt-alert" style={{ borderStyle: 'dashed', margin: '0', fontSize: '0.8rem', padding: '8px' }}>
-              Pressione <strong>COOPERAR</strong> ou <strong>DELATAR</strong>.
-            </div>
-          ) : (
-            <div className="crt-alert" style={{ borderColor: 'var(--crt-green)', margin: '0', fontSize: '0.8rem', padding: '8px' }}>
-              Fim de jogo! Experimente outros bots ou clique em <strong>AVANÇAR</strong>.
-            </div>
-          )}
-        </div>
-
-        {/* Painel Direito: Histórico do Duelo */}
-        <div style={{ flex: '1.5 1 260px', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontSize: '0.75rem', color: '#6a6', textTransform: 'uppercase', marginBottom: '2px' }}>Histórico do Duelo</div>
-          <div className="round-log" style={{ flex: 1, minHeight: '100px', maxHeight: '140px' }}>
-            {history.length === 0 ? (
-              <div style={{ color: '#555', textAlign: 'center', paddingTop: '20px' }}>[SEM REGISTROS]</div>
-            ) : (
-              history.map((r, idx) => (
-                <div key={idx} className="round-log-entry" style={{ fontSize: '0.8rem' }}>
-                  <span>R{idx + 1}: VOCÊ {r.playerChoice === 'cooperate' ? 'COOP' : 'DEL'} | BOT {r.botChoice === 'cooperate' ? 'COOP' : 'DEL'}</span>
-                  <span>[+{r.playerPayoff}y / +{r.botPayoff}y]</span>
-                </div>
-              ))
-            )}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div className="stat-box" style={{ minWidth: '180px' }}>
+          <div style={{ fontSize: '0.7rem', color: '#888' }}>RODADA ATUAL</div>
+          <div className="stat-box-val" style={{ color: 'var(--crt-green)' }}>
+            {isFinished ? 'PARTIDA CONCLUÍDA' : `${roundsPlayed + 1} / ${maxRounds}`}
           </div>
         </div>
       </div>

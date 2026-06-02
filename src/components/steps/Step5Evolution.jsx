@@ -237,20 +237,6 @@ export default function Step5Evolution({ noiseProb }) {
             })}
           </div>
         </div>
-
-        {/* Painel Direito: Análise do Experimento */}
-        <div style={{ flex: '1.2 1 240px', background: 'rgba(0,0,0,0.2)', padding: '10px', borderRadius: '8px', border: '1px solid var(--crt-green-dim)', fontSize: '0.8rem', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--crt-amber)', textTransform: 'uppercase', marginBottom: '6px' }}>Impacto do Ruído:</div>
-          <p className="retro-p" style={{ fontSize: '0.75rem', color: '#aab', marginBottom: '6px' }}>
-            <strong>Com 0% de Ruído:</strong> O <em>Copycat</em> ou <em>Copykitten</em> normalmente dominam a população e eliminam os Traidores.
-          </p>
-          <p className="retro-p" style={{ fontSize: '0.75rem', color: '#aab', marginBottom: '6px' }}>
-            <strong>Com 10% a 20% de Ruído:</strong> O <em>Copycat</em> começa a brigar consigo mesmo por engano. Os <strong>Traidores (T)</strong> crescem explorando a discórdia, mas a tolerância do <strong>Copykitten (K)</strong> pode virar o jogo!
-          </p>
-          <p className="retro-p" style={{ fontSize: '0.75rem', color: '#aab', marginBottom: '0' }}>
-            <strong>Com &gt;35% de Ruído:</strong> O caos impossibilita qualquer cooperação e os <strong>Traidores (T)</strong> assumem o controle total.
-          </p>
-        </div>
       </div>
     </div>
   );
