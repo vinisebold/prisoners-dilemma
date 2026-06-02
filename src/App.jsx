@@ -385,6 +385,9 @@ export default function App() {
         <div className="hanging-lamp-light" />
       </div>
 
+      {/* Superfície Física da Mesa (Z-Index Inferior) */}
+      <div className="desk-surface" />
+
       {/* Mesa do Investigador (Multi-Dispositivo) */}
       <div className="investigator-table">
         

@@ -1,4 +1,4 @@
-/* Estilo Temático Completo: A Mesa do Investigador 3D POV */
+/* Estilo Temático Completo: A Mesa do Investigador 3D POV (Estabilizado) */
 
 :root {
   /* Cores CRT e Gabinete */
@@ -96,6 +96,27 @@ body {
   animation: light-flicker 5s infinite;
 }
 
+/* Base da Mesa de Madeira da Prisão (Elemento DOM Independente) */
+.desk-surface {
+  position: absolute;
+  bottom: -100px;
+  left: -100px;
+  right: -100px;
+  height: 480px;
+  background: linear-gradient(to bottom, #1e1510 0%, #100b08 100%);
+  background-image: 
+    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 15%),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 4px, transparent 4px, transparent 40px);
+  border-top: 10px solid #2d1e16;
+  transform: perspective(1000px) rotateX(52deg);
+  transform-origin: bottom center;
+  box-shadow: 
+    inset 0 10px 30px rgba(255,255,255,0.03),
+    0 30px 60px rgba(0,0,0,0.8);
+  z-index: 1; /* Fica atrás dos dispositivos */
+  pointer-events: none;
+}
+
 /* A MESA EM PERSPECTIVA 3D */
 .investigator-table {
   display: flex;
@@ -105,56 +126,32 @@ body {
   gap: 20px;
   width: 100%;
   max-width: 1200px;
-  z-index: 10;
+  z-index: 10; /* Em cima da mesa física */
+  position: relative;
   
-  /* Ativa 3D global na mesa */
+  /* Ativa 3D nos dispositivos */
   perspective: 1200px;
   transform-style: preserve-3d;
   padding-bottom: 40px;
 }
 
-/* Base da Mesa de Madeira da Prisão */
-.investigator-table::before {
-  content: '';
-  position: absolute;
-  bottom: -200px;
-  left: -100px;
-  right: -100px;
-  height: 600px;
-  background: linear-gradient(to bottom, #1e1510 0%, #100b08 100%);
-  background-image: 
-    linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 10%),
-    repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 4px, transparent 4px, transparent 40px);
-  border: 8px solid #0f0b08;
-  border-top: 12px solid #2d1e16;
-  border-radius: 20px;
-  transform: rotateX(55deg);
-  transform-origin: bottom center;
-  box-shadow: 
-    inset 0 10px 30px rgba(255,255,255,0.05),
-    0 40px 80px rgba(0,0,0,0.9);
-  z-index: -1;
-  pointer-events: none;
-}
-
 /* Colunas (Dispositivos dispostos na mesa inclinada) */
 .table-left {
   flex: 0 1 340px;
-  transform: rotateY(18deg) rotateX(15deg) rotateZ(-3deg) translateZ(10px);
+  transform: rotateY(18deg) rotateX(15deg) rotateZ(-3deg);
   transform-style: preserve-3d;
 }
 
 .table-center {
   flex: 1 1 500px;
   max-width: 600px;
-  /* Ergue o monitor ligeiramente para frente, perpendicular à mesa */
-  transform: rotateX(8deg) translateZ(20px);
+  transform: rotateX(8deg);
   transform-style: preserve-3d;
 }
 
 .table-right {
   flex: 0 1 240px;
-  transform: rotateY(-18deg) rotateX(15deg) rotateZ(3deg) translateZ(10px);
+  transform: rotateY(-18deg) rotateX(15deg) rotateZ(3deg);
   transform-style: preserve-3d;
 }
 
@@ -165,14 +162,13 @@ body {
   border: 4px solid #3c2415;
   border-radius: 10px;
   padding: 18px;
-  /* Extrusão 3D lateral da prancheta */
+  /* Extrusão lateral */
   box-shadow: 
     0 4px 0 #28180e,
     0 8px 0 #180f09,
     0 15px 30px rgba(0,0,0,0.85);
   position: relative;
   min-height: 480px;
-  transform-style: preserve-3d;
 }
 .clipboard-clip {
   width: 120px;
@@ -183,7 +179,7 @@ body {
   position: absolute;
   top: -10px;
   left: 50%;
-  transform: translateX(-50%) translateZ(12px);
+  transform: translateX(-50%);
   box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
@@ -205,7 +201,6 @@ body {
   font-family: var(--font-typewriter);
   padding: 28px 18px 20px 20px;
   border-radius: 2px;
-  /* Papel empilhado 3D */
   box-shadow: 
     1px 1px 0 #ded6c0,
     2px 2px 0 #d2cbb5,
@@ -213,7 +208,6 @@ body {
   min-height: 430px;
   position: relative;
   line-height: 1.45;
-  transform: translateZ(5px);
 }
 
 .paper-sheet-header {
@@ -238,7 +232,7 @@ body {
   font-weight: bold;
   font-size: 0.75rem;
   padding: 3px 8px;
-  transform: rotate(12deg) translateZ(10px);
+  transform: rotate(12deg);
   opacity: 0.8;
   border-radius: 4px;
 }
@@ -287,18 +281,16 @@ body {
   background: linear-gradient(135deg, var(--panel-bg) 0%, var(--panel-bg-dark) 100%);
   border: 6px solid #1a1b1d;
   border-radius: 18px;
-  /* Extrusão lateral 3D espessa para parecer uma caixa pesada */
+  /* Extrusão lateral espessa */
   box-shadow: 
-    0 6px 0 #18191b,
-    0 12px 0 #101112,
-    0 18px 0 #08090a,
-    0 25px 40px rgba(0, 0, 0, 0.85),
+    0 5px 0 #18191b,
+    0 10px 0 #101112,
+    0 15px 25px rgba(0, 0, 0, 0.85),
     inset 0 4px 0 rgba(255, 255, 255, 0.12),
     inset 0 -4px 0 rgba(0, 0, 0, 0.4);
   padding: 18px;
   width: 100%;
   position: relative;
-  transform-style: preserve-3d;
 }
 
 .screw {
@@ -310,7 +302,6 @@ body {
   box-shadow: 
     inset 1px 1px 1px rgba(255,255,255,0.4),
     inset -1px -1px 2px rgba(0,0,0,0.5);
-  transform: translateZ(5px);
 }
 .screw::after {
   content: '';
@@ -329,15 +320,12 @@ body {
   border: 10px solid #0f1011;
   border-radius: 18px;
   padding: 14px;
-  /* Chanfro 3D interno e externo */
   box-shadow: 
     inset 0 10px 20px rgba(0,0,0,0.9),
     0 4px 8px rgba(0,0,0,0.6),
     0 1px 0 rgba(255,255,255,0.1);
   margin-bottom: 16px;
   position: relative;
-  transform: translateZ(10px);
-  transform-style: preserve-3d;
 }
 
 .crt-screen-container {
@@ -350,8 +338,6 @@ body {
   display: flex;
   flex-direction: column;
   box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.98);
-  /* Dá uma leve curvatura no plano da tela */
-  transform: translateZ(5px);
 }
 
 .crt-effects {
@@ -454,13 +440,12 @@ p.retro-p {
   text-shadow: 0 0 4px var(--crt-amber-glow);
 }
 
-/* Painel de Controle e Teclado 3D */
+/* Painel de Controle e Teclado 3D (Flat Z para garantir click estável) */
 .control-panel {
   background: #232527;
   border: 4px solid #141516;
   border-radius: 12px;
   padding: 14px;
-  /* Angulação 3D no painel de botões para parecer inclinado para a frente */
   box-shadow: 
     inset 0 3px 6px rgba(255,255,255,0.06),
     inset 0 -3px 6px rgba(0,0,0,0.5),
@@ -470,8 +455,6 @@ p.retro-p {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  transform: translateZ(15px);
-  transform-style: preserve-3d;
 }
 
 .panel-group {
@@ -496,7 +479,7 @@ p.retro-p {
   font-weight: bold;
 }
 
-/* Botões do Console Elevados */
+/* Botões do Console Elevados via Shadows (Sem Z-translation para evitar bugs de clique) */
 .retro-btn {
   font-family: var(--font-mono);
   font-weight: bold;
@@ -508,15 +491,13 @@ p.retro-p {
   font-size: 0.8rem;
   letter-spacing: 0.5px;
   position: relative;
-  /* Extrusão 3D profunda dos botões mecânicos */
-  transform: translateZ(6px);
   transition: all 0.08s ease;
   box-shadow: 
     0 5px 0 #0d0d0f,
     0 8px 12px rgba(0,0,0,0.5);
 }
 .retro-btn:active:not(:disabled) {
-  transform: translateZ(2px) translateY(3px);
+  transform: translateY(3px);
   box-shadow: 
     0 2px 0 #0d0d0f,
     0 3px 6px rgba(0,0,0,0.5);
@@ -525,7 +506,6 @@ p.retro-p {
   opacity: 0.35;
   cursor: not-allowed;
   filter: grayscale(1);
-  transform: translateZ(0);
   box-shadow: none;
 }
 
@@ -650,7 +630,7 @@ p.retro-p {
   background: #2a2c2e;
   border: 4px solid #1a1b1c;
   border-radius: 10px;
-  /* Extrusão lateral 3D */
+  /* Extrusão lateral */
   box-shadow: 
     0 4px 0 #18191a,
     0 8px 0 #0d0e0f,
@@ -661,7 +641,6 @@ p.retro-p {
   flex-direction: column;
   gap: 12px;
   min-height: 480px;
-  transform-style: preserve-3d;
 }
 .printer-mouth {
   height: 8px;
@@ -672,7 +651,7 @@ p.retro-p {
   margin-bottom: 4px;
 }
 
-/* Papel Térmico Inclinado */
+/* Papel Térmico */
 .ticket-paper {
   background: #fdfdfd;
   color: #111;
@@ -691,7 +670,6 @@ p.retro-p {
   display: flex;
   flex-direction: column;
   scrollbar-width: none;
-  transform: translateZ(5px);
 }
 .ticket-paper::-webkit-scrollbar {
   display: none;
@@ -723,7 +701,6 @@ p.retro-p {
   align-items: center;
   gap: 2px;
   box-shadow: inset 0 2px 8px rgba(0,0,0,0.9);
-  transform: translateZ(8px);
 }
 .scoreboard-label {
   font-size: 0.58rem;
