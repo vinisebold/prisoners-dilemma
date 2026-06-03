@@ -1,6 +1,4 @@
-import React from 'react';
-
-export default function Step2Repeated({ roundsPlayed, playerScore, botScore }) {
+export default function Step2Repeated({ roundsPlayed }) {
   const maxRounds = 5;
   const isFinished = roundsPlayed >= maxRounds;
 

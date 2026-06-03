@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { sound } from '../../utils/sound';
 
 const INITIAL_POPULATION = [
@@ -30,7 +30,7 @@ export default function Step5Evolution({ noiseProb }) {
   };
 
   // Simula uma geração
-  const runGeneration = () => {
+  const runGeneration = useCallback(() => {
     // 1. Simular jogos entre todos os pares (rodadas repetidas de 5 turnos com ruído)
     const n = agents.length;
     const scores = Array(n).fill(0); // Acumula Anos de Prisão (menor é melhor)
@@ -138,7 +138,7 @@ export default function Step5Evolution({ noiseProb }) {
 
     setAgents(newAgents);
     setGeneration(prev => prev + 1);
-  };
+  }, [agents, noiseProb]);
 
   // Simula múltiplos passos em background
   useEffect(() => {
@@ -147,7 +147,7 @@ export default function Step5Evolution({ noiseProb }) {
       runGeneration();
     }, 250);
     return () => clearInterval(timer);
-  }, [isSimulating, agents]);
+  }, [isSimulating, runGeneration]);
 
   // Contagem de estratégias
   const counts = agents.reduce((acc, curr) => {

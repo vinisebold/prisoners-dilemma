@@ -1,6 +1,4 @@
-import React from 'react';
-
-export default function Step1Intro({ playState, playerChoice, botChoice }) {
+export default function Step1Intro({ playState, playerChoice }) {
   return (
     <div style={{ animation: 'crt-flicker 0.15s infinite', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
       <h1 className="retro-h1">Dilema do Prisioneiro</h1>

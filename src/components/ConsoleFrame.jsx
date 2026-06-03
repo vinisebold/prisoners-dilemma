@@ -1,7 +1,5 @@
-import React from 'react';
-import { sound } from '../utils/sound';
 
-export default function ConsoleFrame({ children, isMuted, onToggleMute }) {
+export default function ConsoleFrame({ children }) {
   return (
     <div className="terminal-cabinet">
       {/* Detalhes Físicos - Parafusos nos Cantos */}
@@ -24,22 +22,6 @@ export default function ConsoleFrame({ children, isMuted, onToggleMute }) {
       }}>
         <span>ID: CONSOLE_PD_1984</span>
         <span>STATUS: SYSTEM_OK</span>
-      </div>
-
-      {/* Controle de Áudio / Mudo */}
-      <div 
-        className={`mute-switch ${isMuted ? 'active' : ''}`}
-        onClick={onToggleMute}
-        style={{
-          position: 'absolute',
-          top: '8px',
-          right: '40px',
-          zIndex: 100
-        }}
-        title="Ativar/Desativar Som"
-      >
-        <span style={{ fontSize: '0.65rem', fontWeight: 'bold' }}>SOM: {isMuted ? 'OFF' : 'ON'}</span>
-        <div className="mute-switch-icon" />
       </div>
 
       {/* O monitor e painel de controle são renderizados dentro */}

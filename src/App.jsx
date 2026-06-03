@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ConsoleFrame from './components/ConsoleFrame';
 import CrtScreen from './components/CrtScreen';
 import ControlPanel from './components/ControlPanel';
@@ -10,6 +10,7 @@ import Step3Strategies from './components/steps/Step3Strategies';
 import Step4Noise from './components/steps/Step4Noise';
 import Step5Evolution from './components/steps/Step5Evolution';
 import Step6Conclusion from './components/steps/Step6Conclusion';
+import SettingsMenu from './components/SettingsMenu';
 import { sound } from './utils/sound';
 import './App.css';
 
@@ -17,8 +18,13 @@ const TOTAL_STEPS = 6;
 
 export default function App() {
   const [currentStep, setCurrentStep] = useState(1);
-  const [isMuted, setIsMuted] = useState(false);
   const [noiseProb, setNoiseProb] = useState(15); // Ruído padrão para etapas 4 e 5
+  
+  // Ajustes de Sistema
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('game_theme') || 'green');
+  const [, setVolume] = useState(sound.getVolume());
+  const [, setHumEnabled] = useState(sound.getHumEnabled());
 
   // --- Estados do Jogo por Etapa ---
   
@@ -56,12 +62,11 @@ export default function App() {
     };
   }, []);
 
-  // Monitora mudança de mudo
-  const handleToggleMute = () => {
-    const newMute = sound.toggleMute();
-    setIsMuted(newMute);
-    sound.updateHumGain();
-  };
+  // Monitora mudança de tema
+  useEffect(() => {
+    document.body.className = `theme-${theme}${isSettingsOpen ? ' settings-open' : ''}`;
+    localStorage.setItem('game_theme', theme);
+  }, [theme, isSettingsOpen]);
 
   // --- Função para calcular payoffs ---
   const calculatePayoff = (p1, p2) => {
@@ -85,11 +90,12 @@ export default function App() {
       case 'copycat':
         return myHistory[myHistory.length - 1].playerChoice;
 
-      case 'grudger':
+      case 'grudger': {
         const hasPlayerDefected = myHistory.some(round => round.playerChoice === 'defect');
         return hasPlayerDefected ? 'defect' : 'cooperate';
+      }
 
-      case 'detective':
+      case 'detective': {
         const roundNum = myHistory.length + 1;
         if (roundNum === 1) return 'cooperate';
         if (roundNum === 2) return 'defect';
@@ -102,8 +108,9 @@ export default function App() {
         } else {
           return 'defect';
         }
+      }
 
-      case 'copykitten':
+      case 'copykitten': {
         if (myHistory.length < 2) return 'cooperate';
         const last1 = myHistory[myHistory.length - 1].playerChoice;
         const last2 = myHistory[myHistory.length - 2].playerChoice;
@@ -111,6 +118,7 @@ export default function App() {
           return 'defect';
         }
         return 'cooperate';
+      }
 
       default:
         return 'cooperate';
@@ -386,6 +394,18 @@ export default function App() {
 
   return (
     <>
+      {/* Botão de Hamburger da Página */}
+      <button 
+        className="page-hamburger-btn"
+        onClick={() => {
+          sound.playClick();
+          setIsSettingsOpen(prev => !prev);
+        }}
+        title="Configurações do Sistema"
+      >
+        ☰
+      </button>
+
       {/* Luz Suspensa Dinâmica */}
       <div className="hanging-lamp">
         <div className="hanging-lamp-light" />
@@ -431,48 +451,64 @@ export default function App() {
 
         {/* Coluna Central: O Terminal CRT */}
         <div className="table-center">
-          <ConsoleFrame isMuted={isMuted} onToggleMute={handleToggleMute}>
-            <CrtScreen currentStep={currentStep} totalSteps={TOTAL_STEPS}>
-              {currentStep === 1 && (
-                <Step1Intro 
-                  playState={step1PlayState}
-                  playerChoice={step1PlayerChoice}
-                  botChoice={step1BotChoice}
+          <ConsoleFrame>
+            <CrtScreen 
+              currentStep={currentStep} 
+              totalSteps={TOTAL_STEPS}
+              isSettingsOpen={isSettingsOpen}
+            >
+              {isSettingsOpen ? (
+                <SettingsMenu 
+                  onClose={() => setIsSettingsOpen(false)}
+                  theme={theme}
+                  setTheme={setTheme}
+                  onVolumeChange={() => setVolume(sound.getVolume())}
+                  onHumChange={() => setHumEnabled(sound.getHumEnabled())}
                 />
-              )}
-              {currentStep === 2 && (
-                <Step2Repeated 
-                  roundsPlayed={step2RoundsPlayed}
-                  playerScore={step2PlayerScore}
-                  botScore={step2BotScore}
-                />
-              )}
-              {currentStep === 3 && (
-                <Step3Strategies 
-                  selectedBot={step3SelectedBot}
-                  onBotChange={handleBotChangeStep3}
-                  roundsPlayed={step3RoundsPlayed}
-                  onResetMatch={handleResetStep3}
-                />
-              )}
-              {currentStep === 4 && (
-                <Step4Noise 
-                  selectedBot={step4SelectedBot}
-                  onBotChange={handleBotChangeStep4}
-                  noiseProb={noiseProb}
-                  roundsPlayed={step4RoundsPlayed}
-                  history={step4History}
-                  onResetMatch={handleResetStep4}
-                />
-              )}
-              {currentStep === 5 && (
-                <Step5Evolution noiseProb={noiseProb} />
-              )}
-              {currentStep === 6 && (
-                <Step6Conclusion onRestart={handleFullReset} />
+              ) : (
+                <>
+                  {currentStep === 1 && (
+                    <Step1Intro 
+                      playState={step1PlayState}
+                      playerChoice={step1PlayerChoice}
+                      botChoice={step1BotChoice}
+                    />
+                  )}
+                  {currentStep === 2 && (
+                    <Step2Repeated 
+                      roundsPlayed={step2RoundsPlayed}
+                      playerScore={step2PlayerScore}
+                      botScore={step2BotScore}
+                    />
+                  )}
+                  {currentStep === 3 && (
+                    <Step3Strategies 
+                      selectedBot={step3SelectedBot}
+                      onBotChange={handleBotChangeStep3}
+                      roundsPlayed={step3RoundsPlayed}
+                      onResetMatch={handleResetStep3}
+                    />
+                  )}
+                  {currentStep === 4 && (
+                    <Step4Noise 
+                      selectedBot={step4SelectedBot}
+                      onBotChange={handleBotChangeStep4}
+                      noiseProb={noiseProb}
+                      roundsPlayed={step4RoundsPlayed}
+                      history={step4History}
+                      onResetMatch={handleResetStep4}
+                    />
+                  )}
+                  {currentStep === 5 && (
+                    <Step5Evolution noiseProb={noiseProb} />
+                  )}
+                  {currentStep === 6 && (
+                    <Step6Conclusion onRestart={handleFullReset} />
+                  )}
+                </>
               )}
             </CrtScreen>
-
+ 
             <ControlPanel 
               onCooperate={() => {
                 if (currentStep === 1) handlePlayStep1('cooperate');
@@ -490,12 +526,13 @@ export default function App() {
               onPrev={handlePrevStep}
               onReset={handleFullReset}
               showCooperateDefect={showCooperateDefect}
-              cooperateDefectDisabled={cooperateDefectDisabled}
+              cooperateDefectDisabled={cooperateDefectDisabled || isSettingsOpen}
               showNext={showNext}
-              nextActive={nextActive}
+              nextActive={nextActive && !isSettingsOpen}
               noiseProb={noiseProb}
               onNoiseChange={setNoiseProb}
               showNoise={showNoise}
+              noiseDisabled={isSettingsOpen}
               currentStep={currentStep}
               totalSteps={TOTAL_STEPS}
             />

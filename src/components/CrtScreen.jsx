@@ -1,6 +1,5 @@
-import React from 'react';
 
-export default function CrtScreen({ children, currentStep, totalSteps }) {
+export default function CrtScreen({ children, currentStep, totalSteps, isSettingsOpen }) {
   return (
     <div className="monitor-bezel">
       <div className="crt-screen-container">
@@ -12,11 +11,13 @@ export default function CrtScreen({ children, currentStep, totalSteps }) {
         <div className="crt-content">
           {/* Cabeçalho da Tela */}
           <div className="crt-header">
-            <span className="crt-title">DILEMA MONITOR v1.0</span>
+            <span className="crt-title">
+              {isSettingsOpen ? "AJUSTES DE SISTEMA" : "DILEMA MONITOR v1.0"}
+            </span>
             <div className="crt-status-indicator">
-              <span className="led green on" style={{ width: '8px', height: '8px' }} />
+              <span className={isSettingsOpen ? "led red on" : "led green on"} style={{ width: '8px', height: '8px' }} />
               <span style={{ fontSize: '0.75rem', letterSpacing: '2px', fontWeight: 'bold' }}>
-                MÓDULO: {currentStep}/{totalSteps}
+                {isSettingsOpen ? "SETUP" : `MÓDULO: ${currentStep}/${totalSteps}`}
               </span>
             </div>
           </div>

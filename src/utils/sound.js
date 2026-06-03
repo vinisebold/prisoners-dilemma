@@ -5,7 +5,9 @@ let audioCtx = null;
 let masterGain = null;
 let humOscillator = null;
 let humGain = null;
-let isMuted = false;
+let isMuted = localStorage.getItem('game_muted') === 'true';
+let volume = parseFloat(localStorage.getItem('game_volume') ?? '0.8');
+let humEnabled = localStorage.getItem('game_hum_enabled') !== 'false';
 
 function initAudio() {
   if (audioCtx) return;
@@ -16,27 +18,51 @@ function initAudio() {
   
   // Nó de ganho mestre para controle de mudo
   masterGain = audioCtx.createGain();
-  masterGain.gain.setValueAtTime(isMuted ? 0 : 0.8, audioCtx.currentTime);
+  masterGain.gain.setValueAtTime(isMuted ? 0 : volume, audioCtx.currentTime);
   masterGain.connect(audioCtx.destination);
 }
 
 export const sound = {
+  setVolume: (v) => {
+    volume = Math.max(0, Math.min(1, v));
+    localStorage.setItem('game_volume', String(volume));
+    if (masterGain && audioCtx) {
+      masterGain.gain.setValueAtTime(isMuted ? 0 : volume, audioCtx.currentTime);
+    }
+  },
+  
+  getVolume: () => volume,
+
   setMute: (mute) => {
     isMuted = mute;
+    localStorage.setItem('game_muted', String(mute));
     if (masterGain && audioCtx) {
-      masterGain.gain.setValueAtTime(mute ? 0 : 0.8, audioCtx.currentTime);
+      masterGain.gain.setValueAtTime(mute ? 0 : volume, audioCtx.currentTime);
     }
   },
   
   toggleMute: () => {
     isMuted = !isMuted;
+    localStorage.setItem('game_muted', String(isMuted));
     if (masterGain && audioCtx) {
-      masterGain.gain.setValueAtTime(isMuted ? 0 : 0.8, audioCtx.currentTime);
+      masterGain.gain.setValueAtTime(isMuted ? 0 : volume, audioCtx.currentTime);
     }
     return isMuted;
   },
   
   getMute: () => isMuted,
+
+  setHumEnabled: (enabled) => {
+    humEnabled = enabled;
+    localStorage.setItem('game_hum_enabled', String(enabled));
+    if (enabled) {
+      sound.startCrtHum();
+    } else {
+      sound.stopCrtHum();
+    }
+  },
+
+  getHumEnabled: () => humEnabled,
   
   // Som de clique mecânico do interruptor/botão
   playClick: () => {
@@ -182,6 +208,7 @@ export const sound = {
       if (!audioCtx) return;
       if (audioCtx.state === 'suspended') audioCtx.resume();
       if (humOscillator) return; // já rodando
+      if (!humEnabled) return; // se desativado, não faz nada
       
       const t = audioCtx.currentTime;
       
@@ -226,7 +253,7 @@ export const sound = {
   
   updateHumGain: () => {
     if (humGain && audioCtx) {
-      humGain.gain.setValueAtTime(isMuted ? 0 : 0.015, audioCtx.currentTime);
+      humGain.gain.setValueAtTime((isMuted || !humEnabled) ? 0 : 0.015, audioCtx.currentTime);
     }
   }
 };

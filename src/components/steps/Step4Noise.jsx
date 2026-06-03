@@ -1,4 +1,3 @@
-import React from 'react';
 import { sound } from '../../utils/sound';
 
 export default function Step4Noise({

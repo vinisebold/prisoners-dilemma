@@ -1,5 +1,4 @@
-import React from 'react';
-import { BOT_DOSSIERS } from './steps/Step3Strategies';
+import { BOT_DOSSIERS } from '../utils/dossiers';
 
 export default function ClipboardDossier({ currentStep, selectedBotStep3, selectedBotStep4 }) {
   
@@ -73,7 +72,7 @@ export default function ClipboardDossier({ currentStep, selectedBotStep3, select
           </>
         );
 
-      case 3:
+      case 3: {
         const bot3 = BOT_DOSSIERS[selectedBotStep3] || BOT_DOSSIERS.copycat;
         return (
           <>
@@ -93,8 +92,9 @@ export default function ClipboardDossier({ currentStep, selectedBotStep3, select
             </p>
           </>
         );
+      }
 
-      case 4:
+      case 4: {
         const bot4Name = selectedBotStep4 === 'copycat' ? 'Copycat' : 'Copykitten';
         const bot4Desc = selectedBotStep4 === 'copycat' 
           ? 'Vingativo. Retalia a qualquer delação.'
@@ -121,6 +121,7 @@ export default function ClipboardDossier({ currentStep, selectedBotStep3, select
             </p>
           </>
         );
+      }
 
       case 5:
         return (
