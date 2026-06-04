@@ -563,6 +563,7 @@ body.settings-open::before {
   flex: 1 1 500px;
   max-width: 600px;
   transform: perspective(1000px) rotateX(18deg);
+  transform-style: preserve-3d; /* Habilita o espaço 3D para os filhos */
   transition: transform 0.3s ease;
   z-index: 5; /* Garante que o monitor interativo central fique por cima de qualquer overlap */
   position: relative;
@@ -628,7 +629,8 @@ body.settings-open::before {
   box-shadow:
     0 4px 0 #28180e,
     0 8px 0 #180f09,
-    calc(var(--clip-shadow-dx, 0px) * 0.05) 25px 35px rgba(0, 0, 0, calc(0.70 + 0.18 * var(--light-intensity-clipboard, 0)));
+    calc(var(--clip-shadow-dx, 0px) * 0.05) 25px 35px
+      rgba(0, 0, 0, calc(0.7 + 0.18 * var(--light-intensity-clipboard, 0)));
   position: relative;
   min-height: 480px;
   transition: box-shadow 0.08s linear;
@@ -638,15 +640,21 @@ body.settings-open::before {
 .paper-clipboard::before {
   content: "";
   position: absolute;
-  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
   border-radius: 10px;
   pointer-events: none;
   z-index: 10;
   box-sizing: border-box;
   box-shadow:
-    inset 0 2px 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-clipboard, 0))),
-    inset 2px 0 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-clipboard, 0))),
-    inset -2px 0 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-clipboard, 0)));
+    inset 0 2px 0
+      rgba(255, 255, 240, calc(0.24 * var(--light-intensity-clipboard, 0))),
+    inset 2px 0 0
+      rgba(255, 255, 240, calc(0.24 * var(--light-intensity-clipboard, 0))),
+    inset -2px 0 0
+      rgba(255, 255, 240, calc(0.24 * var(--light-intensity-clipboard, 0)));
   border: 4px solid transparent;
   transition: box-shadow 0.08s linear;
 }
@@ -770,7 +778,8 @@ body.settings-open::before {
   box-shadow:
     0 5px 0 #18191b,
     0 10px 0 #101112,
-    calc(var(--comp-shadow-dx, 0px) * 0.05) 30px 45px rgba(0, 0, 0, calc(0.85 + 0.12 * var(--light-intensity-comp-top, 0))),
+    calc(var(--comp-shadow-dx, 0px) * 0.05) 30px 45px
+      rgba(0, 0, 0, calc(0.85 + 0.12 * var(--light-intensity-comp-top, 0))),
     inset 0 4px 0 rgba(255, 255, 255, 0.12),
     inset 0 -4px 0 rgba(0, 0, 0, 0.4);
   padding: 18px;
@@ -783,15 +792,21 @@ body.settings-open::before {
 .terminal-cabinet::before {
   content: "";
   position: absolute;
-  top: -6px; left: -6px; right: -6px; bottom: -6px;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
   border-radius: 18px;
   pointer-events: none;
   z-index: 10;
   box-sizing: border-box;
   box-shadow:
-    inset 0 calc(2.5px * var(--light-intensity-comp-top, 0)) 0 rgba(255, 255, 240, calc(0.35 * var(--light-intensity-comp-top, 0))),
-    inset calc(2.5px * var(--light-intensity-comp-left, 0)) 0 0 rgba(255, 255, 240, calc(0.35 * var(--light-intensity-comp-left, 0))),
-    inset calc(-2.5px * var(--light-intensity-comp-right, 0)) 0 0 rgba(255, 255, 240, calc(0.35 * var(--light-intensity-comp-right, 0)));
+    inset 0 calc(2.5px * var(--light-intensity-comp-top, 0)) 0
+      rgba(255, 255, 240, calc(0.35 * var(--light-intensity-comp-top, 0))),
+    inset calc(2.5px * var(--light-intensity-comp-left, 0)) 0 0
+      rgba(255, 255, 240, calc(0.35 * var(--light-intensity-comp-left, 0))),
+    inset calc(-2.5px * var(--light-intensity-comp-right, 0)) 0 0
+      rgba(255, 255, 240, calc(0.35 * var(--light-intensity-comp-right, 0)));
   border: 6px solid transparent;
   transition: box-shadow 0.08s linear;
 }
@@ -862,15 +877,21 @@ body.settings-open::before {
 .crt-screen-container::after {
   content: "";
   position: absolute;
-  top: -5px; left: -5px; right: -5px; bottom: -5px;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
   border-radius: 10px;
   pointer-events: none;
   z-index: 10;
   box-sizing: border-box;
   box-shadow:
-    inset 0 1.5px 0 rgba(255, 255, 240, calc(0.40 * var(--light-intensity-comp-top, 0))),
-    inset 1.5px 0 0 rgba(255, 255, 240, calc(0.40 * var(--light-intensity-comp-left, 0))),
-    inset -1.5px 0 0 rgba(255, 255, 240, calc(0.40 * var(--light-intensity-comp-right, 0)));
+    inset 0 1.5px 0
+      rgba(255, 255, 240, calc(0.4 * var(--light-intensity-comp-top, 0))),
+    inset 1.5px 0 0
+      rgba(255, 255, 240, calc(0.4 * var(--light-intensity-comp-left, 0))),
+    inset -1.5px 0 0
+      rgba(255, 255, 240, calc(0.4 * var(--light-intensity-comp-right, 0)));
   border: 5px solid transparent;
   transition: box-shadow 0.08s linear;
 }
@@ -947,6 +968,8 @@ body.settings-open::before {
   flex-direction: column;
   padding: 18px;
   overflow-y: auto;
+  min-height: 0;
+  min-width: 0;
   position: relative;
   z-index: 2;
   text-shadow: 0 0 6px var(--crt-green-glow);
@@ -1212,7 +1235,8 @@ p.retro-p {
   box-shadow:
     0 4px 0 #18191a,
     0 8px 0 #0d0e0f,
-    calc(var(--print-shadow-dx, 0px) * 0.05) 25px 35px rgba(0, 0, 0, calc(0.70 + 0.18 * var(--light-intensity-printer, 0))),
+    calc(var(--print-shadow-dx, 0px) * 0.05) 25px 35px
+      rgba(0, 0, 0, calc(0.7 + 0.18 * var(--light-intensity-printer, 0))),
     inset 0 1px 2px rgba(255, 255, 255, 0.1);
   padding: 12px;
   display: flex;
@@ -1226,15 +1250,21 @@ p.retro-p {
 .secondary-monitor::before {
   content: "";
   position: absolute;
-  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
   border-radius: 12px;
   pointer-events: none;
   z-index: 10;
   box-sizing: border-box;
   box-shadow:
-    inset 0 2px 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-printer, 0))),
-    inset 2px 0 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-printer, 0))),
-    inset -2px 0 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-printer, 0)));
+    inset 0 2px 0
+      rgba(255, 255, 240, calc(0.24 * var(--light-intensity-printer, 0))),
+    inset 2px 0 0
+      rgba(255, 255, 240, calc(0.24 * var(--light-intensity-printer, 0))),
+    inset -2px 0 0
+      rgba(255, 255, 240, calc(0.24 * var(--light-intensity-printer, 0)));
   border: 4px solid transparent;
   transition: box-shadow 0.08s linear;
 }
@@ -1245,7 +1275,7 @@ p.retro-p {
   border: 5px solid #0b0c0d;
   border-radius: 8px;
   padding: 8px;
-  box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.8);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1308,7 +1338,7 @@ p.retro-p {
   width: 4px;
 }
 .sec-mode-grid::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 .sec-mode-grid::-webkit-scrollbar-thumb {
   background: var(--sec-color-dim);
@@ -1362,7 +1392,7 @@ p.retro-p {
 /* Gráfico de Linhas SVG */
 .sec-chart-svg {
   border: 1px solid var(--sec-color-dim);
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   margin-bottom: 6px;
 }
@@ -1394,9 +1424,9 @@ p.retro-p {
   border: 2px solid #777;
   position: relative;
   cursor: pointer;
-  box-shadow: 
-    0 2px 4px rgba(0,0,0,0.5),
-    inset 0 1px 2px rgba(255,255,255,0.3);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .knob-indicator-line {
@@ -1412,7 +1442,7 @@ p.retro-p {
 
 /* Terminal de logs */
 .sec-terminal-logs {
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   border: 1px solid var(--sec-color-dim);
   border-radius: 4px;
   padding: 6px;
@@ -1437,8 +1467,13 @@ p.retro-p {
 }
 
 @keyframes sec-blink {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* População Grid */
@@ -1636,11 +1671,18 @@ body.theme-green {
 .settings-menu {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 6px;
   height: 100%;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 12px;
   color: var(--crt-green);
   font-family: var(--font-mono);
   animation: crt-flicker 0.15s infinite;
+  position: relative;
+  z-index: 20;
 }
 
 .settings-section {
@@ -1682,7 +1724,8 @@ body.theme-green {
 
 .volume-bar {
   flex: 1;
-  font-family: 'Courier New', Courier, monospace; /* Força Courier New para alinhar perfeitamente o U+2591 ░ com U+2588 █ */
+  font-family:
+    "Courier New", Courier, monospace; /* Força Courier New para alinhar perfeitamente o U+2591 ░ com U+2588 █ */
   color: var(--crt-green);
   text-shadow: 0 0 4px var(--crt-green-glow);
   letter-spacing: 1px;
@@ -1754,10 +1797,17 @@ body.theme-green {
   width: 100%;
   box-shadow: none;
   transition: all 0.15s ease;
+  position: relative;
+  z-index: 21;
+}
+
+.settings-loading-screen {
+  position: relative;
+  z-index: 20;
 }
 
 .settings-close-btn:hover {
-  background: rgba(255, 176, 0, 0.20);
+  background: rgba(255, 176, 0, 0.2);
   color: var(--crt-amber);
   box-shadow: none;
 }
@@ -1857,7 +1907,7 @@ body.theme-green {
     transform: perspective(1000px) rotateX(42deg) rotateZ(-12deg)
       translateY(38px) translateX(-140px) scale(0.6);
     filter: blur(2px);
-    opacity: 0.90;
+    opacity: 0.9;
     pointer-events: none;
   }
 
@@ -1866,7 +1916,7 @@ body.theme-green {
     transform: perspective(1000px) rotateY(-8deg) rotateX(15deg) rotateZ(6deg)
       translateY(20px) translateX(110px) scale(0.7);
     filter: blur(2px);
-    opacity: 0.90;
+    opacity: 0.9;
     pointer-events: none;
   }
 
@@ -2080,3 +2130,498 @@ body.theme-green {
   line-height: 1.25;
 }
 
+/* -------------------------------------------------------------
+   TECLADO DE DECISÃO 3D (Vintage, translúcido com luz interna)
+------------------------------------------------------------- */
+.decision-keyboard-deck {
+  margin-top: 12px;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 255, 255, 0.05),
+      transparent 60%
+    ),
+    linear-gradient(135deg, #2b2e33 0%, #151618 50%, #0d0d0e 100%);
+  border: 1px solid #0b0c0d;
+  border-top: 2.5px solid rgba(255, 255, 255, 0.12); /* Brilho de chanfro superior do painel */
+  border-radius: 18px;
+  transform: rotateX(30deg); /* Inclinação acentuada para deitar na mesa */
+  transform-style: preserve-3d;
+  box-shadow:
+    0 12px 0 #0a0b0d,
+    /* Chapa de fundo tridimensional chanfrada e profunda */ 0 16px 32px
+      rgba(0, 0, 0, 0.95),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    inset 0 -6px 12px rgba(0, 0, 0, 0.5);
+  padding: 6px 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Quando desabilitado ou offline, o deck fica desligado/friaço */
+.decision-keyboard-deck.deck-offline {
+  opacity: 0.55;
+  filter: brightness(0.45) contrast(0.85);
+}
+
+/* Parafusos de Gabinete Vintage nos Cantos (Recuados Torx de Alta Definição) */
+.deck-screw {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, #0b0c0d 25%, #1c1d20 75%, #2c2f34 100%);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 2.5px 5px rgba(0, 0, 0, 0.95),
+    /* recesso profundo do furo */ 0 1.5px 1.5px rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deck-screw::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: conic-gradient(
+    from 45deg,
+    #7c8288,
+    #484c50,
+    #9ba1a7,
+    #3e4245,
+    #7c8288
+  );
+  border-radius: 50%;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0.5px rgba(255, 255, 255, 0.35);
+}
+.deck-screw::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #060708;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow:
+    inset 0 1px 1.5px rgba(0, 0, 0, 0.95),
+    0 0.5px 0.5px rgba(255, 255, 255, 0.15);
+}
+.deck-screw.tl {
+  top: 14px;
+  left: 14px;
+}
+.deck-screw.tr {
+  top: 14px;
+  right: 14px;
+}
+.deck-screw.bl {
+  bottom: 14px;
+  left: 14px;
+}
+.deck-screw.br {
+  bottom: 14px;
+  right: 14px;
+}
+
+/* Bezel Prateado de Metal Escovado (Reflexos Cromados como na imagem) */
+.deck-inner-bezel {
+  background: linear-gradient(
+    to bottom,
+    #dfe3e8 0%,
+    #b8bec4 20%,
+    #7d848a 50%,
+    #464b50 80%,
+    #202326 100%
+  );
+  border: 2.5px solid #0a0b0c;
+  border-radius: 16px;
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.8),
+    inset 0 2px 2px rgba(255, 255, 255, 0.95),
+    /* Brilho de cromo nítido na borda superior */ inset 0 -2.5px 4px
+      rgba(0, 0, 0, 0.6);
+  padding: 16px 24px;
+  display: flex;
+  gap: 6px; /* Distância aumentada para dar mais respiro entre botões */
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/* Soquete do Botão (Buraco profundo na base) */
+.deck-button-socket {
+  width: 170px; /* Diminuída a base para reduzir a fresta lateral */
+  height: 72px; /* Diminuída a altura para reduzir a fresta vertical */
+  background: #020202; /* Fundo extremamente escuro para dar profundidade */
+  border-radius: 12px;
+  box-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.35),
+    /* Lábio metálico brilhante na borda interna */ inset 0 12px 24px
+      rgba(0, 0, 0, 1),
+    inset 0 2px 4px rgba(0, 0, 0, 0.8);
+  position: relative;
+  flex-shrink: 0;
+  border: 1px solid #141516;
+}
+
+/* Capa do Botão: Policarbonato Vidroso Translúcido e Brilhante */
+.deck-button-cap {
+  position: absolute;
+  top: -12px; /* Centralizado matematicamente no soquete novo com a sombra */
+  left: 3px; /* Fresta preta reduzida */
+  right: 2px; /* Fresta preta reduzida */
+  height: 65px; /* Altura do botão mantida igual */
+  transform: rotateX(
+    -5deg
+  ); /* Levemente em pé, evitando que a sombra vaze do buraco */
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(0.5px);
+  overflow: visible; /* Permitir sombras projetadas fora da borda do botão */
+  transition:
+    transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.08s cubic-bezier(0.2, 0.8, 0.2, 1),
+    top 0.08s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.15s ease;
+}
+
+/* Brilho chanfrado de vidro nas bordas superiores */
+.deck-button-cap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.35); /* Highlight superior suavizado para não parecer falso */
+  border-left: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-right: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.55);
+  box-shadow:
+    inset 0 2.5px 3px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* Reflexo de Luz / Glare superior (estilo plástico brilhante na metade superior) */
+.deck-button-cap::after {
+  content: "";
+  position: absolute;
+  top: 1.5px;
+  left: 1.5px;
+  right: 1.5px;
+  height: 44%;
+  border-radius: 10px 10px 4px 4px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 7;
+}
+
+/* Glare Diagonal Secundário para maior realismo de vidro tridimensional */
+.btn-glass-glare {
+  position: absolute;
+  top: 1.5px;
+  left: 1.5px;
+  right: 1.5px;
+  bottom: 1.5px;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    transparent 40%
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Placa/Pilar mecânico interno (visível através do acrílico) */
+.btn-stem {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  width: 48px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to right, #1d1e21, #3c4046, #121315);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.55;
+}
+
+/* Suporte de lâmpada vintage metálico (soquete interno do led) */
+.btn-bulb-housing {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    #e2a854 20%,
+    #876022 60%,
+    #2f210a 100%
+  ); /* Latão vintage */
+  border-radius: 50%;
+  border: 1.5px solid #1c1406;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.4;
+}
+
+/* Filamento Incandescente Central (Aparece ativo/ligado) */
+.btn-bulb-filament {
+  width: 10px;
+  height: 2px;
+  border-radius: 1px;
+  background: #ffffff;
+  pointer-events: none;
+  z-index: 3;
+  transition: all 0.1s ease;
+}
+
+/* Lâmpada/LED interna do Botão (Brilho Difuso) */
+.btn-light {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: 50px;
+  height: 38px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  filter: blur(12px);
+  pointer-events: none;
+  z-index: 4;
+  transition: all 0.15s ease;
+}
+
+/* Texto sobre a luz (Fonte Sans-Serif moderna e limpa como na imagem) */
+.btn-label {
+  position: relative;
+  z-index: 8;
+  font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.1s ease;
+}
+
+/* Estilo do botão COOPERAR (Translúcido Verde Esmeralda Maciço) */
+.deck-button-cap.deck-btn-cooperate {
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(46, 204, 113, 0.35) 45%,
+    rgba(20, 105, 54, 0.82) 85%,
+    rgba(10, 50, 27, 0.98) 100%
+  );
+  box-shadow:
+    0 16px 0 rgba(10, 50, 27, 0.98),
+    /* Extrusão sólida perfeitamente ancorada no meio do soquete */ 0 20px 20px
+      rgba(0, 0, 0, 0.95),
+    /* Sombra projetada */ inset 0 0 14px rgba(46, 204, 113, 0.5);
+}
+.deck-button-cap.deck-btn-cooperate .btn-bulb-filament {
+  background: #a3ffd0;
+  box-shadow:
+    0 0 4px #2ecc71,
+    0 0 8px #2ecc71;
+}
+.deck-button-cap.deck-btn-cooperate .btn-light {
+  background: #5effa2;
+  box-shadow:
+    0 0 20px #2ecc71,
+    0 0 45px #2ecc71;
+  opacity: 0.9;
+}
+.deck-button-cap.deck-btn-cooperate .btn-label {
+  color: #ffffff;
+  text-shadow:
+    0 0 8px rgba(46, 204, 113, 1),
+    0 0 16px rgba(46, 204, 113, 0.8),
+    0 2px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* Estilo do botão DELATAR (Translúcido Vermelho Rubi Maciço) */
+.deck-button-cap.deck-btn-defect {
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(231, 76, 60, 0.35) 45%,
+    rgba(160, 30, 20, 0.82) 85%,
+    rgba(60, 10, 6, 0.98) 100%
+  );
+  box-shadow:
+    0 16px 0 rgba(60, 10, 6, 0.98),
+    0 20px 20px rgba(0, 0, 0, 0.95),
+    inset 0 0 14px rgba(231, 76, 60, 0.5);
+}
+.deck-button-cap.deck-btn-defect .btn-bulb-filament {
+  background: #ffb3a3;
+  box-shadow:
+    0 0 4px #e74c3c,
+    0 0 8px #e74c3c;
+}
+.deck-button-cap.deck-btn-defect .btn-light {
+  background: #ff7d70;
+  box-shadow:
+    0 0 20px #e74c3c,
+    0 0 45px #e74c3c;
+  opacity: 0.9;
+}
+.deck-button-cap.deck-btn-defect .btn-label {
+  color: #ffffff;
+  text-shadow:
+    0 0 8px rgba(231, 76, 60, 1),
+    0 0 16px rgba(231, 76, 60, 0.8),
+    0 2px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* Efeito de Hover (Elevação, extrusão extra e luz mais brilhante) */
+.deck-button-cap:not([disabled]):hover {
+  top: -10px; /* Sobe no hover */
+}
+.deck-button-cap.deck-btn-cooperate:not([disabled]):hover {
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(255, 255, 255, 0.44) 0%,
+    rgba(46, 204, 113, 0.44) 45%,
+    rgba(20, 105, 54, 0.85) 85%,
+    rgba(10, 50, 27, 0.98) 100%
+  );
+  box-shadow:
+    0 20px 0 rgba(10, 50, 27, 0.98),
+    0 24px 24px rgba(0, 0, 0, 0.95),
+    inset 0 0 18px rgba(46, 204, 113, 0.65);
+}
+.deck-button-cap.deck-btn-cooperate:not([disabled]):hover .btn-light {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.deck-button-cap.deck-btn-cooperate:not([disabled]):hover .btn-label {
+  text-shadow:
+    0 0 12px rgba(46, 204, 113, 1),
+    0 0 24px rgba(46, 204, 113, 0.95),
+    0 2px 2px rgba(0, 0, 0, 0.9);
+}
+
+.deck-button-cap.deck-btn-defect:not([disabled]):hover {
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(255, 255, 255, 0.44) 0%,
+    rgba(231, 76, 60, 0.44) 45%,
+    rgba(160, 30, 20, 0.85) 85%,
+    rgba(60, 10, 6, 0.98) 100%
+  );
+  box-shadow:
+    0 20px 0 rgba(60, 10, 6, 0.98),
+    0 24px 24px rgba(0, 0, 0, 0.95),
+    inset 0 0 18px rgba(231, 76, 60, 0.65);
+}
+.deck-button-cap.deck-btn-defect:not([disabled]):hover .btn-light {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.deck-button-cap.deck-btn-defect:not([disabled]):hover .btn-label {
+  text-shadow:
+    0 0 12px rgba(231, 76, 60, 1),
+    0 0 24px rgba(231, 76, 60, 0.95),
+    0 2px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* Efeito de Clique `:active` (Compressão mecânica, extrusão menor e filamento piscando intenso) */
+.deck-button-cap:not([disabled]):active {
+  top: 4px; /* Afunda no soquete */
+}
+.deck-button-cap.deck-btn-cooperate:not([disabled]):active {
+  box-shadow:
+    0 6px 0 rgba(10, 50, 27, 0.98),
+    0 8px 12px rgba(0, 0, 0, 0.9),
+    inset 0 0 24px rgba(46, 204, 113, 0.9);
+}
+.deck-button-cap.deck-btn-cooperate:not([disabled]):active .btn-light {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(0.95);
+  background: #a3ffd0;
+  box-shadow:
+    0 0 25px #2ecc71,
+    0 0 60px #2ecc71;
+}
+.deck-button-cap.deck-btn-defect:not([disabled]):active {
+  box-shadow:
+    0 6px 0 rgba(60, 10, 6, 0.98),
+    0 8px 12px rgba(0, 0, 0, 0.9),
+    inset 0 0 24px rgba(231, 76, 60, 0.9);
+}
+.deck-button-cap.deck-btn-defect:not([disabled]):active .btn-light {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(0.95);
+  background: #ffb3a3;
+  box-shadow:
+    0 0 25px #e74c3c,
+    0 0 60px #e74c3c;
+}
+
+/* Estado Desativado / Bloqueado (Fisicamente travado em baixo e com luz apagada) */
+.deck-button-cap[disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+  top: 2px; /* Travado no fundo do soquete */
+  filter: grayscale(0.65) brightness(0.35);
+}
+.deck-button-cap.deck-btn-cooperate[disabled] {
+  box-shadow:
+    0 8px 0 rgba(10, 50, 27, 0.4),
+    0 10px 14px rgba(0, 0, 0, 0.6),
+    inset 0 0 4px rgba(46, 204, 113, 0.1);
+}
+.deck-button-cap.deck-btn-defect[disabled] {
+  box-shadow:
+    0 8px 0 rgba(60, 10, 6, 0.4),
+    0 10px 14px rgba(0, 0, 0, 0.6),
+    inset 0 0 4px rgba(231, 76, 60, 0.1);
+}
+.deck-button-cap[disabled] .btn-light,
+.deck-button-cap[disabled] .btn-bulb-filament {
+  opacity: 0; /* Lâmpada e filamento apagados */
+}
+.deck-button-cap[disabled] .btn-bulb-housing {
+  filter: brightness(0.4);
+}
+.deck-button-cap[disabled] .btn-stem {
+  filter: brightness(0.4);
+}
+.deck-button-cap[disabled] .btn-label {
+  color: rgba(255, 255, 255, 0.2);
+  text-shadow: none;
+}

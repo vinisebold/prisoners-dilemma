@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import ConsoleFrame from './components/ConsoleFrame';
 import CrtScreen from './components/CrtScreen';
 import ControlPanel from './components/ControlPanel';
+import DecisionKeyboard from './components/DecisionKeyboard';
 import ClipboardDossier from './components/ClipboardDossier';
 import SecondaryMonitor from './components/SecondaryMonitor';
 import Step1Intro from './components/steps/Step1Intro';
@@ -661,23 +662,9 @@ export default function App() {
             </CrtScreen>
  
             <ControlPanel 
-              onCooperate={() => {
-                if (currentStep === 1) handlePlayStep1('cooperate');
-                else if (currentStep === 2) handlePlayStep2('cooperate');
-                else if (currentStep === 3) handlePlayStep3('cooperate');
-                else if (currentStep === 4) handlePlayStep4('cooperate');
-              }}
-              onDefect={() => {
-                if (currentStep === 1) handlePlayStep1('defect');
-                else if (currentStep === 2) handlePlayStep2('defect');
-                else if (currentStep === 3) handlePlayStep3('defect');
-                else if (currentStep === 4) handlePlayStep4('defect');
-              }}
               onNext={handleNextStep}
               onPrev={handlePrevStep}
               onReset={handleFullReset}
-              showCooperateDefect={showCooperateDefect}
-              cooperateDefectDisabled={cooperateDefectDisabled || isSettingsOpen}
               showNext={showNext}
               nextActive={nextActive && !isSettingsOpen}
               noiseProb={noiseProb}
@@ -688,6 +675,23 @@ export default function App() {
               totalSteps={TOTAL_STEPS}
             />
           </ConsoleFrame>
+
+          <DecisionKeyboard 
+            onCooperate={() => {
+              if (currentStep === 1) handlePlayStep1('cooperate');
+              else if (currentStep === 2) handlePlayStep2('cooperate');
+              else if (currentStep === 3) handlePlayStep3('cooperate');
+              else if (currentStep === 4) handlePlayStep4('cooperate');
+            }}
+            onDefect={() => {
+              if (currentStep === 1) handlePlayStep1('defect');
+              else if (currentStep === 2) handlePlayStep2('defect');
+              else if (currentStep === 3) handlePlayStep3('defect');
+              else if (currentStep === 4) handlePlayStep4('defect');
+            }}
+            show={showCooperateDefect}
+            disabled={cooperateDefectDisabled || isSettingsOpen}
+          />
         </div>
 
         {/* Coluna Direita: Monitor CRT Secundário */}

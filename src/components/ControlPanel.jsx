@@ -1,13 +1,9 @@
 import { sound } from '../utils/sound';
 
 export default function ControlPanel({
-  onCooperate,
-  onDefect,
   onNext,
   onPrev,
   onReset,
-  showCooperateDefect = false,
-  cooperateDefectDisabled = false,
   showNext = true,
   nextActive = false,
   noiseProb = 0,
@@ -18,16 +14,6 @@ export default function ControlPanel({
   totalSteps = 6
 }) {
   
-  const handleCooperate = () => {
-    sound.playClick();
-    onCooperate();
-  };
-
-  const handleDefect = () => {
-    sound.playClick();
-    onDefect();
-  };
-
   const handleNext = () => {
     sound.playClick();
     onNext();
@@ -65,26 +51,6 @@ export default function ControlPanel({
         </button>
       </div>
 
-      {/* Grupo Central: Botões de Decisão */}
-      {showCooperateDefect && (
-        <div className="panel-group">
-          <span className="panel-group-label">Decisão do Prisioneiro</span>
-          <button 
-            className="retro-btn btn-cooperate"
-            onClick={handleCooperate}
-            disabled={cooperateDefectDisabled}
-          >
-            Cooperar
-          </button>
-          <button 
-            className="retro-btn btn-defect"
-            onClick={handleDefect}
-            disabled={cooperateDefectDisabled}
-          >
-            Delatar
-          </button>
-        </div>
-      )}
 
       {/* Grupo de Parâmetros de Probabilidade (Ruído) */}
       {showNoise && (
