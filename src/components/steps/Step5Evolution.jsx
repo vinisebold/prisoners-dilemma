@@ -157,9 +157,9 @@ export default function Step5Evolution({ noiseProb }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-      <h1 className="retro-h1">Simulador de Evolução Pop</h1>
-      <p className="retro-p">
-        Veja como as estratégias competem em massa ao longo de gerações. O ruído altera drasticamente a sobrevivência!
+      <h1 className="retro-h1">Torneio Evolutivo</h1>
+      <p className="retro-p" style={{ textAlign: 'center', color: '#aab', margin: '2px 0 10px 0' }}>
+        25 agentes competem em torneio. Os 5 piores são eliminados e os 5 melhores se reproduzem.
       </p>
 
       {/* Controles da Simulação */}

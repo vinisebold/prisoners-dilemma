@@ -626,6 +626,7 @@ export default function App() {
                       roundsPlayed={step2RoundsPlayed}
                       playerScore={step2PlayerScore}
                       botScore={step2BotScore}
+                      history={step2History}
                     />
                   )}
                   {currentStep === 3 && (
@@ -633,6 +634,7 @@ export default function App() {
                       selectedBot={step3SelectedBot}
                       onBotChange={handleBotChangeStep3}
                       roundsPlayed={step3RoundsPlayed}
+                      history={step3History}
                       onResetMatch={handleResetStep3}
                     />
                   )}
@@ -642,6 +644,8 @@ export default function App() {
                       onBotChange={handleBotChangeStep4}
                       noiseProb={noiseProb}
                       roundsPlayed={step4RoundsPlayed}
+                      playerScore={step4PlayerScore}
+                      botScore={step4BotScore}
                       history={step4History}
                       onResetMatch={handleResetStep4}
                     />

@@ -1,28 +1,39 @@
-
 export default function Step6Conclusion({ onRestart }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', animation: 'crt-flicker 0.15s infinite' }}>
-      <h1 className="retro-h1" style={{ color: 'var(--crt-amber)', textShadow: '0 0 6px var(--crt-amber-glow)' }}>Relatório Final</h1>
-      
-      <p className="retro-p">
-        Parabéns! Você completou a simulação do Dilema do Prisioneiro.
+      <h1 className="retro-h1" style={{ color: 'var(--crt-amber)', textShadow: '0 0 6px var(--crt-amber-glow)', marginBottom: '4px' }}>Conclusões</h1>
+      <p className="retro-p" style={{ textAlign: 'center', color: '#aab', margin: '0 0 8px 0' }}>
+        A cooperação é uma solução matemática ideal sob três pilares fundamentais:
       </p>
 
-      <div className="crt-alert" style={{ borderStyle: 'solid', borderColor: 'var(--crt-green)', fontSize: '0.85rem' }}>
-        <strong>SISTEMA CONCLUÍDO:</strong> As conclusões matemáticas, as equações de valor esperado e as regras para o florescimento da confiança foram consolidadas e estão disponíveis para leitura na <strong>Prancheta (Esquerda)</strong>.
+      <div className="crt-conclusion-grid">
+        <div className="crt-conclusion-card">
+          <div className="crt-conclusion-title">1. Repetição (Futuro)</div>
+          <div className="crt-conclusion-desc">Relações continuadas no tempo inviabilizam a traição sistêmica.</div>
+        </div>
+
+        <div className="crt-conclusion-card amber">
+          <div className="crt-conclusion-title">2. Soma Não-Zero</div>
+          <div className="crt-conclusion-desc">A cooperação mútua gera mais valor conjunto do que a traição mútua.</div>
+        </div>
+
+        <div className="crt-conclusion-card blue">
+          <div className="crt-conclusion-title">3. Perdão (Tolerância)</div>
+          <div className="crt-conclusion-desc">Capacidade de tolerar erros (ruído) previne espirais destrutivas de vingança.</div>
+        </div>
       </div>
 
-      <p className="retro-p" style={{ fontSize: '0.85rem', color: '#aab', marginTop: '10px' }}>
-        A probabilidade e a teoria dos jogos nos mostram que a cooperação não é apenas uma escolha moral, mas uma solução matemática ideal sob relações duradouras e sistemas de perdão a erros de comunicação.
-      </p>
+      <div className="crt-alert" style={{ borderStyle: 'solid', borderColor: 'var(--crt-green)', fontSize: '0.78rem', textAlign: 'center', margin: '4px 0 8px 0', padding: '6px' }}>
+        Consolidação e fórmulas detalhadas salvas na <strong>Prancheta (Esquerda)</strong>.
+      </div>
 
-      <div style={{ marginTop: '14px', textAlign: 'center' }}>
+      <div style={{ textAlign: 'center' }}>
         <button 
           className="retro-btn btn-next"
           onClick={onRestart}
-          style={{ padding: '8px 20px', fontSize: '0.9rem' }}
+          style={{ padding: '6px 16px', fontSize: '0.8rem' }}
         >
-          Reiniciar Investigação
+          Reiniciar Simulação
         </button>
       </div>
     </div>
