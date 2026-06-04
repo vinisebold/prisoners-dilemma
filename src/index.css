@@ -128,40 +128,12 @@ body {
   transform: translateX(-50%);
   width: 800px;
   height: 1000px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.3) 0%, rgba(255, 255, 200, 0.1) 20%, rgba(255, 255, 200, 0.03) 45%, transparent 60%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.25) 0%, rgba(255, 255, 200, 0.1) 30%, rgba(255, 255, 200, 0.04) 60%, rgba(255, 255, 200, 0) 85%);
   clip-path: polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
   animation: light-flicker 5s infinite;
   mix-blend-mode: screen;
   z-index: 3;
-}
-
-.hanging-lamp-light::before {
-  content: '';
-  position: absolute;
-  top: 40%;
-  left: 0;
-  width: 100%;
-  height: 35%;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.15) 0%, rgba(255, 255, 200, 0.06) 30%, transparent 55%);
-  filter: blur(6px);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  pointer-events: none;
-}
-
-.hanging-lamp-light::after {
-  content: '';
-  position: absolute;
-  top: 65%;
-  left: 0;
-  width: 100%;
-  height: 35%;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.15) 0%, rgba(255, 255, 200, 0.06) 30%, transparent 55%);
-  filter: blur(20px);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 100%);
-  pointer-events: none;
 }
 
 .hanging-lamp-particles {
