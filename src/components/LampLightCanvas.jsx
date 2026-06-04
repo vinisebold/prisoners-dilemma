@@ -208,7 +208,7 @@ export default function LampLightCanvas({ isSettingsOpen }) {
         ctx.lineTo(renderPoints[i].x, renderPoints[i].y);
       }
       ctx.strokeStyle = '#0a0a0a';
-      ctx.lineWidth = 5;
+      ctx.lineWidth = 7;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.stroke();
@@ -247,8 +247,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
         // Distância do ponto ao centro do feixe
         const distToBeam = Math.sqrt((ox - closestX) ** 2 + (oy - closestY) ** 2);
         
-        // Largura do cone de luz a esta distância projetada (inicia maior com 40)
-        const coneWidth = 40 + projection * 0.44;
+        // Largura do cone de luz a esta distância projetada (inicia maior com 55)
+        const coneWidth = 55 + projection * 0.44;
         
         // Fator de proximidade ao centro do feixe
         const insideBeamFactor = Math.max(0, 1 - distToBeam / (coneWidth * 1.1));
@@ -296,7 +296,7 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.translate(lx, ly);
       ctx.rotate(-lastAngle); // Gira o holofote junto com o balanço
 
-      const ly_base = 28; // Base da lâmpada onde começa o cone de luz (mais baixa e larga)
+      const ly_base = 38; // Base da lâmpada onde começa o cone de luz (mais baixa e larga)
 
       // Flicker suave da luz
       const raw =
@@ -320,8 +320,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.fillStyle = g1;
 
       ctx.beginPath();
-      ctx.moveTo(-40, ly_base);
-      ctx.lineTo(40, ly_base);
+      ctx.moveTo(-55, ly_base);
+      ctx.lineTo(55, ly_base);
       ctx.lineTo(400, H);
       ctx.lineTo(-400, H);
       ctx.closePath();
@@ -339,8 +339,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.save();
       ctx.filter = 'blur(15px)';
       ctx.beginPath();
-      ctx.moveTo(-40, ly_base);
-      ctx.lineTo(40, ly_base);
+      ctx.moveTo(-55, ly_base);
+      ctx.lineTo(55, ly_base);
       ctx.lineTo(420, H);
       ctx.lineTo(-420, H);
       ctx.closePath();
@@ -359,8 +359,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.save();
       ctx.filter = 'blur(40px)';
       ctx.beginPath();
-      ctx.moveTo(-40, ly_base);
-      ctx.lineTo(40, ly_base);
+      ctx.moveTo(-55, ly_base);
+      ctx.lineTo(55, ly_base);
       ctx.lineTo(450, H);
       ctx.lineTo(-450, H);
       ctx.closePath();
@@ -379,8 +379,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.save();
       ctx.filter = 'blur(80px)';
       ctx.beginPath();
-      ctx.moveTo(-40, ly_base);
-      ctx.lineTo(40, ly_base);
+      ctx.moveTo(-55, ly_base);
+      ctx.lineTo(55, ly_base);
       ctx.lineTo(490, H);
       ctx.lineTo(-490, H);
       ctx.closePath();
@@ -410,8 +410,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
         const localX = dx * cos + dy * sin;
         const localY = -dx * sin + dy * cos;
 
-        // Calcula a largura da seção do cone de luz nesta altura local (maior com 40)
-        const halfW = 40 + localY * 0.44;
+        // Calcula a largura da seção do cone de luz nesta altura local (maior com 55)
+        const halfW = 55 + localY * 0.44;
 
         // Se estiver dentro da área iluminada pelo feixe de luz
         if (localY >= 0 && localY <= H) {
@@ -435,31 +435,31 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.translate(lx, ly);
       ctx.rotate(-lastAngle);
 
-      const lampGrd = ctx.createRadialGradient(0, 6, 6, 0, 6, 38);
+      const lampGrd = ctx.createRadialGradient(0, 8, 8, 0, 8, 52);
       lampGrd.addColorStop(0, '#3a3a3a');
       lampGrd.addColorStop(0.5, '#151515');
       lampGrd.addColorStop(1, '#050505');
       ctx.fillStyle = lampGrd;
 
       // Ajusta o aspecto de profundidade da lâmpada (boca da lâmpada) ao abrir configurações
-      const targetMouthHeight = isSettingsOpenRef.current ? 13 : 6.5;
+      const targetMouthHeight = isSettingsOpenRef.current ? 18 : 9;
       mouthHeightRef.current += (targetMouthHeight - mouthHeightRef.current) * 0.08;
       const mouthHeight = mouthHeightRef.current;
 
       ctx.beginPath();
-      ctx.arc(0, 12, 40, Math.PI, 0); // cúpula superior (maior)
+      ctx.ellipse(0, 16, 55, 36, 0, Math.PI, 0); // cúpula superior achatada
       // Conecta com a metade inferior da elipse (boca da lâmpada) para dar efeito de profundidade
-      ctx.ellipse(0, 28, 40, mouthHeight, 0, 0, Math.PI, false);
+      ctx.ellipse(0, 38, 55, mouthHeight, 0, 0, Math.PI, false);
       ctx.closePath();
       ctx.fill();
 
       // Abertura brilhante da lâmpada (glowing mouth)
       ctx.beginPath();
-      ctx.ellipse(0, 28, 40, mouthHeight, 0, 0, 2 * Math.PI);
+      ctx.ellipse(0, 38, 55, mouthHeight, 0, 0, 2 * Math.PI);
       ctx.fillStyle = `rgba(255, 255, 240, ${(0.95 * f).toFixed(3)})`;
       ctx.fill();
       ctx.strokeStyle = '#050505';
-      ctx.lineWidth = 2.0; // borda mais espessa para a lâmpada maior
+      ctx.lineWidth = 3.0; // borda mais espessa para a lâmpada maior
       ctx.stroke();
 
       ctx.restore();
