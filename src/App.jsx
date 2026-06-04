@@ -11,6 +11,7 @@ import Step4Noise from './components/steps/Step4Noise';
 import Step5Evolution from './components/steps/Step5Evolution';
 import Step6Conclusion from './components/steps/Step6Conclusion';
 import SettingsMenu from './components/SettingsMenu';
+import LampLightCanvas from './components/LampLightCanvas';
 import { sound } from './utils/sound';
 import './App.css';
 
@@ -406,9 +407,9 @@ export default function App() {
         ☰
       </button>
 
-      {/* Luz Suspensa Dinâmica */}
+      {/* Luz Suspensa Dinâmica: Canvas 2D Cascade Blur */}
       <div className="hanging-lamp">
-        <div className="hanging-lamp-light" />
+        <LampLightCanvas />
         <div className="hanging-lamp-particles">
           <svg width="800" height="850" viewBox="0 0 800 850" className="dust-particles-svg">
             <circle cx="375" cy="100" r="1.2" className="dust-p" style={{ '--dx': '5px', '--dy': '-3px', '--d': '-0s' }} />

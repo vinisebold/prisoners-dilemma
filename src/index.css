@@ -90,6 +90,26 @@ body {
   position: relative;
 }
 
+/* Overlay escuro para o background de parede/teto ao entrar no menu */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+}
+body.settings-open::before {
+  opacity: 1;
+}
+
 /* Lâmpada Pendurada */
 .hanging-lamp {
   position: absolute;
@@ -121,19 +141,39 @@ body {
     0 4px 6px rgba(0,0,0,0.9);
   z-index: 4;
 }
-.hanging-lamp-light {
+/* ==== Cone de Luz: SVG Cascade Blur Progressivo ====
+   Por que SVG e nao CSS puro:
+   Com CSS, filter:blur() + clip-path -> o blur e aplicado ANTES do clip-path,
+   e as bordas borradas sao cortadas, resultando em bordas ainda sharps.
+   No SVG, a ordem e: renderiza poligono -> aplica <filter> -> aplica <mask>
+   Isso significa que o blur se espalha ANTES de ser mascarado, e as bordas
+   borradas ficam visiveis onde a mask as expoe. Resultado: blur real nas bordas!
+*/
+.hanging-lamp-light-svg {
   position: absolute;
   top: 145px;
   left: 25%;
   transform: translateX(-50%);
   width: 800px;
   height: 1000px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.25) 0%, rgba(255, 255, 200, 0.1) 30%, rgba(255, 255, 200, 0.04) 60%, rgba(255, 255, 200, 0) 85%);
-  clip-path: polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
-  animation: light-flicker 5s infinite;
   mix-blend-mode: screen;
   z-index: 3;
+  animation: light-flicker 5s infinite;
+  overflow: visible; /* essencial: permite o blur vazar alem dos bounds do SVG */
+}
+
+.hanging-lamp-light-canvas {
+  position: absolute;
+  top: 145px;
+  left: 25%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 1000px;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 3;
+  overflow: visible;
 }
 
 .hanging-lamp-particles {
@@ -146,6 +186,8 @@ body {
   pointer-events: none;
   clip-path: polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%);
   z-index: 3;
+  mask-image: linear-gradient(to bottom, black 0%, black 40%, rgba(0,0,0,0.8) 60%, transparent 80%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, rgba(0,0,0,0.8) 60%, transparent 80%);
 }
 
 .dust-particles-svg {
@@ -175,11 +217,11 @@ body {
   width: 14px;
   height: 100%;
   background: linear-gradient(to right, 
-    #101010 0%, 
-    #444444 25%, 
-    #777777 45%, 
-    #3c3c3c 65%, 
-    #0a0a0a 100%
+    #080808 0%, 
+    #252525 25%, 
+    #444444 45%, 
+    #202020 65%, 
+    #050505 100%
   );
   box-shadow: 
     6px 0 12px rgba(0, 0, 0, 0.85),
@@ -187,6 +229,7 @@ body {
     inset 1px 0 2px rgba(0,0,0,0.8);
   z-index: 1;
   pointer-events: none;
+  transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Abraçadeiras do Conduíte com Parafusos */
@@ -197,9 +240,9 @@ body {
   height: 10px;
   left: -12px;
   background: 
-    radial-gradient(circle at 5px 5px, #050505 1.5px, #666 2px, transparent 2.5px),
-    radial-gradient(circle at 33px 5px, #050505 1.5px, #666 2px, transparent 2.5px),
-    linear-gradient(to bottom, #444, #777 40%, #2b2b2b 100%);
+    radial-gradient(circle at 5px 5px, #050505 1.5px, #333 2px, transparent 2.5px),
+    radial-gradient(circle at 33px 5px, #050505 1.5px, #333 2px, transparent 2.5px),
+    linear-gradient(to bottom, #222, #444 40%, #151515 100%);
   border-radius: 2px;
   box-shadow: 
     0 2px 4px rgba(0,0,0,0.7),
@@ -1284,7 +1327,8 @@ body.theme-green {
                 opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
-  .hanging-lamp-light,
+  .hanging-lamp-light-svg,
+  .hanging-lamp-light-canvas,
   .hanging-lamp-particles,
   .prison-window-shadow {
     transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
@@ -1329,10 +1373,12 @@ body.theme-green {
   }
 
   /* Slightly dim the light / shadow overlays */
-  body.settings-open .hanging-lamp-light {
-    opacity: 0.25;
+  body.settings-open .hanging-lamp-light-svg,
+  body.settings-open .hanging-lamp-light-canvas {
+    opacity: 0.65;
   }
-  body.settings-open .prison-window-shadow {
+  body.settings-open .prison-window-shadow,
+  body.settings-open .prison-conduit {
     opacity: 0.35;
   }
 }
