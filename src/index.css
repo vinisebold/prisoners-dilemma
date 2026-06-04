@@ -156,60 +156,20 @@ body.settings-open::before {
 /* Lâmpada Pendurada */
 .hanging-lamp {
   position: absolute;
-  top: 15px;
+  top: 0px;
   left: 25%;
-  width: 4px;
-  height: 120px;
-  background: #111;
+  width: 1px; /* container de âncora, a arte é desenhada no canvas */
+  height: 1px;
   transform-origin: top center;
-  animation: lamp-swing 8s ease-in-out infinite;
-  scale: 1.15;
+  transform: translate(0, 0) scale(1.15);
   z-index: 3;
   pointer-events: none;
-  transition:
-    scale 0.85s cubic-bezier(0.25, 1, 0.5, 1),
-    top 0.85s cubic-bezier(0.25, 1, 0.5, 1),
-    left 0.85s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.hanging-lamp::after {
-  content: "";
-  position: absolute;
-  bottom: -25px;
-  left: -32px;
-  width: 64px;
-  height: 30px;
-  background: radial-gradient(circle at 50% 30%, #333 30%, #050505 80%);
-  border-radius: 50% 50% 0 0;
-  box-shadow:
-    0 20px 40px rgba(255, 255, 200, 0.2),
-    0 4px 6px rgba(0, 0, 0, 0.9);
-  z-index: 4;
-}
-/* ==== Cone de Luz: SVG Cascade Blur Progressivo ====
-   Por que SVG e nao CSS puro:
-   Com CSS, filter:blur() + clip-path -> o blur e aplicado ANTES do clip-path,
-   e as bordas borradas sao cortadas, resultando em bordas ainda sharps.
-   No SVG, a ordem e: renderiza poligono -> aplica <filter> -> aplica <mask>
-   Isso significa que o blur se espalha ANTES de ser mascarado, e as bordas
-   borradas ficam visiveis onde a mask as expoe. Resultado: blur real nas bordas!
-*/
-.hanging-lamp-light-svg {
-  position: absolute;
-  top: 145px;
-  left: 25%;
-  transform: translateX(-50%);
-  width: 800px;
-  height: 1000px;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  z-index: 3;
-  animation: light-flicker 5s infinite;
-  overflow: visible; /* essencial: permite o blur vazar alem dos bounds do SVG */
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .hanging-lamp-light-canvas {
   position: absolute;
-  top: 145px;
+  top: 0; /* Começa do topo (teto) para desenhar a corda flexível */
   left: 25%;
   transform: translateX(-50%);
   width: 1200px;
@@ -360,7 +320,7 @@ body.settings-open::before {
   background: 
     /* Luz da Lâmpada (Dramática no centro da mesa - mais intensa e ampla) */
     radial-gradient(
-      ellipse at 50% 0%,
+      ellipse at var(--light-desk-x, 25%) 0%,
       rgba(255, 240, 200, 0.38) 0%,
       rgba(0, 0, 0, 0.85) 90%
     ),
@@ -513,9 +473,9 @@ body.settings-open::before {
 /* Colunas (Dispositivos dispostos com perspectiva 3D local e z-index isolado) */
 .table-left {
   flex: 0 1 340px;
-  /* Alinhado exatamente à inclinação de 42deg da mesa, deitado plano e deslocado confortavelmente */
-  transform: perspective(1000px) rotateX(42deg) rotateZ(-5deg) translateY(55px)
-    scale(0.85);
+  /* Deslocado ainda mais para a esquerda e reduzido para quase espelhar o estado do menu */
+  transform: perspective(1000px) rotateX(42deg) rotateZ(-11deg) translateY(55px)
+    translateX(-120px) scale(0.64);
   transform-origin: bottom center;
   transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 2;
@@ -539,10 +499,10 @@ body.settings-open::before {
     opacity 0.45s ease;
 }
 
-/* Ao passar o mouse, a prancheta "sobe" e se inclina para leitura */
+/* Ao passar o mouse, a prancheta "sobe", centraliza e se inclina para leitura */
 .table-left:hover {
   transform: perspective(1000px) rotateX(15deg) rotateZ(-2deg) translateY(-20px)
-    scale(1);
+    translateX(0px) scale(1);
   z-index: 12; /* Sobe por cima de tudo */
 }
 .table-left:hover::before {
@@ -609,13 +569,31 @@ body.settings-open::before {
   border: 4px solid #3c2415;
   border-radius: 10px;
   padding: 18px;
-  /* Extrusão lateral e sombra projetada para a esquerda */
+  /* Extrusão lateral e sombra projetada dinâmica calculada por raytracing artificial */
   box-shadow:
     0 4px 0 #28180e,
     0 8px 0 #180f09,
-    -15px 25px 35px rgba(0, 0, 0, 0.85);
+    calc(var(--clip-shadow-dx, 0px) * 0.05) 25px 35px rgba(0, 0, 0, calc(0.70 + 0.18 * var(--light-intensity-clipboard, 0)));
   position: relative;
   min-height: 480px;
+  transition: box-shadow 0.08s linear;
+}
+
+/* Specular edge shine (Brilho das arestas) quando a luz do holofote passa pela prancheta */
+.paper-clipboard::before {
+  content: "";
+  position: absolute;
+  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 10;
+  box-sizing: border-box;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-clipboard, 0))),
+    inset 2px 0 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-clipboard, 0))),
+    inset -2px 0 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-clipboard, 0)));
+  border: 4px solid transparent;
+  transition: box-shadow 0.08s linear;
 }
 .clipboard-clip {
   width: 120px;
@@ -733,16 +711,34 @@ body.settings-open::before {
   );
   border: 6px solid #1a1b1d;
   border-radius: 18px;
-  /* Extrusão lateral espessa e sombra profunda */
+  /* Extrusão lateral espessa e sombra profunda dinâmica com base na oscilação da luz */
   box-shadow:
     0 5px 0 #18191b,
     0 10px 0 #101112,
-    0 30px 45px rgba(0, 0, 0, 0.95),
+    calc(var(--comp-shadow-dx, 0px) * 0.05) 30px 45px rgba(0, 0, 0, calc(0.85 + 0.12 * var(--light-intensity-comp-top, 0))),
     inset 0 4px 0 rgba(255, 255, 255, 0.12),
     inset 0 -4px 0 rgba(0, 0, 0, 0.4);
   padding: 18px;
   width: 100%;
   position: relative;
+  transition: box-shadow 0.08s linear;
+}
+
+/* Specular edge shine (Brilho das arestas) da carcaça do computador */
+.terminal-cabinet::before {
+  content: "";
+  position: absolute;
+  top: -6px; left: -6px; right: -6px; bottom: -6px;
+  border-radius: 18px;
+  pointer-events: none;
+  z-index: 10;
+  box-sizing: border-box;
+  box-shadow:
+    inset 0 calc(2.5px * var(--light-intensity-comp-top, 0)) 0 rgba(255, 255, 240, calc(0.35 * var(--light-intensity-comp-top, 0))),
+    inset calc(2.5px * var(--light-intensity-comp-left, 0)) 0 0 rgba(255, 255, 240, calc(0.35 * var(--light-intensity-comp-left, 0))),
+    inset calc(-2.5px * var(--light-intensity-comp-right, 0)) 0 0 rgba(255, 255, 240, calc(0.35 * var(--light-intensity-comp-right, 0)));
+  border: 6px solid transparent;
+  transition: box-shadow 0.08s linear;
 }
 
 .screw {
@@ -805,6 +801,23 @@ body.settings-open::before {
   display: flex;
   flex-direction: column;
   box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.98);
+}
+
+/* Specular edge shine (Brilho das arestas) da moldura preta interna da tela CRT */
+.crt-screen-container::after {
+  content: "";
+  position: absolute;
+  top: -5px; left: -5px; right: -5px; bottom: -5px;
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 10;
+  box-sizing: border-box;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 240, calc(0.40 * var(--light-intensity-comp-top, 0))),
+    inset 1.5px 0 0 rgba(255, 255, 240, calc(0.40 * var(--light-intensity-comp-left, 0))),
+    inset -1.5px 0 0 rgba(255, 255, 240, calc(0.40 * var(--light-intensity-comp-right, 0)));
+  border: 5px solid transparent;
+  transition: box-shadow 0.08s linear;
 }
 
 .crt-effects {
@@ -1141,17 +1154,36 @@ p.retro-p {
   background: #2a2c2e;
   border: 4px solid #1a1b1c;
   border-radius: 10px;
-  /* Extrusão lateral e sombra projetada para a direita */
+  /* Extrusão lateral e sombra projetada dinâmica calculada por raytracing artificial */
   box-shadow:
     0 4px 0 #18191a,
     0 8px 0 #0d0e0f,
-    15px 25px 35px rgba(0, 0, 0, 0.8),
+    calc(var(--print-shadow-dx, 0px) * 0.05) 25px 35px rgba(0, 0, 0, calc(0.70 + 0.18 * var(--light-intensity-printer, 0))),
     inset 0 1px 2px rgba(255, 255, 255, 0.1);
   padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   min-height: 480px;
+  position: relative;
+  transition: box-shadow 0.08s linear;
+}
+
+/* Specular edge shine (Brilho das arestas) da impressora quando o holofote a ilumina */
+.ticket-printer::before {
+  content: "";
+  position: absolute;
+  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 10;
+  box-sizing: border-box;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-printer, 0))),
+    inset 2px 0 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-printer, 0))),
+    inset -2px 0 0 rgba(255, 255, 240, calc(0.24 * var(--light-intensity-printer, 0)));
+  border: 4px solid transparent;
+  transition: box-shadow 0.08s linear;
 }
 .printer-mouth {
   height: 8px;
@@ -1659,11 +1691,9 @@ body.theme-green {
     transform: perspective(1000px) rotateX(32deg) translateY(60px);
   }
 
-  /* Scale the lamp and pull it up when settings open */
+  /* Scale the lamp and pull it up when settings open using hardware-accelerated transform */
   body.settings-open .hanging-lamp {
-    scale: 1.35;
-    top: -180px;
-    left: 22%;
+    transform: translate(-3vw, -180px) scale(1.35);
   }
 
   /* Slightly dim the light / shadow overlays */
