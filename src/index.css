@@ -535,12 +535,19 @@ body.settings-open::before {
 
 .table-right {
   flex: 0 1 240px;
-  /* Impressora deitada levemente para casar com a inclinação da mesa */
-  transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(2deg)
-    translateY(25px);
-  transition: transform 0.3s ease;
+  /* Deslocado para a direita e reduzido para quase espelhar o estado do menu */
+  transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(10deg)
+    translateY(25px) translateX(120px) scale(0.65);
+  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 1;
   position: relative;
+}
+
+/* Ao passar o mouse, a impressora amplia e centraliza levemente para melhor leitura dos tickets */
+.table-right:hover {
+  transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(2deg)
+    translateY(10px) translateX(0px) scale(0.85);
+  z-index: 12;
 }
 .table-right::before {
   content: "";
@@ -1668,21 +1675,21 @@ body.theme-green {
     z-index: 15;
   }
 
-  /* Shift the clipboard dossier to the side, subtle blur */
+  /* Shift the clipboard dossier to the side, subtle blur, less transparent */
   body.settings-open .table-left {
     transform: perspective(1000px) rotateX(42deg) rotateZ(-12deg)
-      translateY(55px) translateX(-140px) scale(0.6);
+      translateY(38px) translateX(-140px) scale(0.6);
     filter: blur(2px);
-    opacity: 0.75;
+    opacity: 0.90;
     pointer-events: none;
   }
 
-  /* Shift the ticket printer to the side, subtle blur */
+  /* Shift the ticket printer to the side, subtle blur, less transparent */
   body.settings-open .table-right {
     transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(12deg)
       translateY(25px) translateX(140px) scale(0.6);
     filter: blur(2px);
-    opacity: 0.75;
+    opacity: 0.90;
     pointer-events: none;
   }
 

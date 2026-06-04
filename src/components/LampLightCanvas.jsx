@@ -68,6 +68,7 @@ export default function LampLightCanvas({ isSettingsOpen }) {
     let rafId;
     const t0 = performance.now();
     let tLast = performance.now();
+    let accumulator = 0;
 
     // Posição do mouse mapeada no canvas
     let mouseX = null;
@@ -87,86 +88,93 @@ export default function LampLightCanvas({ isSettingsOpen }) {
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseleave', handleMouseLeave);
 
+    const fixedDt = 0.016; // Timestep fixo para evitar jitter/stutter devido a variações de frame time
+
     function render(now) {
       const t = (now - t0) * 0.001;
-      const dt = Math.min(0.02, (now - tLast) * 0.001); // cap de frame
+      const rawDt = Math.min(0.1, (now - tLast) * 0.001); // Evita pular passos se a aba ficar em segundo plano
       tLast = now;
 
-      // ──────────────────────────────────────────
-      // CÁLCULO FÍSICO DO MALEÁVEL (VERLET CHAIN)
-      // ──────────────────────────────────────────
-      const gravity = 1200;      // Força de gravidade um pouco mais lenta/sutil
-      const friction = 0.982;    // Damping balanceado para oscilação natural
-      const wind = 12 * Math.sin(t * 0.7); // Brisa de fundo sutil
+      accumulator += rawDt;
 
-      // 1. Atualização Verlet
-      for (let i = 1; i < numPoints; i++) {
-        const p = points[i];
-        const vx = (p.x - p.oldX) * friction;
-        const vy = (p.y - p.oldY) * friction;
+      // Executa os passos físicos em intervalos constantes de tempo
+      while (accumulator >= fixedDt) {
+        // ──────────────────────────────────────────
+        // CÁLCULO FÍSICO DO MALEÁVEL (VERLET CHAIN) - FIXED STEP
+        // ──────────────────────────────────────────
+        const gravity = 1200;      // Força de gravidade
+        const friction = 0.982;    // Damping balanceado
+        const wind = 12 * Math.sin(t * 0.7);
 
-        p.oldX = p.x;
-        p.oldY = p.y;
-
-        p.x += vx;
-        p.y += vy + gravity * dt * dt;
-
-        // Adiciona força do vento
-        p.x += wind * dt * dt;
-      }
-
-      // 2. Colisão Física Simples com o Mouse (Sem magnetismo/arraste de velocidade)
-      if (mouseX !== null && mouseY !== null) {
+        // 1. Atualização Verlet
         for (let i = 1; i < numPoints; i++) {
           const p = points[i];
-          const dx = p.x - mouseX;
-          const dy = p.y - mouseY;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const vx = (p.x - p.oldX) * friction;
+          const vy = (p.y - p.oldY) * friction;
 
-          if (dist > 0.1) {
-            // Raio de colisão menor no topo e maior na base (deixando o topo menos sensível)
-            const minRadius = 6;
-            const maxRadius = 30;
-            const solidRadius = minRadius + (maxRadius - minRadius) * (i / (numPoints - 1));
+          p.oldX = p.x;
+          p.oldY = p.y;
 
-            if (dist < solidRadius) {
-              const penetration = solidRadius - dist;
-              p.x += (dx / dist) * penetration;
-              p.y += (dy / dist) * penetration;
+          p.x += vx;
+          p.y += vy + gravity * fixedDt * fixedDt;
+
+          // Adiciona força do vento
+          p.x += wind * fixedDt * fixedDt;
+        }
+
+        // 2. Colisão Física Simples com o Mouse
+        if (mouseX !== null && mouseY !== null) {
+          for (let i = 1; i < numPoints; i++) {
+            const p = points[i];
+            const dx = p.x - mouseX;
+            const dy = p.y - mouseY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist > 0.1) {
+              const minRadius = 6;
+              const maxRadius = 30;
+              const solidRadius = minRadius + (maxRadius - minRadius) * (i / (numPoints - 1));
+
+              if (dist < solidRadius) {
+                const penetration = solidRadius - dist;
+                p.x += (dx / dist) * penetration;
+                p.y += (dy / dist) * penetration;
+              }
             }
           }
         }
-      }
 
-      // 3. Aplica restrições de distância (Constraint Solver) - Mais iterações para evitar estiramento
-      for (let k = 0; k < 12; k++) {
-        // Fixa a âncora do teto
-        points[0].x = cx;
-        points[0].y = 0;
+        // 3. Aplica restrições de distância (Constraint Solver)
+        for (let k = 0; k < 12; k++) {
+          points[0].x = cx;
+          points[0].y = 0;
 
-        for (let i = 0; i < numPoints - 1; i++) {
-          const p1 = points[i];
-          const p2 = points[i + 1];
-          const dx = p2.x - p1.x;
-          const dy = p2.y - p1.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 0.001) continue;
-          
-          const diff = segLength - dist;
-          const percent = (diff / dist) * 0.5;
-          const offsetX = dx * percent;
-          const offsetY = dy * percent;
+          for (let i = 0; i < numPoints - 1; i++) {
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            const dx = p2.x - p1.x;
+            const dy = p2.y - p1.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 0.001) continue;
+            
+            const diff = segLength - dist;
+            const percent = (diff / dist) * 0.5;
+            const offsetX = dx * percent;
+            const offsetY = dy * percent;
 
-          if (i === 0) {
-            p2.x += offsetX * 2;
-            p2.y += offsetY * 2;
-          } else {
-            p1.x -= offsetX;
-            p1.y -= offsetY;
-            p2.x += offsetX;
-            p2.y += offsetY;
+            if (i === 0) {
+              p2.x += offsetX * 2;
+              p2.y += offsetY * 2;
+            } else {
+              p1.x -= offsetX;
+              p1.y -= offsetY;
+              p2.x += offsetX;
+              p2.y += offsetY;
+            }
           }
         }
+
+        accumulator -= fixedDt;
       }
 
       // ──────────────────────────────────────────
@@ -182,7 +190,7 @@ export default function LampLightCanvas({ isSettingsOpen }) {
         ctx.lineTo(points[i].x, points[i].y);
       }
       ctx.strokeStyle = '#0a0a0a';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 5;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.stroke();
@@ -221,8 +229,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
         // Distância do ponto ao centro do feixe
         const distToBeam = Math.sqrt((ox - closestX) ** 2 + (oy - closestY) ** 2);
         
-        // Largura do cone de luz a esta distância projetada
-        const coneWidth = 32 + projection * 0.44;
+        // Largura do cone de luz a esta distância projetada (inicia maior com 40)
+        const coneWidth = 40 + projection * 0.44;
         
         // Fator de proximidade ao centro do feixe
         const insideBeamFactor = Math.max(0, 1 - distToBeam / (coneWidth * 1.1));
@@ -237,12 +245,12 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       const intensityCompLeft   = getPointLightIntensity(640, 580);
       const intensityCompTop    = getPointLightIntensity(720, 500);
       const intensityCompRight  = getPointLightIntensity(800, 580);
-      const intensityPrinter   = getPointLightIntensity(1080, 650);
+      const intensityPrinter   = getPointLightIntensity(1180, 650);
 
       // Desvios das sombras com base na posição horizontal da lâmpada
       const shadowClipDx = 210 - lx;
       const shadowCompDx = 720 - lx;
-      const shadowPrintDx = 1080 - lx;
+      const shadowPrintDx = 1180 - lx;
 
       // Posição da poça de luz na mesa em % do viewport
       const sweepX = lx + (750 - ly) * Math.sin(-lastAngle);
@@ -270,7 +278,7 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.translate(lx, ly);
       ctx.rotate(-lastAngle); // Gira o holofote junto com o balanço
 
-      const ly_base = 22; // Base da lâmpada onde começa o cone de luz
+      const ly_base = 28; // Base da lâmpada onde começa o cone de luz (mais baixa e larga)
 
       // Flicker suave da luz
       const raw =
@@ -294,8 +302,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.fillStyle = g1;
 
       ctx.beginPath();
-      ctx.moveTo(-32, ly_base);
-      ctx.lineTo(32, ly_base);
+      ctx.moveTo(-40, ly_base);
+      ctx.lineTo(40, ly_base);
       ctx.lineTo(400, H);
       ctx.lineTo(-400, H);
       ctx.closePath();
@@ -313,8 +321,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.save();
       ctx.filter = 'blur(15px)';
       ctx.beginPath();
-      ctx.moveTo(-32, ly_base);
-      ctx.lineTo(32, ly_base);
+      ctx.moveTo(-40, ly_base);
+      ctx.lineTo(40, ly_base);
       ctx.lineTo(420, H);
       ctx.lineTo(-420, H);
       ctx.closePath();
@@ -333,8 +341,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.save();
       ctx.filter = 'blur(40px)';
       ctx.beginPath();
-      ctx.moveTo(-32, ly_base);
-      ctx.lineTo(32, ly_base);
+      ctx.moveTo(-40, ly_base);
+      ctx.lineTo(40, ly_base);
       ctx.lineTo(450, H);
       ctx.lineTo(-450, H);
       ctx.closePath();
@@ -353,8 +361,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.save();
       ctx.filter = 'blur(80px)';
       ctx.beginPath();
-      ctx.moveTo(-32, ly_base);
-      ctx.lineTo(32, ly_base);
+      ctx.moveTo(-40, ly_base);
+      ctx.lineTo(40, ly_base);
       ctx.lineTo(490, H);
       ctx.lineTo(-490, H);
       ctx.closePath();
@@ -384,8 +392,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
         const localX = dx * cos + dy * sin;
         const localY = -dx * sin + dy * cos;
 
-        // Calcula a largura da seção do cone de luz nesta altura local
-        const halfW = 32 + localY * 0.44;
+        // Calcula a largura da seção do cone de luz nesta altura local (maior com 40)
+        const halfW = 40 + localY * 0.44;
 
         // Se estiver dentro da área iluminada pelo feixe de luz
         if (localY >= 0 && localY <= H) {
@@ -409,31 +417,31 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.translate(lx, ly);
       ctx.rotate(-lastAngle);
 
-      const lampGrd = ctx.createRadialGradient(0, 5, 5, 0, 5, 30);
+      const lampGrd = ctx.createRadialGradient(0, 6, 6, 0, 6, 38);
       lampGrd.addColorStop(0, '#3a3a3a');
       lampGrd.addColorStop(0.5, '#151515');
       lampGrd.addColorStop(1, '#050505');
       ctx.fillStyle = lampGrd;
 
       // Ajusta o aspecto de profundidade da lâmpada (boca da lâmpada) ao abrir configurações
-      const targetMouthHeight = isSettingsOpenRef.current ? 10 : 5;
+      const targetMouthHeight = isSettingsOpenRef.current ? 13 : 6.5;
       mouthHeightRef.current += (targetMouthHeight - mouthHeightRef.current) * 0.08;
       const mouthHeight = mouthHeightRef.current;
 
       ctx.beginPath();
-      ctx.arc(0, 10, 32, Math.PI, 0); // cúpula superior
+      ctx.arc(0, 12, 40, Math.PI, 0); // cúpula superior (maior)
       // Conecta com a metade inferior da elipse (boca da lâmpada) para dar efeito de profundidade
-      ctx.ellipse(0, 22, 32, mouthHeight, 0, 0, Math.PI, false);
+      ctx.ellipse(0, 28, 40, mouthHeight, 0, 0, Math.PI, false);
       ctx.closePath();
       ctx.fill();
 
       // Abertura brilhante da lâmpada (glowing mouth)
       ctx.beginPath();
-      ctx.ellipse(0, 22, 32, mouthHeight, 0, 0, 2 * Math.PI);
+      ctx.ellipse(0, 28, 40, mouthHeight, 0, 0, 2 * Math.PI);
       ctx.fillStyle = `rgba(255, 255, 240, ${(0.95 * f).toFixed(3)})`;
       ctx.fill();
       ctx.strokeStyle = '#050505';
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 2.0; // borda mais espessa para a lâmpada maior
       ctx.stroke();
 
       ctx.restore();
