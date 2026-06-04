@@ -11,22 +11,22 @@
   --crt-red-glow: rgba(255, 51, 51, 0.6);
   --crt-bg: #050805;
   --crt-bg-scanline: #0a0f0a;
-  
+
   --panel-bg: #2d3033;
   --panel-bg-dark: #1b1c1e;
   --panel-border: #4a4e52;
   --metal-screw: #8a8e94;
-  
+
   /* Cores dos Dispositivos Analógicos */
   --clipboard-wood: #5c4033;
   --paper-cream: #faf3e0;
   --paper-ink: #1f1f1e;
   --paper-stamp: #b22222;
-  
+
   /* Fontes */
-  --font-display: 'VT323', monospace;
-  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
-  --font-typewriter: 'Courier New', Courier, monospace;
+  --font-display: "VT323", monospace;
+  --font-mono: "Share Tech Mono", "Courier New", monospace;
+  --font-typewriter: "Courier New", Courier, monospace;
 }
 
 * {
@@ -41,16 +41,48 @@ body {
   background-color: #0c0d0f;
   background-image:
     /* 1. Iluminação Suave da Lâmpada Pendurada */
-    radial-gradient(circle at 50% -10%, rgba(255, 235, 180, 0.08) 0%, rgba(0, 0, 0, 0.85) 85%),
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(255, 235, 180, 0.08) 0%,
+      rgba(0, 0, 0, 0.85) 85%
+    ),
     /* 2. Umidade, Infiltração e Manchas nos Cantos Inferiores */
     radial-gradient(circle at 5% 95%, rgba(8, 20, 12, 0.75) 0%, transparent 60%),
-    radial-gradient(circle at 95% 95%, rgba(6, 12, 22, 0.75) 0%, transparent 60%),
+    radial-gradient(
+      circle at 95% 95%,
+      rgba(6, 12, 22, 0.75) 0%,
+      transparent 60%
+    ),
     radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.9) 0%, transparent 70%),
     /* 3. Furos de Tirante de Fôrma de Concreto nas pontas de cada bloco de 300x150 */
-    radial-gradient(circle at 25px 25px, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 2px, rgba(255,255,255,0.04) 3px, transparent 4px),
-    radial-gradient(circle at 275px 25px, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 2px, rgba(255,255,255,0.04) 3px, transparent 4px),
-    radial-gradient(circle at 25px 125px, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 2px, rgba(255,255,255,0.04) 3px, transparent 4px),
-    radial-gradient(circle at 275px 125px, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 2px, rgba(255,255,255,0.04) 3px, transparent 4px),
+    radial-gradient(
+        circle at 25px 25px,
+        rgba(0, 0, 0, 0.95) 0px,
+        rgba(0, 0, 0, 0.95) 2px,
+        rgba(255, 255, 255, 0.04) 3px,
+        transparent 4px
+      ),
+    radial-gradient(
+      circle at 275px 25px,
+      rgba(0, 0, 0, 0.95) 0px,
+      rgba(0, 0, 0, 0.95) 2px,
+      rgba(255, 255, 255, 0.04) 3px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle at 25px 125px,
+      rgba(0, 0, 0, 0.95) 0px,
+      rgba(0, 0, 0, 0.95) 2px,
+      rgba(255, 255, 255, 0.04) 3px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle at 275px 125px,
+      rgba(0, 0, 0, 0.95) 0px,
+      rgba(0, 0, 0, 0.95) 2px,
+      rgba(255, 255, 255, 0.04) 3px,
+      transparent 4px
+    ),
     /* 4. Sombra das juntas de argamassa (friso inferior e direito do bloco) */
     linear-gradient(to top, rgba(0, 0, 0, 0.85) 4px, transparent 4px),
     linear-gradient(to left, rgba(0, 0, 0, 0.85) 4px, transparent 4px),
@@ -58,26 +90,37 @@ body {
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 2px, transparent 2px),
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 2px, transparent 2px),
     /* 6. Texturas finas de porosidade e imperfeição do concreto */
-    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.07) 0px, rgba(0, 0, 0, 0.07) 1px, transparent 1px, transparent 3px),
-    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 4px),
-    /* 7. Fundo Sólido */
-    linear-gradient(180deg, #181a1d 0%, #0d0f11 100%);
+    repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.07) 0px,
+        rgba(0, 0, 0, 0.07) 1px,
+        transparent 1px,
+        transparent 3px
+      ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.015) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    /* 7. Fundo Sólido */ linear-gradient(180deg, #181a1d 0%, #0d0f11 100%);
   background-size:
-    100% 100%, /* Lamp */
-    100% 100%, /* Moisture L */
-    100% 100%, /* Moisture R */
-    100% 100%, /* Bottom shadow */
-    300px 150px, /* Cone 1 */
-    300px 150px, /* Cone 2 */
-    300px 150px, /* Cone 3 */
-    300px 150px, /* Cone 4 */
-    300px 150px, /* Joint shadow bottom */
-    300px 150px, /* Joint shadow right */
-    300px 150px, /* Bevel top */
-    300px 150px, /* Bevel left */
-    100% 100%, /* Grain 1 */
-    100% 100%, /* Grain 2 */
-    100% 100%; /* Solid color */
+    100% 100%,
+    /* Lamp */ 100% 100%,
+    /* Moisture L */ 100% 100%,
+    /* Moisture R */ 100% 100%,
+    /* Bottom shadow */ 300px 150px,
+    /* Cone 1 */ 300px 150px,
+    /* Cone 2 */ 300px 150px,
+    /* Cone 3 */ 300px 150px,
+    /* Cone 4 */ 300px 150px,
+    /* Joint shadow bottom */ 300px 150px,
+    /* Joint shadow right */ 300px 150px,
+    /* Bevel top */ 300px 150px,
+    /* Bevel left */ 100% 100%,
+    /* Grain 1 */ 100% 100%,
+    /* Grain 2 */ 100% 100%; /* Solid color */
   color: var(--crt-green);
   font-family: var(--font-mono);
   min-height: 100vh;
@@ -92,7 +135,7 @@ body {
 
 /* Overlay escuro para o background de parede/teto ao entrar no menu */
 body::before {
-  content: '';
+  content: "";
   position: fixed;
   top: 0;
   left: 0;
@@ -123,12 +166,13 @@ body.settings-open::before {
   scale: 1.15;
   z-index: 3;
   pointer-events: none;
-  transition: scale 0.85s cubic-bezier(0.25, 1, 0.5, 1),
-              top 0.85s cubic-bezier(0.25, 1, 0.5, 1),
-              left 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+  transition:
+    scale 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+    top 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+    left 0.85s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .hanging-lamp::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -25px;
   left: -32px;
@@ -136,9 +180,9 @@ body.settings-open::before {
   height: 30px;
   background: radial-gradient(circle at 50% 30%, #333 30%, #050505 80%);
   border-radius: 50% 50% 0 0;
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(255, 255, 200, 0.2),
-    0 4px 6px rgba(0,0,0,0.9);
+    0 4px 6px rgba(0, 0, 0, 0.9);
   z-index: 4;
 }
 /* ==== Cone de Luz: SVG Cascade Blur Progressivo ====
@@ -186,8 +230,20 @@ body.settings-open::before {
   pointer-events: none;
   clip-path: polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%);
   z-index: 3;
-  mask-image: linear-gradient(to bottom, black 0%, black 40%, rgba(0,0,0,0.8) 60%, transparent 80%);
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, rgba(0,0,0,0.8) 60%, transparent 80%);
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 40%,
+    rgba(0, 0, 0, 0.8) 60%,
+    transparent 80%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 40%,
+    rgba(0, 0, 0, 0.8) 60%,
+    transparent 80%
+  );
 }
 
 .dust-particles-svg {
@@ -197,16 +253,29 @@ body.settings-open::before {
 }
 
 .dust-p {
-  fill: rgba(255,255,255,0.35);
+  fill: rgba(255, 255, 255, 0.35);
   animation: dust-float 18s infinite ease-in-out;
   animation-delay: var(--d);
 }
 
 @keyframes dust-float {
-  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
-  25% { transform: translate(var(--dx), var(--dy)); opacity: 0.35; }
-  50% { transform: translate(calc(var(--dx) * -0.5), calc(var(--dy) * 0.8)); opacity: 0.1; }
-  75% { transform: translate(calc(var(--dx) * 0.7), calc(var(--dy) * -0.6)); opacity: 0.25; }
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.2;
+  }
+  25% {
+    transform: translate(var(--dx), var(--dy));
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate(calc(var(--dx) * -0.5), calc(var(--dy) * 0.8));
+    opacity: 0.1;
+  }
+  75% {
+    transform: translate(calc(var(--dx) * 0.7), calc(var(--dy) * -0.6));
+    opacity: 0.25;
+  }
 }
 
 /* Cano de Conduíte Metálico Vertical */
@@ -216,37 +285,49 @@ body.settings-open::before {
   left: 15%;
   width: 14px;
   height: 100%;
-  background: linear-gradient(to right, 
-    #080808 0%, 
-    #252525 25%, 
-    #444444 45%, 
-    #202020 65%, 
+  background: linear-gradient(
+    to right,
+    #080808 0%,
+    #252525 25%,
+    #444444 45%,
+    #202020 65%,
     #050505 100%
   );
-  box-shadow: 
+  box-shadow:
     6px 0 12px rgba(0, 0, 0, 0.85),
-    inset -1px 0 2px rgba(255,255,255,0.08),
-    inset 1px 0 2px rgba(0,0,0,0.8);
+    inset -1px 0 2px rgba(255, 255, 255, 0.08),
+    inset 1px 0 2px rgba(0, 0, 0, 0.8);
   z-index: 1;
   pointer-events: none;
   transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Abraçadeiras do Conduíte com Parafusos */
-.prison-conduit::before, .prison-conduit::after {
-  content: '';
+.prison-conduit::before,
+.prison-conduit::after {
+  content: "";
   position: absolute;
   width: 38px;
   height: 10px;
   left: -12px;
-  background: 
-    radial-gradient(circle at 5px 5px, #050505 1.5px, #333 2px, transparent 2.5px),
-    radial-gradient(circle at 33px 5px, #050505 1.5px, #333 2px, transparent 2.5px),
+  background:
+    radial-gradient(
+      circle at 5px 5px,
+      #050505 1.5px,
+      #333 2px,
+      transparent 2.5px
+    ),
+    radial-gradient(
+      circle at 33px 5px,
+      #050505 1.5px,
+      #333 2px,
+      transparent 2.5px
+    ),
     linear-gradient(to bottom, #222, #444 40%, #151515 100%);
   border-radius: 2px;
-  box-shadow: 
-    0 2px 4px rgba(0,0,0,0.7),
-    inset 0 1px 1px rgba(255,255,255,0.15);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
 }
 .prison-conduit::before {
   top: 12%;
@@ -278,39 +359,89 @@ body.settings-open::before {
   height: 820px;
   background: 
     /* Luz da Lâmpada (Dramática no centro da mesa - mais intensa e ampla) */
-    radial-gradient(ellipse at 50% 0%, rgba(255, 240, 200, 0.38) 0%, rgba(0, 0, 0, 0.85) 90%),
-    /* Mancha de Caneca de Café no lado esquerdo */
-    radial-gradient(circle at 28% 35%, transparent 15px, rgba(40, 20, 5, 0.45) 16px, rgba(40, 20, 5, 0.35) 18px, transparent 20px),
-    radial-gradient(circle at 28% 35%, rgba(40, 20, 5, 0.1) 0%, rgba(40, 20, 5, 0.1) 15px, transparent 16px),
-    /* Arranhão / Risco na mesa */
-    linear-gradient(120deg, transparent 45%, rgba(255, 255, 255, 0.07) 45.2%, rgba(255, 255, 255, 0.07) 45.8%, transparent 46%),
-    linear-gradient(30deg, transparent 72%, rgba(0, 0, 0, 0.35) 72.1%, rgba(0, 0, 0, 0.35) 72.6%, transparent 72.8%),
-    /* Veios e ranhuras da madeira (horizontal) */
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 2px, transparent 2px, transparent 6px),
-    repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px),
-    /* Divisões de tábuas de madeira rústica */
-    linear-gradient(90deg, 
-      transparent 18%, rgba(0,0,0,0.55) 18.2%, rgba(255,255,255,0.04) 18.5%, transparent 18.8%,
-      transparent 48%, rgba(0,0,0,0.55) 48.2%, rgba(255,255,255,0.04) 48.5%, transparent 48.8%,
-      transparent 78%, rgba(0,0,0,0.55) 78.2%, rgba(255,255,255,0.04) 78.5%, transparent 78.8%,
-      transparent 100%
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(255, 240, 200, 0.38) 0%,
+      rgba(0, 0, 0, 0.85) 90%
     ),
+    /* Mancha de Caneca de Café no lado esquerdo */
+    radial-gradient(
+        circle at 28% 35%,
+        transparent 15px,
+        rgba(40, 20, 5, 0.45) 16px,
+        rgba(40, 20, 5, 0.35) 18px,
+        transparent 20px
+      ),
+    radial-gradient(
+      circle at 28% 35%,
+      rgba(40, 20, 5, 0.1) 0%,
+      rgba(40, 20, 5, 0.1) 15px,
+      transparent 16px
+    ),
+    /* Arranhão / Risco na mesa */
+    linear-gradient(
+        120deg,
+        transparent 45%,
+        rgba(255, 255, 255, 0.07) 45.2%,
+        rgba(255, 255, 255, 0.07) 45.8%,
+        transparent 46%
+      ),
+    linear-gradient(
+      30deg,
+      transparent 72%,
+      rgba(0, 0, 0, 0.35) 72.1%,
+      rgba(0, 0, 0, 0.35) 72.6%,
+      transparent 72.8%
+    ),
+    /* Veios e ranhuras da madeira (horizontal) */
+    repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 2px,
+        transparent 2px,
+        transparent 6px
+      ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    /* Divisões de tábuas de madeira rústica */
+    linear-gradient(
+        90deg,
+        transparent 18%,
+        rgba(0, 0, 0, 0.55) 18.2%,
+        rgba(255, 255, 255, 0.04) 18.5%,
+        transparent 18.8%,
+        transparent 48%,
+        rgba(0, 0, 0, 0.55) 48.2%,
+        rgba(255, 255, 255, 0.04) 48.5%,
+        transparent 48.8%,
+        transparent 78%,
+        rgba(0, 0, 0, 0.55) 78.2%,
+        rgba(255, 255, 255, 0.04) 78.5%,
+        transparent 78.8%,
+        transparent 100%
+      ),
     /* Gradiente base da madeira (Nogueira média/quente vibrante) */
     linear-gradient(to bottom, #4c2f1f 0%, #200f07 100%);
-  background-blend-mode: multiply, normal, normal, normal, overlay, normal, normal, normal;
+  background-blend-mode:
+    multiply, normal, normal, normal, overlay, normal, normal, normal;
   border-top: 12px solid #583724;
   transform: perspective(1000px) rotateX(42deg);
   transform-origin: bottom center;
-  box-shadow: 
-    inset 0 8px 25px rgba(255,255,255,0.08),
-    0 40px 80px rgba(0,0,0,0.95);
+  box-shadow:
+    inset 0 8px 25px rgba(255, 255, 255, 0.08),
+    0 40px 80px rgba(0, 0, 0, 0.95);
   z-index: 2; /* Fica atrás dos dispositivos, mas cobre o fundo da cela e o conduíte */
   pointer-events: none;
 }
 
 /* Post-it Note no lado esquerdo da mesa */
 .desk-surface::before {
-  content: 'CONFESSAR = Nash?';
+  content: "CONFESSAR = Nash?";
   position: absolute;
   top: 28%; /* Ajustado para a inclinação de 42deg e altura de 820px */
   left: 18%;
@@ -322,9 +453,9 @@ body.settings-open::before {
   font-size: 0.58rem;
   font-weight: bold;
   padding: 12px;
-  box-shadow: 
-    3px 6px 12px rgba(0,0,0,0.7),
-    inset 0 0 10px rgba(0,0,0,0.05);
+  box-shadow:
+    3px 6px 12px rgba(0, 0, 0, 0.7),
+    inset 0 0 10px rgba(0, 0, 0, 0.05);
   transform: rotate(-10deg);
   border-left: 2px solid #ebe18e;
   display: flex;
@@ -337,25 +468,31 @@ body.settings-open::before {
 
 /* Lápis de Investigação no lado direito da mesa */
 .desk-surface::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 18%; /* Ajustado para a inclinação de 42deg e altura de 820px */
   right: 25%;
   width: 130px;
   height: 7px;
   /* Ponta de grafite, madeira crua raspada, corpo pintado de amarelo escolar vibrante, virola dourada, borracha rosa */
-  background: linear-gradient(to right, 
-    #151515 0%, #151515 3%, 
-    #dcbca3 3%, #dcbca3 8%, 
-    #ffcc00 8%, #ffcc00 85%, 
-    #a8acb2 85%, #a8acb2 90%, 
-    #ff9ea3 90%, #ff9ea3 100%
+  background: linear-gradient(
+    to right,
+    #151515 0%,
+    #151515 3%,
+    #dcbca3 3%,
+    #dcbca3 8%,
+    #ffcc00 8%,
+    #ffcc00 85%,
+    #a8acb2 85%,
+    #a8acb2 90%,
+    #ff9ea3 90%,
+    #ff9ea3 100%
   );
   border-radius: 1px 3px 3px 1px;
   transform: rotate(-18deg);
-  box-shadow: 
-    2px 4px 6px rgba(0,0,0,0.8),
-    inset 0 1px 1px rgba(255,255,255,0.3);
+  box-shadow:
+    2px 4px 6px rgba(0, 0, 0, 0.8),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
   filter: blur(0.3px);
 }
 
@@ -377,14 +514,15 @@ body.settings-open::before {
 .table-left {
   flex: 0 1 340px;
   /* Alinhado exatamente à inclinação de 42deg da mesa, deitado plano e deslocado confortavelmente */
-  transform: perspective(1000px) rotateX(42deg) rotateZ(-5deg) translateY(55px) scale(0.85);
+  transform: perspective(1000px) rotateX(42deg) rotateZ(-5deg) translateY(55px)
+    scale(0.85);
   transform-origin: bottom center;
   transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 2;
   position: relative;
 }
 .table-left::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0px; /* Sombra de contato perfeita */
   left: 5%;
@@ -395,12 +533,16 @@ body.settings-open::before {
   filter: blur(4px); /* Sombra bem nítida e escura na base */
   z-index: -1;
   pointer-events: none;
-  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.45s ease, opacity 0.45s ease;
+  transition:
+    transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
+    filter 0.45s ease,
+    opacity 0.45s ease;
 }
 
 /* Ao passar o mouse, a prancheta "sobe" e se inclina para leitura */
 .table-left:hover {
-  transform: perspective(1000px) rotateX(15deg) rotateZ(-2deg) translateY(-20px) scale(1.0);
+  transform: perspective(1000px) rotateX(15deg) rotateZ(-2deg) translateY(-20px)
+    scale(1);
   z-index: 12; /* Sobe por cima de tudo */
 }
 .table-left:hover::before {
@@ -418,7 +560,7 @@ body.settings-open::before {
   position: relative;
 }
 .table-center::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -18px;
   left: 4%;
@@ -434,13 +576,14 @@ body.settings-open::before {
 .table-right {
   flex: 0 1 240px;
   /* Impressora deitada levemente para casar com a inclinação da mesa */
-  transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(2deg) translateY(25px);
+  transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(2deg)
+    translateY(25px);
   transition: transform 0.3s ease;
   z-index: 1;
   position: relative;
 }
 .table-right::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -15px;
   left: 8%;
@@ -456,15 +599,21 @@ body.settings-open::before {
 /* 1. DISPOSITIVO: Prancheta 3D */
 .paper-clipboard {
   background: var(--clipboard-wood);
-  background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 3px, transparent 3px, transparent 15px);
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 3px,
+    transparent 3px,
+    transparent 15px
+  );
   border: 4px solid #3c2415;
   border-radius: 10px;
   padding: 18px;
   /* Extrusão lateral e sombra projetada para a esquerda */
-  box-shadow: 
+  box-shadow:
     0 4px 0 #28180e,
     0 8px 0 #180f09,
-    -15px 25px 35px rgba(0,0,0,0.85);
+    -15px 25px 35px rgba(0, 0, 0, 0.85);
   position: relative;
   min-height: 480px;
 }
@@ -478,13 +627,13 @@ body.settings-open::before {
   top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .clipboard-clip::after {
-  content: '';
+  content: "";
   width: 14px;
   height: 14px;
   background: #222;
@@ -499,10 +648,10 @@ body.settings-open::before {
   font-family: var(--font-typewriter);
   padding: 28px 18px 20px 20px;
   border-radius: 2px;
-  box-shadow: 
+  box-shadow:
     1px 1px 0 #ded6c0,
     2px 2px 0 #d2cbb5,
-    4px 4px 10px rgba(0,0,0,0.4);
+    4px 4px 10px rgba(0, 0, 0, 0.4);
   min-height: 430px;
   position: relative;
   line-height: 1.45;
@@ -556,31 +705,36 @@ body.settings-open::before {
   margin: 10px 0;
   font-size: 0.7rem;
 }
-.paper-payoff-table th, .paper-payoff-table td {
-  border: 1px solid rgba(0,0,0,0.15);
+.paper-payoff-table th,
+.paper-payoff-table td {
+  border: 1px solid rgba(0, 0, 0, 0.15);
   padding: 5px;
   text-align: center;
 }
 .paper-payoff-table th {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .paper-footer {
   margin-top: 20px;
   font-size: 0.65rem;
   color: #777;
-  border-top: 1px dashed rgba(0,0,0,0.15);
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
   padding-top: 6px;
   text-align: center;
 }
 
 /* 2. DISPOSITIVO: Gabinete do Monitor CRT 3D */
 .terminal-cabinet {
-  background: linear-gradient(135deg, var(--panel-bg) 0%, var(--panel-bg-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--panel-bg) 0%,
+    var(--panel-bg-dark) 100%
+  );
   border: 6px solid #1a1b1d;
   border-radius: 18px;
   /* Extrusão lateral espessa e sombra profunda */
-  box-shadow: 
+  box-shadow:
     0 5px 0 #18191b,
     0 10px 0 #101112,
     0 30px 45px rgba(0, 0, 0, 0.95),
@@ -597,31 +751,46 @@ body.settings-open::before {
   height: 10px;
   background: var(--metal-screw);
   border-radius: 50%;
-  box-shadow: 
-    inset 1px 1px 1px rgba(255,255,255,0.4),
-    inset -1px -1px 2px rgba(0,0,0,0.5);
+  box-shadow:
+    inset 1px 1px 1px rgba(255, 255, 255, 0.4),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.5);
 }
 .screw::after {
-  content: '';
+  content: "";
   position: absolute;
-  top: 4px; left: 1px; width: 8px; height: 2px;
+  top: 4px;
+  left: 1px;
+  width: 8px;
+  height: 2px;
   background: #333;
   transform: rotate(45deg);
 }
-.screw.tl { top: 12px; left: 12px; }
-.screw.tr { top: 12px; right: 12px; }
-.screw.bl { bottom: 12px; left: 12px; }
-.screw.br { bottom: 12px; right: 12px; }
+.screw.tl {
+  top: 12px;
+  left: 12px;
+}
+.screw.tr {
+  top: 12px;
+  right: 12px;
+}
+.screw.bl {
+  bottom: 12px;
+  left: 12px;
+}
+.screw.br {
+  bottom: 12px;
+  right: 12px;
+}
 
 .monitor-bezel {
   background: #1c1d1f;
   border: 10px solid #0f1011;
   border-radius: 18px;
   padding: 14px;
-  box-shadow: 
-    inset 0 10px 20px rgba(0,0,0,0.9),
-    0 4px 8px rgba(0,0,0,0.6),
-    0 1px 0 rgba(255,255,255,0.1);
+  box-shadow:
+    inset 0 10px 20px rgba(0, 0, 0, 0.9),
+    0 4px 8px rgba(0, 0, 0, 0.6),
+    0 1px 0 rgba(255, 255, 255, 0.1);
   margin-bottom: 16px;
   position: relative;
 }
@@ -640,7 +809,10 @@ body.settings-open::before {
 
 .crt-effects {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
   z-index: 1;
   border-radius: 8px;
@@ -650,25 +822,52 @@ body.settings-open::before {
   content: " ";
   display: block;
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.55) 100%);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
   z-index: 12;
 }
 .crt-effects::after {
   content: " ";
   display: block;
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
-  background-size: 100% 4px, 6px 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background:
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%),
+    linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.04),
+      rgba(0, 255, 0, 0.02),
+      rgba(0, 0, 255, 0.04)
+    );
+  background-size:
+    100% 4px,
+    6px 100%;
   z-index: 11;
   animation: crt-flicker 0.15s infinite;
 }
 
 .crt-scanline-bar {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 60px;
-  background: linear-gradient(to bottom, rgba(51, 255, 51, 0) 0%, rgba(51, 255, 51, 0.05) 15%, rgba(51, 255, 51, 0) 100%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(
+    to bottom,
+    rgba(51, 255, 51, 0) 0%,
+    rgba(51, 255, 51, 0.05) 15%,
+    rgba(51, 255, 51, 0) 100%
+  );
   animation: scanline-move 12s linear infinite;
   z-index: 9;
   pointer-events: none;
@@ -744,10 +943,10 @@ p.retro-p {
   border: 4px solid #141516;
   border-radius: 12px;
   padding: 14px;
-  box-shadow: 
-    inset 0 3px 6px rgba(255,255,255,0.06),
-    inset 0 -3px 6px rgba(0,0,0,0.5),
-    0 4px 6px rgba(0,0,0,0.6);
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.06),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.5),
+    0 4px 6px rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -764,11 +963,12 @@ p.retro-p {
   align-items: center;
   gap: 8px;
   background: rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 .panel-group-label {
   position: absolute;
-  top: -8px; left: 8px;
+  top: -8px;
+  left: 8px;
   background: #232527;
   padding: 0 4px;
   font-size: 0.6rem;
@@ -790,15 +990,15 @@ p.retro-p {
   letter-spacing: 0.5px;
   position: relative;
   transition: all 0.08s ease;
-  box-shadow: 
+  box-shadow:
     0 5px 0 #0d0d0f,
-    0 8px 12px rgba(0,0,0,0.5);
+    0 8px 12px rgba(0, 0, 0, 0.5);
 }
 .retro-btn:active:not(:disabled) {
   transform: translateY(3px);
-  box-shadow: 
+  box-shadow:
     0 2px 0 #0d0d0f,
-    0 3px 6px rgba(0,0,0,0.5);
+    0 3px 6px rgba(0, 0, 0, 0.5);
 }
 .retro-btn:disabled {
   opacity: 0.35;
@@ -874,7 +1074,9 @@ p.retro-p {
   background: #555;
   border: 1px solid #888;
   border-radius: 2px;
-  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.5);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
 
@@ -896,10 +1098,12 @@ p.retro-p {
   border: 1px solid #333;
 }
 .mute-switch-icon::after {
-  content: '';
+  content: "";
   position: absolute;
-  top: 1px; left: 1px;
-  width: 10px; height: 10px;
+  top: 1px;
+  left: 1px;
+  width: 10px;
+  height: 10px;
   background: #666;
   border-radius: 50%;
   transition: all 0.2s ease;
@@ -916,12 +1120,21 @@ p.retro-p {
   height: 8px;
   border-radius: 50%;
   background-color: #220000;
-  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.8);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.8);
   display: inline-block;
 }
-.led.green.on { background-color: var(--crt-green); box-shadow: 0 0 5px var(--crt-green-glow); }
-.led.amber.on { background-color: var(--crt-amber); box-shadow: 0 0 5px var(--crt-amber-glow); }
-.led.red.on { background-color: var(--crt-red); box-shadow: 0 0 5px var(--crt-red-glow); }
+.led.green.on {
+  background-color: var(--crt-green);
+  box-shadow: 0 0 5px var(--crt-green-glow);
+}
+.led.amber.on {
+  background-color: var(--crt-amber);
+  box-shadow: 0 0 5px var(--crt-amber-glow);
+}
+.led.red.on {
+  background-color: var(--crt-red);
+  box-shadow: 0 0 5px var(--crt-red-glow);
+}
 
 /* 3. DISPOSITIVO: Impressora de Tickets 3D */
 .ticket-printer {
@@ -929,11 +1142,11 @@ p.retro-p {
   border: 4px solid #1a1b1c;
   border-radius: 10px;
   /* Extrusão lateral e sombra projetada para a direita */
-  box-shadow: 
+  box-shadow:
     0 4px 0 #18191a,
     0 8px 0 #0d0e0f,
-    15px 25px 35px rgba(0,0,0,0.8),
-    inset 0 1px 2px rgba(255,255,255,0.1);
+    15px 25px 35px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
   padding: 14px;
   display: flex;
   flex-direction: column;
@@ -956,9 +1169,9 @@ p.retro-p {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   padding: 14px 8px;
-  box-shadow: 
-    0 6px 12px rgba(0,0,0,0.3),
-    inset 0 0 8px rgba(0,0,0,0.05);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.3),
+    inset 0 0 8px rgba(0, 0, 0, 0.05);
   border-left: 1px dashed #ccc;
   border-right: 1px dashed #ccc;
   border-bottom: 4px dashed #999;
@@ -998,7 +1211,7 @@ p.retro-p {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.9);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 .scoreboard-label {
   font-size: 0.58rem;
@@ -1033,18 +1246,38 @@ p.retro-p {
   justify-content: center;
   font-size: 0.8rem;
   font-weight: bold;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
-.agent-node.cooperator { background-color: rgba(51, 255, 51, 0.25); color: var(--crt-green); border-color: var(--crt-green); }
-.agent-node.cheater { background-color: rgba(255, 51, 51, 0.25); color: var(--crt-red); border-color: var(--crt-red); }
-.agent-node.copycat { background-color: rgba(255, 176, 0, 0.25); color: var(--crt-amber); border-color: var(--crt-amber); }
-.agent-node.grudger { background-color: rgba(0, 180, 255, 0.25); color: #00b4ff; border-color: #00b4ff; }
-.agent-node.copykitten { background-color: rgba(255, 240, 50, 0.25); color: #fff032; border-color: #fff032; }
+.agent-node.cooperator {
+  background-color: rgba(51, 255, 51, 0.25);
+  color: var(--crt-green);
+  border-color: var(--crt-green);
+}
+.agent-node.cheater {
+  background-color: rgba(255, 51, 51, 0.25);
+  color: var(--crt-red);
+  border-color: var(--crt-red);
+}
+.agent-node.copycat {
+  background-color: rgba(255, 176, 0, 0.25);
+  color: var(--crt-amber);
+  border-color: var(--crt-amber);
+}
+.agent-node.grudger {
+  background-color: rgba(0, 180, 255, 0.25);
+  color: #00b4ff;
+  border-color: #00b4ff;
+}
+.agent-node.copykitten {
+  background-color: rgba(255, 240, 50, 0.25);
+  color: #fff032;
+  border-color: #fff032;
+}
 
 .stat-box {
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   padding: 6px;
-  border: 1px solid rgba(51,255,51,0.1);
+  border: 1px solid rgba(51, 255, 51, 0.1);
   border-radius: 4px;
   text-align: center;
 }
@@ -1056,33 +1289,76 @@ p.retro-p {
 
 /* Animações */
 @keyframes crt-flicker {
-  0% { opacity: 0.99; }
-  50% { opacity: 1; }
-  100% { opacity: 0.99; }
+  0% {
+    opacity: 0.99;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.99;
+  }
 }
 @keyframes scanline-move {
-  0% { transform: translateY(-80px); }
-  100% { transform: translateY(380px); }
+  0% {
+    transform: translateY(-80px);
+  }
+  100% {
+    transform: translateY(380px);
+  }
 }
 @keyframes pulse-border {
-  0% { border-color: rgba(255, 176, 0, 0.5); }
-  50% { border-color: rgba(255, 176, 0, 1); box-shadow: 0 0 10px rgba(255, 176, 0, 0.3), 0 5px 0 #0d0d0f; }
-  100% { border-color: rgba(255, 176, 0, 0.5); }
+  0% {
+    border-color: rgba(255, 176, 0, 0.5);
+  }
+  50% {
+    border-color: rgba(255, 176, 0, 1);
+    box-shadow:
+      0 0 10px rgba(255, 176, 0, 0.3),
+      0 5px 0 #0d0d0f;
+  }
+  100% {
+    border-color: rgba(255, 176, 0, 0.5);
+  }
 }
 @keyframes lamp-swing {
-  0%, 100% { transform: rotate(1deg) translateX(-50%); }
-  50% { transform: rotate(-1deg) translateX(-50%); }
+  0%,
+  100% {
+    transform: rotate(1deg) translateX(-50%);
+  }
+  50% {
+    transform: rotate(-1deg) translateX(-50%);
+  }
 }
 @keyframes light-flicker {
-  0%, 100% { opacity: 1; }
-  5% { opacity: 0.96; }
-  6% { opacity: 1; }
-  23% { opacity: 1; }
-  24% { opacity: 0.9; }
-  26% { opacity: 1; }
-  78% { opacity: 1; }
-  79% { opacity: 0.94; }
-  80% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  5% {
+    opacity: 0.96;
+  }
+  6% {
+    opacity: 1;
+  }
+  23% {
+    opacity: 1;
+  }
+  24% {
+    opacity: 0.9;
+  }
+  26% {
+    opacity: 1;
+  }
+  78% {
+    opacity: 1;
+  }
+  79% {
+    opacity: 0.94;
+  }
+  80% {
+    opacity: 1;
+  }
 }
 
 /* Responsividade Adaptada */
@@ -1095,17 +1371,32 @@ p.retro-p {
     perspective: none;
     transform-style: flat;
   }
-  .table-left, .table-center, .table-right {
+  .table-left,
+  .table-center,
+  .table-right {
     width: 100%;
     max-width: 600px;
     position: static;
     transform: none !important;
   }
-  .paper-clipboard { min-height: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-  .ticket-printer { min-height: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-  .ticket-paper { max-height: 200px; }
-  body { padding: 10px; overflow-y: auto; }
-  .hanging-lamp { display: none; }
+  .paper-clipboard {
+    min-height: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+  .ticket-printer {
+    min-height: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+  .ticket-paper {
+    max-height: 200px;
+  }
+  body {
+    padding: 10px;
+    overflow-y: auto;
+  }
+  .hanging-lamp {
+    display: none;
+  }
 }
 
 /* Temas do Monitor CRT */
@@ -1143,24 +1434,24 @@ body.theme-green {
 }
 
 .settings-section {
-  border: 1px dashed var(--crt-green-dim);
-  padding: 10px 14px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  background: rgba(0, 0, 0, 0.35);
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+  border: none;
+  padding: 6px 4px;
+  border-radius: 0;
+  margin-bottom: 12px;
+  background: transparent;
+  box-shadow: none;
 }
 
 .settings-section-title {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   font-weight: bold;
   color: var(--crt-amber);
-  text-shadow: 0 0 4px var(--crt-amber-glow);
+  text-shadow: 0 0 2px var(--crt-amber-glow);
   text-transform: uppercase;
-  margin-bottom: 8px;
-  border-bottom: 1px dotted var(--crt-green-dim);
-  padding-bottom: 2px;
+  margin-bottom: 6px;
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .settings-row {
@@ -1181,10 +1472,11 @@ body.theme-green {
 
 .volume-bar {
   flex: 1;
-  font-family: monospace;
+  font-family: 'Courier New', Courier, monospace; /* Força Courier New para alinhar perfeitamente o U+2591 ░ com U+2588 █ */
   color: var(--crt-green);
   text-shadow: 0 0 4px var(--crt-green-glow);
   letter-spacing: 1px;
+  line-height: 1;
 }
 
 .settings-btn-group {
@@ -1194,34 +1486,32 @@ body.theme-green {
 }
 
 .settings-btn {
-  background: #081208;
+  background: transparent;
   color: var(--crt-green);
-  border: 1px solid var(--crt-green-dim);
+  border: none;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 5px 10px;
-  border-radius: 4px;
+  font-size: 0.78rem;
+  padding: 3px 6px;
+  border-radius: 0;
   cursor: pointer;
   text-transform: uppercase;
   transition: all 0.1s ease;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: none;
 }
 
 .settings-btn:hover:not(:disabled) {
-  border-color: var(--crt-green);
-  background: rgba(51, 255, 51, 0.05);
+  background: rgba(51, 255, 51, 0.15);
   color: #fff;
   text-shadow: 0 0 4px var(--crt-green-glow);
-  box-shadow: 0 0 6px var(--crt-green-glow);
+  box-shadow: none;
 }
 
 .settings-btn.active {
   background: var(--crt-green-dim);
-  border-color: var(--crt-green);
-  color: #fff;
+  color: #000;
   font-weight: bold;
-  text-shadow: 0 0 6px var(--crt-green-glow);
-  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.8), 0 0 8px var(--crt-green-glow);
+  text-shadow: none;
+  box-shadow: none;
 }
 
 .settings-btn:active:not(:disabled) {
@@ -1232,7 +1522,7 @@ body.theme-green {
 .settings-btn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
-  border-color: #333;
+  border-color: transparent;
   color: #555;
   background: transparent;
   text-shadow: none;
@@ -1240,26 +1530,26 @@ body.theme-green {
 }
 
 .settings-close-btn {
-  background: #333;
+  background: transparent;
   color: var(--crt-amber);
-  border: 2px solid var(--crt-amber);
+  border: none;
   font-family: var(--font-mono);
   font-weight: bold;
   font-size: 0.85rem;
   padding: 8px;
-  border-radius: 6px;
+  border-radius: 0;
   cursor: pointer;
   text-align: center;
   text-transform: uppercase;
   width: 100%;
-  box-shadow: 0 0 10px rgba(255, 176, 0, 0.2);
+  box-shadow: none;
   transition: all 0.15s ease;
 }
 
 .settings-close-btn:hover {
-  background: var(--crt-amber);
-  color: #000;
-  box-shadow: 0 0 15px var(--crt-amber-glow);
+  background: rgba(255, 176, 0, 0.20);
+  color: var(--crt-amber);
+  box-shadow: none;
 }
 
 .settings-close-btn:active {
@@ -1307,7 +1597,7 @@ body.theme-green {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
+  box-shadow:
     0 4px 10px rgba(0, 0, 0, 0.7),
     inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
@@ -1322,9 +1612,10 @@ body.theme-green {
   .table-center,
   .table-right,
   .desk-surface {
-    transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1),
-                filter 0.65s cubic-bezier(0.25, 1, 0.5, 1),
-                opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+    transition:
+      transform 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+      filter 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+      opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
   .hanging-lamp-light-svg,
@@ -1340,13 +1631,15 @@ body.theme-green {
   }
 
   body.settings-open .table-center {
-    transform: perspective(1000px) rotateX(0deg) translateZ(120px) translateY(15px);
+    transform: perspective(1000px) rotateX(0deg) translateZ(120px)
+      translateY(15px);
     z-index: 15;
   }
 
   /* Shift the clipboard dossier to the side, subtle blur */
   body.settings-open .table-left {
-    transform: perspective(1000px) rotateX(42deg) rotateZ(-12deg) translateY(55px) translateX(-140px) scale(0.6);
+    transform: perspective(1000px) rotateX(42deg) rotateZ(-12deg)
+      translateY(55px) translateX(-140px) scale(0.6);
     filter: blur(2px);
     opacity: 0.75;
     pointer-events: none;
@@ -1354,7 +1647,8 @@ body.theme-green {
 
   /* Shift the ticket printer to the side, subtle blur */
   body.settings-open .table-right {
-    transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(12deg) translateY(25px) translateX(140px) scale(0.6);
+    transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(12deg)
+      translateY(25px) translateX(140px) scale(0.6);
     filter: blur(2px);
     opacity: 0.75;
     pointer-events: none;

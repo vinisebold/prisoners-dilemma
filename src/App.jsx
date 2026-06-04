@@ -404,7 +404,7 @@ export default function App() {
         }}
         title="Configurações do Sistema"
       >
-        ☰
+        {isSettingsOpen ? '✕' : '☰'}
       </button>
 
       {/* Luz Suspensa Dinâmica: Canvas 2D Cascade Blur */}
