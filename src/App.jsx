@@ -409,6 +409,49 @@ export default function App() {
       {/* Luz Suspensa Dinâmica */}
       <div className="hanging-lamp">
         <div className="hanging-lamp-light" />
+        <div className="hanging-lamp-particles">
+          <svg width="800" height="850" viewBox="0 0 800 850" className="dust-particles-svg">
+            <circle cx="375" cy="100" r="1.2" className="dust-p" style={{ '--dx': '5px', '--dy': '-3px', '--d': '-0s' }} />
+            <circle cx="440" cy="200" r="0.8" className="dust-p" style={{ '--dx': '-3px', '--dy': '4px', '--d': '-2s' }} />
+            <circle cx="355" cy="320" r="1.8" className="dust-p" style={{ '--dx': '4px', '--dy': '-2px', '--d': '-4s' }} />
+            <circle cx="490" cy="400" r="0.9" className="dust-p" style={{ '--dx': '-4px', '--dy': '3px', '--d': '-6s' }} />
+            <circle cx="320" cy="500" r="1.5" className="dust-p" style={{ '--dx': '3px', '--dy': '-4px', '--d': '-8s' }} />
+            <circle cx="540" cy="580" r="0.7" className="dust-p" style={{ '--dx': '-2px', '--dy': '2px', '--d': '-10s' }} />
+            <circle cx="310" cy="660" r="1.8" className="dust-p" style={{ '--dx': '5px', '--dy': '-1px', '--d': '-3s' }} />
+            <circle cx="580" cy="740" r="1" className="dust-p" style={{ '--dx': '-5px', '--dy': '3px', '--d': '-7s' }} />
+            <circle cx="400" cy="800" r="0.6" className="dust-p" style={{ '--dx': '2px', '--dy': '-3px', '--d': '-11s' }} />
+            <circle cx="410" cy="150" r="0.7" className="dust-p" style={{ '--dx': '-2px', '--dy': '5px', '--d': '-1s' }} />
+            <circle cx="360" cy="260" r="1.4" className="dust-p" style={{ '--dx': '3px', '--dy': '-1px', '--d': '-5s' }} />
+            <circle cx="480" cy="310" r="0.6" className="dust-p" style={{ '--dx': '-1px', '--dy': '-4px', '--d': '-9s' }} />
+            <circle cx="340" cy="420" r="2" className="dust-p" style={{ '--dx': '4px', '--dy': '2px', '--d': '-0.5s' }} />
+            <circle cx="530" cy="460" r="0.8" className="dust-p" style={{ '--dx': '-3px', '--dy': '-2px', '--d': '-4.5s' }} />
+            <circle cx="380" cy="550" r="1.1" className="dust-p" style={{ '--dx': '1px', '--dy': '4px', '--d': '-8.5s' }} />
+            <circle cx="500" cy="620" r="0.5" className="dust-p" style={{ '--dx': '-4px', '--dy': '1px', '--d': '-2.5s' }} />
+            <circle cx="350" cy="700" r="1.3" className="dust-p" style={{ '--dx': '2px', '--dy': '-3px', '--d': '-6.5s' }} />
+            <circle cx="550" cy="780" r="0.9" className="dust-p" style={{ '--dx': '-1px', '--dy': '5px', '--d': '-10.5s' }} />
+            <circle cx="420" cy="50" r="0.5" className="dust-p" style={{ '--dx': '3px', '--dy': '1px', '--d': '-3.5s' }} />
+            <circle cx="450" cy="520" r="1.6" className="dust-p" style={{ '--dx': '-5px', '--dy': '-1px', '--d': '-7.5s' }} />
+            <circle cx="330" cy="140" r="0.6" className="dust-p" style={{ '--dx': '2px', '--dy': '-2px', '--d': '-1.5s' }} />
+            <circle cx="470" cy="80" r="0.9" className="dust-p" style={{ '--dx': '-1px', '--dy': '3px', '--d': '-5.5s' }} />
+            <circle cx="390" cy="230" r="0.5" className="dust-p" style={{ '--dx': '4px', '--dy': '1px', '--d': '-9.5s' }} />
+            <circle cx="430" cy="350" r="1.3" className="dust-p" style={{ '--dx': '-3px', '--dy': '-2px', '--d': '-0.8s' }} />
+            <circle cx="300" cy="440" r="0.7" className="dust-p" style={{ '--dx': '1px', '--dy': '4px', '--d': '-4.8s' }} />
+            <circle cx="560" cy="500" r="1" className="dust-p" style={{ '--dx': '-2px', '--dy': '-3px', '--d': '-8.8s' }} />
+            <circle cx="370" cy="600" r="0.5" className="dust-p" style={{ '--dx': '3px', '--dy': '2px', '--d': '-2.8s' }} />
+            <circle cx="520" cy="650" r="1.2" className="dust-p" style={{ '--dx': '-4px', '--dy': '-1px', '--d': '-6.8s' }} />
+            <circle cx="330" cy="750" r="0.8" className="dust-p" style={{ '--dx': '2px', '--dy': '3px', '--d': '-10.8s' }} />
+            <circle cx="460" cy="680" r="0.6" className="dust-p" style={{ '--dx': '-1px', '--dy': '-4px', '--d': '-1.2s' }} />
+            <circle cx="510" cy="300" r="1.5" className="dust-p" style={{ '--dx': '5px', '--dy': '1px', '--d': '-5.2s' }} />
+            <circle cx="340" cy="40" r="0.7" className="dust-p" style={{ '--dx': '-2px', '--dy': '2px', '--d': '-9.2s' }} />
+            <circle cx="420" cy="470" r="0.4" className="dust-p" style={{ '--dx': '1px', '--dy': '-5px', '--d': '-3.2s' }} />
+            <circle cx="280" cy="580" r="0.9" className="dust-p" style={{ '--dx': '3px', '--dy': '4px', '--d': '-7.2s' }} />
+            <circle cx="570" cy="710" r="1.1" className="dust-p" style={{ '--dx': '-5px', '--dy': '-2px', '--d': '-11.2s' }} />
+            <circle cx="380" cy="180" r="0.4" className="dust-p" style={{ '--dx': '2px', '--dy': '-1px', '--d': '-0.3s' }} />
+            <circle cx="490" cy="280" r="0.8" className="dust-p" style={{ '--dx': '-4px', '--dy': '3px', '--d': '-4.3s' }} />
+            <circle cx="360" cy="380" r="1.7" className="dust-p" style={{ '--dx': '1px', '--dy': '-3px', '--d': '-8.3s' }} />
+            <circle cx="410" cy="50" r="0.5" className="dust-p" style={{ '--dx': '-3px', '--dy': '4px', '--d': '-2.3s' }} />
+          </svg>
+        </div>
       </div>
 
       {/* Elementos Atmosféricos do Fundo (Prisão) */}

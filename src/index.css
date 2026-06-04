@@ -93,41 +93,106 @@ body {
 /* Lâmpada Pendurada */
 .hanging-lamp {
   position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 100px;
+  top: 15px;
+  left: 25%;
+  width: 4px;
+  height: 120px;
   background: #111;
   transform-origin: top center;
   animation: lamp-swing 8s ease-in-out infinite;
-  z-index: 100;
+  scale: 1.15;
+  z-index: 3;
   pointer-events: none;
+  transition: scale 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+              top 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+              left 0.85s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .hanging-lamp::after {
   content: '';
   position: absolute;
-  bottom: -20px;
-  left: -19px;
-  width: 38px;
-  height: 22px;
+  bottom: -25px;
+  left: -32px;
+  width: 64px;
+  height: 30px;
   background: radial-gradient(circle at 50% 30%, #333 30%, #050505 80%);
   border-radius: 50% 50% 0 0;
   box-shadow: 
-    0 15px 30px rgba(255, 255, 200, 0.15),
+    0 20px 40px rgba(255, 255, 200, 0.2),
     0 4px 6px rgba(0,0,0,0.9);
+  z-index: 4;
 }
 .hanging-lamp-light {
   position: absolute;
-  top: 100px;
-  left: 50%;
+  top: 145px;
+  left: 25%;
   transform: translateX(-50%);
-  width: 700px;
-  height: 800px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.14) 0%, rgba(255, 255, 200, 0) 75%);
-  clip-path: polygon(48% 0%, 52% 0%, 100% 100%, 0% 100%);
+  width: 800px;
+  height: 1000px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.3) 0%, rgba(255, 255, 200, 0.1) 20%, rgba(255, 255, 200, 0.03) 45%, transparent 60%);
+  clip-path: polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
   animation: light-flicker 5s infinite;
-  z-index: 99;
+  mix-blend-mode: screen;
+  z-index: 3;
+}
+
+.hanging-lamp-light::before {
+  content: '';
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.15) 0%, rgba(255, 255, 200, 0.06) 30%, transparent 55%);
+  filter: blur(6px);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  pointer-events: none;
+}
+
+.hanging-lamp-light::after {
+  content: '';
+  position: absolute;
+  top: 65%;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 200, 0.15) 0%, rgba(255, 255, 200, 0.06) 30%, transparent 55%);
+  filter: blur(20px);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 100%);
+  pointer-events: none;
+}
+
+.hanging-lamp-particles {
+  position: absolute;
+  top: 145px;
+  left: 25%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 1000px;
+  pointer-events: none;
+  clip-path: polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%);
+  z-index: 3;
+}
+
+.dust-particles-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.dust-p {
+  fill: rgba(255,255,255,0.35);
+  animation: dust-float 18s infinite ease-in-out;
+  animation-delay: var(--d);
+}
+
+@keyframes dust-float {
+  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
+  25% { transform: translate(var(--dx), var(--dy)); opacity: 0.35; }
+  50% { transform: translate(calc(var(--dx) * -0.5), calc(var(--dy) * 0.8)); opacity: 0.1; }
+  75% { transform: translate(calc(var(--dx) * 0.7), calc(var(--dy) * -0.6)); opacity: 0.25; }
 }
 
 /* Cano de Conduíte Metálico Vertical */
@@ -1248,6 +1313,7 @@ body.theme-green {
   }
 
   .hanging-lamp-light,
+  .hanging-lamp-particles,
   .prison-window-shadow {
     transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
   }
@@ -1283,9 +1349,16 @@ body.theme-green {
     transform: perspective(1000px) rotateX(32deg) translateY(60px);
   }
 
+  /* Scale the lamp and pull it up when settings open */
+  body.settings-open .hanging-lamp {
+    scale: 1.35;
+    top: -180px;
+    left: 22%;
+  }
+
   /* Slightly dim the light / shadow overlays */
   body.settings-open .hanging-lamp-light {
-    opacity: 0.45;
+    opacity: 0.25;
   }
   body.settings-open .prison-window-shadow {
     opacity: 0.35;
