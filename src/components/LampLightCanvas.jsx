@@ -36,15 +36,17 @@ export default function LampLightCanvas({ isSettingsOpen }) {
     const ctx = canvas.getContext('2d');
     
     // Inicializa nós da corda caso não existam
-    const numPoints = 24;
-    const segLength = 5.8; // 5.8px por segmento ~ 133.4px de altura total, puxando a lâmpada um pouco para cima
+    const numPoints = 16;
+    const segLength = 8.8; // 8.8px por segmento ~ 132px de altura total, mantendo a lâmpada na posição correta
     if (pointsRef.current.length === 0) {
       for (let i = 0; i < numPoints; i++) {
         pointsRef.current.push({
           x: cx,
           y: i * segLength,
           oldX: cx,
-          oldY: i * segLength
+          oldY: i * segLength,
+          prevX: cx,
+          prevY: i * segLength
         });
       }
     }
@@ -69,6 +71,7 @@ export default function LampLightCanvas({ isSettingsOpen }) {
     const t0 = performance.now();
     let tLast = performance.now();
     let accumulator = 0;
+    let physTime = 0;
 
     // Posição do mouse mapeada no canvas
     let mouseX = null;
@@ -99,12 +102,20 @@ export default function LampLightCanvas({ isSettingsOpen }) {
 
       // Executa os passos físicos em intervalos constantes de tempo
       while (accumulator >= fixedDt) {
+        // Salva posições do passo anterior para interpolação
+        for (let i = 0; i < numPoints; i++) {
+          points[i].prevX = points[i].x;
+          points[i].prevY = points[i].y;
+        }
+
         // ──────────────────────────────────────────
         // CÁLCULO FÍSICO DO MALEÁVEL (VERLET CHAIN) - FIXED STEP
         // ──────────────────────────────────────────
         const gravity = 1200;      // Força de gravidade
         const friction = 0.982;    // Damping balanceado
-        const wind = 12 * Math.sin(t * 0.7);
+        
+        physTime += fixedDt;
+        const wind = 12 * Math.sin(physTime * 0.7);
 
         // 1. Atualização Verlet
         for (let i = 1; i < numPoints; i++) {
@@ -144,8 +155,8 @@ export default function LampLightCanvas({ isSettingsOpen }) {
           }
         }
 
-        // 3. Aplica restrições de distância (Constraint Solver)
-        for (let k = 0; k < 12; k++) {
+        // 3. Aplica restrições de distância (Constraint Solver) - 32 iterações para estabilidade
+        for (let k = 0; k < 32; k++) {
           points[0].x = cx;
           points[0].y = 0;
 
@@ -182,12 +193,19 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       // ──────────────────────────────────────────
       ctx.clearRect(0, 0, W, H);
 
-      // 1. Desenha a corda (curva suave maleável)
+      // Interpolação suave de física para evitar stutters/jitters de frame timing (aliasing)
+      const alpha = Math.max(0, Math.min(1, accumulator / fixedDt));
+      const renderPoints = points.map(p => ({
+        x: p.prevX + (p.x - p.prevX) * alpha,
+        y: p.prevY + (p.y - p.prevY) * alpha
+      }));
+
+      // 1. Desenha a corda (curva suave maleável) usando coordenadas interpoladas
       ctx.save();
       ctx.beginPath();
-      ctx.moveTo(points[0].x, points[0].y);
+      ctx.moveTo(renderPoints[0].x, renderPoints[0].y);
       for (let i = 1; i < numPoints; i++) {
-        ctx.lineTo(points[i].x, points[i].y);
+        ctx.lineTo(renderPoints[i].x, renderPoints[i].y);
       }
       ctx.strokeStyle = '#0a0a0a';
       ctx.lineWidth = 5;
@@ -196,16 +214,16 @@ export default function LampLightCanvas({ isSettingsOpen }) {
       ctx.stroke();
       ctx.restore();
 
-      // Posição final da lâmpada
-      const lx = points[numPoints - 1].x;
-      const ly = points[numPoints - 1].y;
+      // Posição final da lâmpada (interpolada)
+      const lx = renderPoints[numPoints - 1].x;
+      const ly = renderPoints[numPoints - 1].y;
 
       // Ângulo de rotação da lâmpada com base nos últimos segmentos da corda para evitar jittering
       const smoothLookAhead = 4;
-      const refNode = points[numPoints - 1 - smoothLookAhead] || points[0];
+      const refNode = renderPoints[numPoints - 1 - smoothLookAhead] || renderPoints[0];
       const lastAngle = Math.atan2(
-        points[numPoints - 1].x - refNode.x,
-        points[numPoints - 1].y - refNode.y
+        renderPoints[numPoints - 1].x - refNode.x,
+        renderPoints[numPoints - 1].y - refNode.y
       );
 
       // ──────────────────────────────────────────

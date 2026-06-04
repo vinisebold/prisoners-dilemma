@@ -39,6 +39,46 @@
 /* Cenário de Fundo: Cela / Sala de Interrogatório */
 body {
   background-color: #0c0d0f;
+  color: var(--crt-green);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Painel Geral de Background (Agrupa parede, janela e conduíte para Zoom Parallax Acelerado) */
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1; /* Abaixo da lâmpada (3) e mesa (10) */
+  pointer-events: none;
+  transform-origin: center center;
+  transition:
+    transform 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Parede de Concreto em Background */
+.background-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-color: #0c0d0f;
   background-image:
     /* 1. Iluminação Suave da Lâmpada Pendurada */
     radial-gradient(
@@ -121,16 +161,6 @@ body {
     /* Bevel left */ 100% 100%,
     /* Grain 1 */ 100% 100%,
     /* Grain 2 */ 100% 100%; /* Solid color */
-  color: var(--crt-green);
-  font-family: var(--font-mono);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  overflow: hidden;
-  position: relative;
 }
 
 /* Overlay escuro para o background de parede/teto ao entrar no menu */
@@ -242,7 +272,7 @@ body.settings-open::before {
 .prison-conduit {
   position: absolute;
   top: 0;
-  left: 15%;
+  right: 15%;
   width: 14px;
   height: 100%;
   background: linear-gradient(
@@ -308,6 +338,24 @@ body.settings-open::before {
   transform: rotate(7deg) skewX(5deg);
   opacity: 0.85;
   mix-blend-mode: screen; /* Mescla a luz com a textura do concreto */
+}
+
+/* Janela de Observação Física da Prisão (Espaço da Esquerda) */
+.prison-window {
+  position: absolute;
+  top: 12%;
+  left: calc(25% - min(325px, 26vw));
+  width: min(650px, 52vw);
+  height: min(450px, 36vw);
+  aspect-ratio: 1.44 / 1;
+  pointer-events: none;
+  z-index: 2; /* Atrás da lâmpada (3) e mesa (10) */
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.9),
+    0 4px 10px rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Base da Mesa de Madeira da Prisão (Elemento DOM Independente) */
@@ -1660,13 +1708,19 @@ body.theme-green {
   .hanging-lamp-light-svg,
   .hanging-lamp-light-canvas,
   .hanging-lamp-particles,
-  .prison-window-shadow {
+  .prison-window-shadow,
+  .prison-window {
     transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
   /* When settings is open: zoom the whole scene and push CRT closer */
   body.settings-open .investigator-table {
     transform: scale(1.12);
+  }
+
+  body.settings-open .background-container {
+    transform: scale(1.05) translateY(-12px); /* Leve zoom e deslocamento vertical no background ao entrar no menu */
+    filter: brightness(0.55); /* Escurece a parede, janela e conduíte juntos */
   }
 
   body.settings-open .table-center {
