@@ -3,7 +3,7 @@ import ConsoleFrame from './components/ConsoleFrame';
 import CrtScreen from './components/CrtScreen';
 import ControlPanel from './components/ControlPanel';
 import ClipboardDossier from './components/ClipboardDossier';
-import TicketPrinter from './components/TicketPrinter';
+import SecondaryMonitor from './components/SecondaryMonitor';
 import Step1Intro from './components/steps/Step1Intro';
 import Step2Repeated from './components/steps/Step2Repeated';
 import Step3Strategies from './components/steps/Step3Strategies';
@@ -315,7 +315,7 @@ export default function App() {
     setStep4BotScore(0);
   };
 
-  // --- Seleciona placar e histórico dinâmico para o TicketPrinter ---
+  // --- Seleciona placar e histórico dinâmico para o SecondaryMonitor ---
   const getActiveHistoryAndScores = () => {
     if (currentStep === 1) {
       const played = step1PlayState === 'played';
@@ -690,9 +690,9 @@ export default function App() {
           </ConsoleFrame>
         </div>
 
-        {/* Coluna Direita: O Registrador e Impressor (Ticket) */}
+        {/* Coluna Direita: Monitor CRT Secundário */}
         <div className="table-right">
-          <TicketPrinter 
+          <SecondaryMonitor 
             currentStep={currentStep}
             history={activeHistory}
             playerScore={activePlayerScore}

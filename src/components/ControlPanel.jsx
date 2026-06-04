@@ -124,7 +124,7 @@ export default function ControlPanel({
             onClick={handleNext}
             style={{ minWidth: '100px' }}
           >
-            {currentStep === totalSteps ? 'Fim' : 'Avançar &gt;'}
+            {currentStep === totalSteps ? 'Fim' : 'Avançar >'}
           </button>
         </div>
       )}

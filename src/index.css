@@ -582,19 +582,19 @@ body.settings-open::before {
 }
 
 .table-right {
-  flex: 0 1 240px;
-  /* Deslocado para a direita e reduzido para quase espelhar o estado do menu */
-  transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(10deg)
-    translateY(25px) translateX(120px) scale(0.65);
+  flex: 0 1 310px;
+  /* Deslocado para a direita com rotações mais suaves para apontar em nossa direção */
+  transform: perspective(1000px) rotateY(-8deg) rotateX(15deg) rotateZ(5deg)
+    translateY(15px) translateX(90px) scale(0.8);
   transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 1;
   position: relative;
 }
 
-/* Ao passar o mouse, a impressora amplia e centraliza levemente para melhor leitura dos tickets */
+/* Ao passar o mouse, o monitor amplia e aponta quase de frente para leitura */
 .table-right:hover {
-  transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(2deg)
-    translateY(10px) translateX(0px) scale(0.85);
+  transform: perspective(1000px) rotateY(-2deg) rotateX(8deg) rotateZ(1deg)
+    translateY(0px) translateX(0px) scale(0.98);
   z-index: 12;
 }
 .table-right::before {
@@ -1204,32 +1204,30 @@ p.retro-p {
   box-shadow: 0 0 5px var(--crt-red-glow);
 }
 
-/* 3. DISPOSITIVO: Impressora de Tickets 3D */
-.ticket-printer {
+/* 3. DISPOSITIVO: Monitor CRT Secundário */
+.secondary-monitor {
   background: #2a2c2e;
   border: 4px solid #1a1b1c;
-  border-radius: 10px;
-  /* Extrusão lateral e sombra projetada dinâmica calculada por raytracing artificial */
+  border-radius: 12px;
   box-shadow:
     0 4px 0 #18191a,
     0 8px 0 #0d0e0f,
     calc(var(--print-shadow-dx, 0px) * 0.05) 25px 35px rgba(0, 0, 0, calc(0.70 + 0.18 * var(--light-intensity-printer, 0))),
     inset 0 1px 2px rgba(255, 255, 255, 0.1);
-  padding: 14px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-height: 480px;
+  gap: 10px;
+  min-height: 485px;
   position: relative;
   transition: box-shadow 0.08s linear;
 }
 
-/* Specular edge shine (Brilho das arestas) da impressora quando o holofote a ilumina */
-.ticket-printer::before {
+.secondary-monitor::before {
   content: "";
   position: absolute;
   top: -4px; left: -4px; right: -4px; bottom: -4px;
-  border-radius: 10px;
+  border-radius: 12px;
   pointer-events: none;
   z-index: 10;
   box-sizing: border-box;
@@ -1240,79 +1238,207 @@ p.retro-p {
   border: 4px solid transparent;
   transition: box-shadow 0.08s linear;
 }
-.printer-mouth {
-  height: 8px;
-  background: #0d0e0f;
-  border-radius: 4px;
-  border-bottom: 2px solid #333;
-  position: relative;
-  margin-bottom: 4px;
-}
 
-/* Papel Térmico */
-.ticket-paper {
-  background: #fdfdfd;
-  color: #111;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  padding: 14px 8px;
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.3),
-    inset 0 0 8px rgba(0, 0, 0, 0.05);
-  border-left: 1px dashed #ccc;
-  border-right: 1px dashed #ccc;
-  border-bottom: 4px dashed #999;
+/* Tela CRT do Monitor Secundário */
+.sec-monitor-bezel {
+  background: #151617;
+  border: 5px solid #0b0c0d;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);
   flex: 1;
-  overflow-y: auto;
-  max-height: 280px;
   display: flex;
   flex-direction: column;
-  scrollbar-width: none;
-}
-.ticket-paper::-webkit-scrollbar {
-  display: none;
-}
-.ticket-line {
-  margin-bottom: 4px;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px dotted #bbb;
-  padding-bottom: 2px;
-}
-.ticket-title {
-  text-align: center;
-  font-weight: bold;
-  border-bottom: 2px solid #333;
-  margin-bottom: 8px;
-  padding-bottom: 3px;
-  text-transform: uppercase;
+  position: relative; /* Necessário para posicionamento absoluto do knob */
 }
 
-/* displays digitais */
-.scoreboard-digital {
-  background: #0f0000;
-  border: 3px solid #141414;
+.sec-monitor-screen {
+  background-color: var(--crt-bg);
+  --sec-color: var(--crt-green);
+  --sec-color-glow: var(--crt-green-glow);
+  --sec-color-dim: var(--crt-green-dim);
+  --sec-color-bg: rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
   border-radius: 6px;
+  border: 3px solid #050505;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.95);
+  transition: background-color 0.3s ease;
+  clip-path: url(#screen-clip); /* Aplica o recorte responsivo para o knob */
+}
+
+/* Conteúdo da Tela Secundária */
+.sec-monitor-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  color: var(--sec-color);
+  text-shadow: 0 0 4px var(--sec-color-glow);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  overflow-y: hidden; /* A tela em si não rola para evitar clipping */
+}
+
+.sec-monitor-title {
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 2px solid var(--sec-color-dim);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Modos de Exibição */
+.sec-mode-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 230px;
+  padding-right: 4px;
+}
+.sec-mode-grid::-webkit-scrollbar {
+  width: 4px;
+}
+.sec-mode-grid::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
+}
+.sec-mode-grid::-webkit-scrollbar-thumb {
+  background: var(--sec-color-dim);
+  border-radius: 2px;
+}
+.sec-mode-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--sec-color);
+}
+
+.sec-round-card {
+  border: 1px solid var(--sec-color-dim);
+  background: var(--sec-color-bg);
+  border-radius: 4px;
   padding: 6px;
+  font-size: 0.7rem;
+}
+
+.sec-card-header {
+  font-weight: bold;
+  border-bottom: 1px dashed var(--sec-color-dim);
+  margin-bottom: 4px;
+  padding-bottom: 2px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sec-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.sec-choice-badge {
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 0.65rem;
+}
+.sec-choice-badge.cooperate {
+  background: rgba(51, 255, 51, 0.2);
+  color: #33ff33;
+  border: 1px solid #33ff33;
+}
+.sec-choice-badge.defect {
+  background: rgba(255, 51, 51, 0.2);
+  color: #ff3333;
+  border: 1px solid #ff3333;
+}
+
+/* Gráfico de Linhas SVG */
+.sec-chart-svg {
+  border: 1px solid var(--sec-color-dim);
+  background: rgba(0,0,0,0.3);
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.control-label-micro {
+  font-size: 0.55rem;
+  color: #777;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: var(--font-mono);
+}
+
+/* Botão Giratório (Knob) */
+.knob-container {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.9);
 }
-.scoreboard-label {
-  font-size: 0.58rem;
-  color: #440a0a;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 0.5px;
+.knob-wheel {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #555 40%, #222 90%);
+  border: 2px solid #777;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.5),
+    inset 0 1px 2px rgba(255,255,255,0.3);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-.seven-segment {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  color: var(--crt-red);
-  text-shadow: 0 0 6px var(--crt-red-glow);
-  letter-spacing: 1px;
+.knob-indicator-line {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  background: #fff;
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+/* Terminal de logs */
+.sec-terminal-logs {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--sec-color-dim);
+  border-radius: 4px;
+  padding: 6px;
+  margin-right: 16%; /* Empurra a borda direita para a esquerda do recorte do knob */
+  font-size: 0.62rem;
+  color: var(--sec-color);
+  max-height: 85px;
+  overflow-y: auto;
+  margin-top: 8px;
+  scrollbar-width: none;
+}
+.sec-terminal-logs::-webkit-scrollbar {
+  display: none;
+}
+.sec-cursor {
+  display: inline-block;
+  width: 5px;
+  height: 10px;
+  background-color: var(--sec-color);
+  margin-left: 2px;
+  animation: sec-blink 1s infinite;
+}
+
+@keyframes sec-blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 /* População Grid */
@@ -1470,12 +1596,9 @@ p.retro-p {
     min-height: auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   }
-  .ticket-printer {
+  .secondary-monitor {
     min-height: auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  }
-  .ticket-paper {
-    max-height: 200px;
   }
   body {
     padding: 10px;
@@ -1738,10 +1861,10 @@ body.theme-green {
     pointer-events: none;
   }
 
-  /* Shift the ticket printer to the side, subtle blur, less transparent */
+  /* Shift the secondary monitor to the side, subtle blur, less transparent */
   body.settings-open .table-right {
-    transform: perspective(1000px) rotateY(-14deg) rotateX(24deg) rotateZ(12deg)
-      translateY(25px) translateX(140px) scale(0.6);
+    transform: perspective(1000px) rotateY(-8deg) rotateX(15deg) rotateZ(6deg)
+      translateY(20px) translateX(110px) scale(0.7);
     filter: blur(2px);
     opacity: 0.90;
     pointer-events: none;
