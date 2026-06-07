@@ -2097,7 +2097,7 @@ body.intro-open .table-right {
 }
 
 body.intro-open .table-center {
-  transform: perspective(1000px) rotateX(8deg) scale(1.05);
+  transform: perspective(1000px) rotateX(18deg);
   z-index: 15;
 }
 
