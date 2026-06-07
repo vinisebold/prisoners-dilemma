@@ -69,6 +69,7 @@ export default function App() {
   const handleDismissIntro = () => {
     sound.playClick();
     setShowIntro(false);
+    sound.startMusic();
   };
 
   useEffect(() => {

@@ -29,6 +29,7 @@ export const sound = {
     if (masterGain && audioCtx) {
       masterGain.gain.setValueAtTime(isMuted ? 0 : volume, audioCtx.currentTime);
     }
+    sound.updateMusicVolume();
   },
   
   getVolume: () => volume,
@@ -39,6 +40,7 @@ export const sound = {
     if (masterGain && audioCtx) {
       masterGain.gain.setValueAtTime(mute ? 0 : volume, audioCtx.currentTime);
     }
+    sound.updateMusicVolume();
   },
   
   toggleMute: () => {
@@ -47,6 +49,7 @@ export const sound = {
     if (masterGain && audioCtx) {
       masterGain.gain.setValueAtTime(isMuted ? 0 : volume, audioCtx.currentTime);
     }
+    sound.updateMusicVolume();
     return isMuted;
   },
   
@@ -255,5 +258,35 @@ export const sound = {
     if (humGain && audioCtx) {
       humGain.gain.setValueAtTime((isMuted || !humEnabled) ? 0 : 0.015, audioCtx.currentTime);
     }
-  }
+  },
+
+  // --- Música de Fundo ---
+  _bgAudio: null,
+
+  startMusic: (src = '/music.mp3', loop = true) => {
+    try {
+      sound.stopMusic();
+      const audio = new Audio(src);
+      audio.loop = loop;
+      audio.volume = isMuted ? 0 : volume * 0.3;
+      audio.play().catch(() => {});
+      sound._bgAudio = audio;
+    } catch (e) {
+      console.warn('Falha ao iniciar música:', e);
+    }
+  },
+
+  stopMusic: () => {
+    if (sound._bgAudio) {
+      sound._bgAudio.pause();
+      sound._bgAudio.src = '';
+      sound._bgAudio = null;
+    }
+  },
+
+  updateMusicVolume: () => {
+    if (sound._bgAudio) {
+      sound._bgAudio.volume = isMuted ? 0 : volume * 0.3;
+    }
+  },
 };
