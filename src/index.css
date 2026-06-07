@@ -567,6 +567,7 @@ body.settings-open::before {
   transition: transform 0.3s ease;
   z-index: 5; /* Garante que o monitor interativo central fique por cima de qualquer overlap */
   position: relative;
+  pointer-events: none;
 }
 .table-center::before {
   content: "";
@@ -785,6 +786,8 @@ body.settings-open::before {
   padding: 18px;
   width: 100%;
   position: relative;
+  z-index: 1;
+  pointer-events: auto;
   transition: box-shadow 0.08s linear;
 }
 
@@ -2133,8 +2136,16 @@ body.theme-green {
 /* -------------------------------------------------------------
    TECLADO DE DECISÃO 3D (Vintage, translúcido com luz interna)
 ------------------------------------------------------------- */
-.decision-keyboard-deck {
+.decision-keyboard-shell {
   margin-top: 12px;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.decision-keyboard-deck {
+  margin-top: 0;
   background:
     radial-gradient(
       circle at 50% 0%,
@@ -2158,9 +2169,34 @@ body.theme-green {
   justify-content: center;
   align-items: center;
   position: relative;
+  pointer-events: none;
   box-sizing: border-box;
   width: 100%;
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.decision-keyboard-hit-layer {
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  bottom: -18px;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 42px;
+  pointer-events: none;
+  transform: translateZ(160px);
+  transform-style: flat;
+}
+
+.deck-hitbox-bezel {
+  display: flex;
+  gap: 0;
+  padding: 16px 24px;
+  border: 2.5px solid transparent;
+  pointer-events: none;
 }
 
 /* Quando desabilitado ou offline, o deck fica desligado/friaço */
@@ -2182,6 +2218,7 @@ body.theme-green {
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 }
 .deck-screw::after {
   content: "";
@@ -2253,6 +2290,7 @@ body.theme-green {
   box-sizing: border-box;
   transform-style: preserve-3d;
   position: relative;
+  pointer-events: none;
 }
 
 /* Soquete do Botão (Buraco profundo na base) */
@@ -2269,6 +2307,11 @@ body.theme-green {
   position: relative;
   flex-shrink: 0;
   border: 1px solid #141516;
+  pointer-events: none;
+}
+
+.decision-keyboard-deck.deck-disabled .deck-button-socket {
+  cursor: not-allowed;
 }
 
 /* Capa do Botão: Policarbonato Vidroso Translúcido e Brilhante */
@@ -2285,6 +2328,7 @@ body.theme-green {
   border: none;
   outline: none;
   cursor: pointer;
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2295,6 +2339,27 @@ body.theme-green {
     box-shadow 0.08s cubic-bezier(0.2, 0.8, 0.2, 1),
     top 0.08s cubic-bezier(0.2, 0.8, 0.2, 1),
     background 0.15s ease;
+}
+
+.deck-button-hitbox {
+  position: relative;
+  top: -4px;
+  width: 194px;
+  height: 104px;
+  flex-shrink: 0;
+  z-index: 20;
+  border: 0;
+  border-radius: 10px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.deck-button-hitbox:disabled {
+  cursor: not-allowed;
 }
 
 /* Brilho chanfrado de vidro nas bordas superiores */
@@ -2507,69 +2572,20 @@ body.theme-green {
     0 2px 2px rgba(0, 0, 0, 0.9);
 }
 
-/* Efeito de Hover (Elevação, extrusão extra e luz mais brilhante) */
-.deck-button-cap:not([disabled]):hover {
-  top: -10px; /* Sobe no hover */
-}
-.deck-button-cap.deck-btn-cooperate:not([disabled]):hover {
-  background: radial-gradient(
-    circle at 50% 30%,
-    rgba(255, 255, 255, 0.44) 0%,
-    rgba(46, 204, 113, 0.44) 45%,
-    rgba(20, 105, 54, 0.85) 85%,
-    rgba(10, 50, 27, 0.98) 100%
-  );
-  box-shadow:
-    0 20px 0 rgba(10, 50, 27, 0.98),
-    0 24px 24px rgba(0, 0, 0, 0.95),
-    inset 0 0 18px rgba(46, 204, 113, 0.65);
-}
-.deck-button-cap.deck-btn-cooperate:not([disabled]):hover .btn-light {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.1);
-}
-.deck-button-cap.deck-btn-cooperate:not([disabled]):hover .btn-label {
-  text-shadow:
-    0 0 12px rgba(46, 204, 113, 1),
-    0 0 24px rgba(46, 204, 113, 0.95),
-    0 2px 2px rgba(0, 0, 0, 0.9);
-}
-
-.deck-button-cap.deck-btn-defect:not([disabled]):hover {
-  background: radial-gradient(
-    circle at 50% 30%,
-    rgba(255, 255, 255, 0.44) 0%,
-    rgba(231, 76, 60, 0.44) 45%,
-    rgba(160, 30, 20, 0.85) 85%,
-    rgba(60, 10, 6, 0.98) 100%
-  );
-  box-shadow:
-    0 20px 0 rgba(60, 10, 6, 0.98),
-    0 24px 24px rgba(0, 0, 0, 0.95),
-    inset 0 0 18px rgba(231, 76, 60, 0.65);
-}
-.deck-button-cap.deck-btn-defect:not([disabled]):hover .btn-light {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.1);
-}
-.deck-button-cap.deck-btn-defect:not([disabled]):hover .btn-label {
-  text-shadow:
-    0 0 12px rgba(231, 76, 60, 1),
-    0 0 24px rgba(231, 76, 60, 0.95),
-    0 2px 2px rgba(0, 0, 0, 0.9);
-}
-
 /* Efeito de Clique `:active` (Compressão mecânica, extrusão menor e filamento piscando intenso) */
-.deck-button-cap:not([disabled]):active {
+.deck-button-cap:not([disabled]):active,
+.deck-button-cap.is-pressed {
   top: 4px; /* Afunda no soquete */
 }
-.deck-button-cap.deck-btn-cooperate:not([disabled]):active {
+.deck-button-cap.deck-btn-cooperate:not([disabled]):active,
+.deck-button-cap.deck-btn-cooperate.is-pressed {
   box-shadow:
     0 6px 0 rgba(10, 50, 27, 0.98),
     0 8px 12px rgba(0, 0, 0, 0.9),
     inset 0 0 24px rgba(46, 204, 113, 0.9);
 }
-.deck-button-cap.deck-btn-cooperate:not([disabled]):active .btn-light {
+.deck-button-cap.deck-btn-cooperate:not([disabled]):active .btn-light,
+.deck-button-cap.deck-btn-cooperate.is-pressed .btn-light {
   opacity: 1;
   transform: translate(-50%, -50%) scale(0.95);
   background: #a3ffd0;
@@ -2577,13 +2593,15 @@ body.theme-green {
     0 0 25px #2ecc71,
     0 0 60px #2ecc71;
 }
-.deck-button-cap.deck-btn-defect:not([disabled]):active {
+.deck-button-cap.deck-btn-defect:not([disabled]):active,
+.deck-button-cap.deck-btn-defect.is-pressed {
   box-shadow:
     0 6px 0 rgba(60, 10, 6, 0.98),
     0 8px 12px rgba(0, 0, 0, 0.9),
     inset 0 0 24px rgba(231, 76, 60, 0.9);
 }
-.deck-button-cap.deck-btn-defect:not([disabled]):active .btn-light {
+.deck-button-cap.deck-btn-defect:not([disabled]):active .btn-light,
+.deck-button-cap.deck-btn-defect.is-pressed .btn-light {
   opacity: 1;
   transform: translate(-50%, -50%) scale(0.95);
   background: #ffb3a3;
@@ -2593,35 +2611,43 @@ body.theme-green {
 }
 
 /* Estado Desativado / Bloqueado (Fisicamente travado em baixo e com luz apagada) */
-.deck-button-cap[disabled] {
+.deck-button-cap[disabled],
+.deck-button-cap.is-disabled {
   cursor: not-allowed;
   pointer-events: none;
   top: 2px; /* Travado no fundo do soquete */
   filter: grayscale(0.65) brightness(0.35);
 }
-.deck-button-cap.deck-btn-cooperate[disabled] {
+.deck-button-cap.deck-btn-cooperate[disabled],
+.deck-button-cap.deck-btn-cooperate.is-disabled {
   box-shadow:
     0 8px 0 rgba(10, 50, 27, 0.4),
     0 10px 14px rgba(0, 0, 0, 0.6),
     inset 0 0 4px rgba(46, 204, 113, 0.1);
 }
-.deck-button-cap.deck-btn-defect[disabled] {
+.deck-button-cap.deck-btn-defect[disabled],
+.deck-button-cap.deck-btn-defect.is-disabled {
   box-shadow:
     0 8px 0 rgba(60, 10, 6, 0.4),
     0 10px 14px rgba(0, 0, 0, 0.6),
     inset 0 0 4px rgba(231, 76, 60, 0.1);
 }
 .deck-button-cap[disabled] .btn-light,
-.deck-button-cap[disabled] .btn-bulb-filament {
+.deck-button-cap[disabled] .btn-bulb-filament,
+.deck-button-cap.is-disabled .btn-light,
+.deck-button-cap.is-disabled .btn-bulb-filament {
   opacity: 0; /* Lâmpada e filamento apagados */
 }
-.deck-button-cap[disabled] .btn-bulb-housing {
+.deck-button-cap[disabled] .btn-bulb-housing,
+.deck-button-cap.is-disabled .btn-bulb-housing {
   filter: brightness(0.4);
 }
-.deck-button-cap[disabled] .btn-stem {
+.deck-button-cap[disabled] .btn-stem,
+.deck-button-cap.is-disabled .btn-stem {
   filter: brightness(0.4);
 }
-.deck-button-cap[disabled] .btn-label {
+.deck-button-cap[disabled] .btn-label,
+.deck-button-cap.is-disabled .btn-label {
   color: rgba(255, 255, 255, 0.2);
   text-shadow: none;
 }
