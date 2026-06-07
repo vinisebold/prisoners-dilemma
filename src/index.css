@@ -1985,6 +1985,140 @@ body.menu-open .prison-conduit {
   opacity: 0.25;
 }
 
+/* --- Tela de Introdução / História --- */
+.intro-story {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  animation: crt-flicker 0.15s infinite;
+}
+
+.intro-scroll {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.intro-line {
+  margin: 0;
+  line-height: 1.4;
+  animation: intro-fade-in 0.4s ease;
+}
+
+@keyframes intro-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.intro-system {
+  font-size: 0.7rem;
+  color: var(--crt-green-dim);
+  text-shadow: none;
+}
+
+.intro-system-warn {
+  font-size: 0.75rem;
+  color: var(--crt-amber);
+  text-shadow: 0 0 4px var(--crt-amber-glow);
+}
+
+.intro-narrative {
+  font-size: 0.85rem;
+  color: #ccddcc;
+  text-shadow: 0 0 2px var(--crt-green-glow);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.intro-narrative-em {
+  font-size: 0.85rem;
+  color: var(--crt-amber);
+  text-shadow: 0 0 4px var(--crt-amber-glow);
+  line-height: 1.5;
+}
+
+.intro-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--crt-green);
+  text-shadow: 0 0 8px var(--crt-green-glow);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 8px 0 4px;
+}
+
+.intro-cursor {
+  display: inline-block;
+  animation: sec-blink 0.8s infinite;
+  color: var(--crt-green-dim);
+  font-size: 0.8rem;
+}
+
+.intro-continue-btn {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 12px 0 4px;
+  text-align: center;
+  animation: intro-fade-in 0.6s ease;
+  text-transform: uppercase;
+}
+
+.intro-continue-btn:hover {
+  color: var(--crt-green);
+  text-shadow: 0 0 4px var(--crt-green-glow);
+}
+
+.intro-blink {
+  display: inline-block;
+  animation: sec-blink 1s infinite;
+  color: var(--crt-green);
+  margin-left: 4px;
+}
+
+body.intro-open .table-left,
+body.intro-open .table-right {
+  display: none;
+}
+
+body.intro-open .table-center {
+  transform: perspective(1000px) rotateX(8deg) scale(1.05);
+  z-index: 15;
+}
+
+body.intro-open .desk-surface {
+  transform: perspective(1000px) rotateX(32deg) translateY(40px);
+  filter: brightness(0.5);
+}
+
+body.intro-open .background-container {
+  filter: brightness(0.4);
+}
+
+body.intro-open .prison-window,
+body.intro-open .prison-window-shadow {
+  opacity: 0.25;
+}
+
+body.intro-open .prison-conduit {
+  opacity: 0.2;
+}
+
 /* Didactic & Visual Gameplay Overrides */
 .crt-split-panel {
   display: flex;

@@ -13,6 +13,7 @@ import Step5Evolution from './components/steps/Step5Evolution';
 import Step6Conclusion from './components/steps/Step6Conclusion';
 import SettingsMenu from './components/SettingsMenu';
 import Menu from './components/Menu';
+import IntroStory from './components/IntroStory';
 import LampLightCanvas from './components/LampLightCanvas';
 import { sound } from './utils/sound';
 import './App.css';
@@ -57,10 +58,17 @@ export default function App() {
   const [step4BotScore, setStep4BotScore] = useState(0);
 
   const [showMenu, setShowMenu] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
 
   const handleStartGame = () => {
     sound.playClick();
     setShowMenu(false);
+    setShowIntro(true);
+  };
+
+  const handleDismissIntro = () => {
+    sound.playClick();
+    setShowIntro(false);
   };
 
   useEffect(() => {
@@ -71,6 +79,15 @@ export default function App() {
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [showMenu]);
+
+  useEffect(() => {
+    if (!showIntro) return;
+    const handler = (e) => {
+      if (e.key === 'Enter') handleDismissIntro();
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [showIntro]);
 
   // --- Efeitos de Inicialização ---
   useEffect(() => {
@@ -83,9 +100,9 @@ export default function App() {
 
   // Monitora mudança de tema
   useEffect(() => {
-    document.body.className = `theme-${theme}${isSettingsOpen ? ' settings-open' : ''}${showMenu ? ' menu-open' : ''}`;
+    document.body.className = `theme-${theme}${isSettingsOpen ? ' settings-open' : ''}${showMenu ? ' menu-open' : ''}${showIntro ? ' intro-open' : ''}`;
     localStorage.setItem('game_theme', theme);
-  }, [theme, isSettingsOpen, showMenu]);
+  }, [theme, isSettingsOpen, showMenu, showIntro]);
 
   // --- Função para calcular payoffs ---
   const calculatePayoff = (p1, p2) => {
@@ -605,7 +622,7 @@ export default function App() {
       {/* Mesa do Investigador (Multi-Dispositivo) */}
       <div className="investigator-table">
         
-        {!showMenu && (
+        {(!showMenu && !showIntro) && (
         <div className="table-left">
           <ClipboardDossier 
             currentStep={currentStep} 
@@ -633,6 +650,8 @@ export default function App() {
                 />
               ) : showMenu ? (
                 <Menu onStart={handleStartGame} />
+              ) : showIntro ? (
+                <IntroStory onDismiss={handleDismissIntro} />
               ) : (
                 <>
                   {currentStep === 1 && (
@@ -681,6 +700,7 @@ export default function App() {
               )}
             </CrtScreen>
  
+            {!showIntro && (
             <ControlPanel 
               onNext={handleNextStep}
               onPrev={handlePrevStep}
@@ -694,9 +714,10 @@ export default function App() {
               currentStep={currentStep}
               totalSteps={TOTAL_STEPS}
             />
+            )}
           </ConsoleFrame>
 
-          {!showMenu && (
+          {(!showMenu && !showIntro) && (
           <DecisionKeyboard 
             onCooperate={() => {
               if (currentStep === 1) handlePlayStep1('cooperate');
@@ -716,7 +737,7 @@ export default function App() {
           )}
         </div>
 
-        {!showMenu && (
+        {(!showMenu && !showIntro) && (
         <div className="table-right">
           <SecondaryMonitor 
             currentStep={currentStep}
