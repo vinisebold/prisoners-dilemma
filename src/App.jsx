@@ -12,6 +12,7 @@ import Step4Noise from './components/steps/Step4Noise';
 import Step5Evolution from './components/steps/Step5Evolution';
 import Step6Conclusion from './components/steps/Step6Conclusion';
 import SettingsMenu from './components/SettingsMenu';
+import Menu from './components/Menu';
 import LampLightCanvas from './components/LampLightCanvas';
 import { sound } from './utils/sound';
 import './App.css';
@@ -55,6 +56,22 @@ export default function App() {
   const [step4PlayerScore, setStep4PlayerScore] = useState(0);
   const [step4BotScore, setStep4BotScore] = useState(0);
 
+  const [showMenu, setShowMenu] = useState(true);
+
+  const handleStartGame = () => {
+    sound.playClick();
+    setShowMenu(false);
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+    const handler = (e) => {
+      if (e.key === 'Enter') handleStartGame();
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [showMenu]);
+
   // --- Efeitos de Inicialização ---
   useEffect(() => {
     // Inicia o zumbido de eletricidade estática da tela CRT
@@ -66,9 +83,9 @@ export default function App() {
 
   // Monitora mudança de tema
   useEffect(() => {
-    document.body.className = `theme-${theme}${isSettingsOpen ? ' settings-open' : ''}`;
+    document.body.className = `theme-${theme}${isSettingsOpen ? ' settings-open' : ''}${showMenu ? ' menu-open' : ''}`;
     localStorage.setItem('game_theme', theme);
-  }, [theme, isSettingsOpen]);
+  }, [theme, isSettingsOpen, showMenu]);
 
   // --- Função para calcular payoffs ---
   const calculatePayoff = (p1, p2) => {
@@ -588,7 +605,7 @@ export default function App() {
       {/* Mesa do Investigador (Multi-Dispositivo) */}
       <div className="investigator-table">
         
-        {/* Coluna Esquerda: A Prancheta de Papel (Dossiê do Caso) */}
+        {!showMenu && (
         <div className="table-left">
           <ClipboardDossier 
             currentStep={currentStep} 
@@ -596,6 +613,7 @@ export default function App() {
             selectedBotStep4={step4SelectedBot}
           />
         </div>
+        )}
 
         {/* Coluna Central: O Terminal CRT */}
         <div className="table-center">
@@ -613,6 +631,8 @@ export default function App() {
                   onVolumeChange={() => setVolume(sound.getVolume())}
                   onHumChange={() => setHumEnabled(sound.getHumEnabled())}
                 />
+              ) : showMenu ? (
+                <Menu onStart={handleStartGame} />
               ) : (
                 <>
                   {currentStep === 1 && (
@@ -676,6 +696,7 @@ export default function App() {
             />
           </ConsoleFrame>
 
+          {!showMenu && (
           <DecisionKeyboard 
             onCooperate={() => {
               if (currentStep === 1) handlePlayStep1('cooperate');
@@ -692,9 +713,10 @@ export default function App() {
             show={showCooperateDefect}
             disabled={cooperateDefectDisabled || isSettingsOpen}
           />
+          )}
         </div>
 
-        {/* Coluna Direita: Monitor CRT Secundário */}
+        {!showMenu && (
         <div className="table-right">
           <SecondaryMonitor 
             currentStep={currentStep}
@@ -709,6 +731,7 @@ export default function App() {
             }
           />
         </div>
+        )}
 
       </div>
     </>
