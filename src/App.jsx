@@ -695,7 +695,7 @@ export default function App() {
                     <Step5Evolution noiseProb={noiseProb} />
                   )}
                   {currentStep === 6 && (
-                    <Step6Conclusion onRestart={handleFullReset} />
+                    <Step6Conclusion />
                   )}
                 </>
               )}
