@@ -96,7 +96,7 @@ export default function Step4Noise({
           })}
         </div>
         <div style={{ fontSize: '0.6rem', color: '#666', marginTop: '12px' }}>
-          Legenda: C = Cooperar, D = Delatar | ⚡ = Ruído (Inversão física da jogada)
+          Legenda: S = Silêncio, C = Confessar | ⚡ = Ruído (Inversão física da jogada)
         </div>
       </div>
 

@@ -10,8 +10,8 @@ const INITIAL_POPULATION = [
 ];
 
 const STRATEGY_INFO = {
-  cooperator: { name: 'Ingênuo (Sempre Cooperar)', color: 'var(--crt-green)', letter: 'I', class: 'cooperator' },
-  cheater: { name: 'Traidor (Sempre Delatar)', color: 'var(--crt-red)', letter: 'T', class: 'cheater' },
+  cooperator: { name: 'Sempre Silêncio', color: 'var(--crt-green)', letter: 'S', class: 'cooperator' },
+  cheater: { name: 'Sempre Confessar', color: 'var(--crt-red)', letter: 'C', class: 'cheater' },
   copycat: { name: 'Copycat (Olho por Olho)', color: 'var(--crt-amber)', letter: 'C', class: 'copycat' },
   grudger: { name: 'Rabugento (Rancoroso)', color: '#00b4ff', letter: 'R', class: 'grudger' },
   copykitten: { name: 'Copykitten (Tolerante)', color: '#fff032', letter: 'K', class: 'copykitten' }

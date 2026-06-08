@@ -14,28 +14,28 @@ export default function ClipboardDossier({ currentStep, selectedBotStep3, select
               ESCOLHAS DISPONÍVEIS:
             </p>
             <p className="paper-p" style={{ fontSize: '0.8rem', margin: '0 0 4px 10px' }}>
-              • <strong>COOPERAR (Silêncio):</strong> Não confessa.
+              • <strong>SILÊNCIO:</strong> Não confessa.
             </p>
             <p className="paper-p" style={{ fontSize: '0.8rem', margin: '0 0 12px 10px' }}>
-              • <strong>DELATAR (Trair):</strong> Denuncia o comparsa.
+              • <strong>CONFESSAR:</strong> Confessa e implica o comparsa.
             </p>
             
             <table className="paper-payoff-table">
               <thead>
                 <tr>
                   <th>Você ↓ | Bot →</th>
-                  <th>Cooperar</th>
-                  <th>Delatar</th>
+                  <th>Silêncio</th>
+                  <th>Confessar</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th>Cooperar</th>
+                  <th>Silêncio</th>
                   <td>Ambos:<br/><strong>1 ano</strong></td>
                   <td>Você: 5 anos<br/>Bot: Livre</td>
                 </tr>
                 <tr>
-                  <th>Delatar</th>
+                  <th>Confessar</th>
                   <td>Você: Livre<br/>Bot: 5 anos</td>
                   <td>Ambos:<br/><strong>3 anos</strong></td>
                 </tr>
@@ -43,7 +43,7 @@ export default function ClipboardDossier({ currentStep, selectedBotStep3, select
             </table>
 
             <p className="paper-p" style={{ fontSize: '0.75rem', marginTop: '12px', color: '#555' }}>
-              <strong>Nota:</strong> Delatar é a estratégia dominante individual (Nash), mas pune ambos coletivamente.
+              <strong>Nota:</strong> Confessar é a estratégia dominante individual (Nash), mas pune ambos coletivamente.
             </p>
           </>
         );
@@ -59,14 +59,14 @@ export default function ClipboardDossier({ currentStep, selectedBotStep3, select
             </p>
             <p className="paper-p" style={{ fontSize: '0.8rem', margin: '0 0 12px 10px' }}>
               • Introduz punição e retaliação futuras.<br/>
-              • Ameaça de traição sustenta a cooperação.
+              • A ameaça de confissão sustenta o silêncio mútuo.
             </p>
             
             <p className="paper-p" style={{ fontWeight: 'bold', marginBottom: '4px' }}>
               OPONENTE ATUAL: COPYCAT
             </p>
             <p className="paper-p" style={{ fontSize: '0.8rem', margin: '0 0 4px 10px' }}>
-              1. Começa cooperando (Silêncio).<br/>
+              1. Começa em silêncio.<br/>
               2. Copia exatamente sua jogada anterior.
             </p>
           </>
@@ -109,7 +109,7 @@ export default function ClipboardDossier({ currentStep, selectedBotStep3, select
             </p>
             <p className="paper-p" style={{ fontSize: '0.8rem', margin: '0 0 10px 10px' }}>
               • Chance de inverter sua ação na rede.<br/>
-              • Cooperar planned → Delatar sent (por erro).
+              • Silêncio planejado → Confessar enviado (por erro).
             </p>
 
             <p className="paper-p" style={{ fontWeight: 'bold', marginBottom: '4px' }}>
@@ -158,7 +158,7 @@ export default function ClipboardDossier({ currentStep, selectedBotStep3, select
             </p>
             
             <p className="paper-p" style={{ fontSize: '0.8rem', margin: '0 0 6px 10px' }}>
-              1. <strong>Repetição (Futuro):</strong> Relações contínuas inviabilizam a traição.
+              1. <strong>Repetição (Futuro):</strong> Relações contínuas reduzem o incentivo a confessar.
             </p>
             
             <p className="paper-p" style={{ fontSize: '0.8rem', margin: '0 0 6px 10px' }}>

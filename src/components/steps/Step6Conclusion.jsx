@@ -17,7 +17,7 @@ export default function Step6Conclusion() {
         </p>
 
         <p className="retro-p" style={{ fontSize: '0.85rem', color: '#aabbcc', lineHeight: '1.5', maxWidth: '90%' }}>
-          Suas decisões ao longo deste simulado contribuíram para o desenvolvimento de novas teorias sobre cooperação, confiança e tomada de decisão em ambientes de pressão.
+          Suas decisões ao longo deste simulado contribuíram para o desenvolvimento de novas teorias sobre confiança, silêncio mútuo e tomada de decisão em ambientes de pressão.
         </p>
 
         <p className="retro-p" style={{ fontSize: '0.85rem', color: 'var(--crt-amber)', textShadow: '0 0 4px var(--crt-amber-glow)', lineHeight: '1.5', maxWidth: '90%' }}>
@@ -38,18 +38,18 @@ export default function Step6Conclusion() {
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', animation: 'crt-flicker 0.15s infinite' }}>
       <h1 className="retro-h1" style={{ color: 'var(--crt-amber)', textShadow: '0 0 6px var(--crt-amber-glow)', marginBottom: '4px' }}>Conclusões</h1>
       <p className="retro-p" style={{ textAlign: 'center', color: '#aab', margin: '0 0 8px 0' }}>
-        A cooperação é uma solução matemática ideal sob três pilares fundamentais:
+        O silêncio mútuo é uma solução matemática ideal sob três pilares fundamentais:
       </p>
 
       <div className="crt-conclusion-grid">
         <div className="crt-conclusion-card">
           <div className="crt-conclusion-title">1. Repetição (Futuro)</div>
-          <div className="crt-conclusion-desc">Relações continuadas no tempo inviabilizam a traição sistêmica.</div>
+          <div className="crt-conclusion-desc">Relações continuadas no tempo reduzem a vantagem de confessar sistematicamente.</div>
         </div>
 
         <div className="crt-conclusion-card amber">
           <div className="crt-conclusion-title">2. Soma Não-Zero</div>
-          <div className="crt-conclusion-desc">A cooperação mútua gera mais valor conjunto do que a traição mútua.</div>
+          <div className="crt-conclusion-desc">O silêncio mútuo gera mais valor conjunto do que a confissão mútua.</div>
         </div>
 
         <div className="crt-conclusion-card blue">

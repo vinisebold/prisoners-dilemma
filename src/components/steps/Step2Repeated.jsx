@@ -54,7 +54,7 @@ export default function Step2Repeated({ roundsPlayed, playerScore, botScore, his
           })}
         </div>
         <div style={{ fontSize: '0.6rem', color: '#666', marginTop: '12px' }}>
-          Legenda: C = Cooperar, D = Delatar (Superior: Você | Inferior: Oponente)
+          Legenda: S = Silêncio, C = Confessar (Superior: Você | Inferior: Oponente)
         </div>
       </div>
 

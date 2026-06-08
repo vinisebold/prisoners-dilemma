@@ -50,8 +50,8 @@ export default function SecondaryMonitor({
     const lastRound = history[lastRoundIdx];
     const rNum = String(lastRoundIdx + 1).padStart(2, '0');
 
-    const pChoiceStr = lastRound.playerChoice === 'cooperate' ? 'COOPERAR' : 'DELATAR';
-    const bChoiceStr = lastRound.botChoice === 'cooperate' ? 'COOPERAR' : 'DELATAR';
+    const pChoiceStr = lastRound.playerChoice === 'cooperate' ? 'SILÊNCIO' : 'CONFESSAR';
+    const bChoiceStr = lastRound.botChoice === 'cooperate' ? 'SILÊNCIO' : 'CONFESSAR';
 
     const pFlipStr = lastRound.playerFlipped ? ' (⚡RUÍDO)' : '';
     const bFlipStr = lastRound.botFlipped ? ' (⚡RUÍDO)' : '';
@@ -248,7 +248,7 @@ export default function SecondaryMonitor({
         </div>
 
         <div style={{ fontSize: '0.58rem', color: 'var(--sec-color-dim)', borderTop: '1px dotted var(--sec-color-dim)', paddingTop: '6px', marginTop: '4px', textAlign: 'center' }}>
-          Legenda: Barras indicam percentual de rodadas em que a opção de cooperar foi executada.
+          Legenda: Barras indicam o percentual de rodadas em que a opção silêncio foi executada.
         </div>
       </div>
     );
@@ -331,7 +331,7 @@ export default function SecondaryMonitor({
                             <span>VOCÊ:</span>
                             <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                               <span className={`sec-choice-badge ${pCooperate ? 'cooperate' : 'defect'}`}>
-                                {pCooperate ? '🤝 COOPERAR' : '⚔️ DELATAR'}
+                                {pCooperate ? '🤝 SILÊNCIO' : '⚔️ CONFESSAR'}
                               </span>
                               <span>+{round.playerPayoff}a</span>
                             </div>
@@ -340,7 +340,7 @@ export default function SecondaryMonitor({
                             <span>OPONENTE:</span>
                             <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                               <span className={`sec-choice-badge ${bCooperate ? 'cooperate' : 'defect'}`}>
-                                {bCooperate ? '🤝 COOPERAR' : '⚔️ DELATAR'}
+                                {bCooperate ? '🤝 SILÊNCIO' : '⚔️ CONFESSAR'}
                               </span>
                               <span>+{round.botPayoff}a</span>
                             </div>

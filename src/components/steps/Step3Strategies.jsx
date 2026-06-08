@@ -91,7 +91,7 @@ export default function Step3Strategies({
           })}
         </div>
         <div style={{ fontSize: '0.6rem', color: '#666', marginTop: '12px' }}>
-          Legenda: C = Cooperar, D = Delatar (Superior: Você | Inferior: Oponente)
+          Legenda: S = Silêncio, C = Confessar (Superior: Você | Inferior: Oponente)
         </div>
       </div>
 

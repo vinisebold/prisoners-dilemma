@@ -52,7 +52,7 @@ export default function DecisionKeyboard({ onCooperate, onDefect, show = false, 
 
         {/* Bezel prateado de metal escovado que agrupa ambos os botões */}
         <div className="deck-inner-bezel">
-          {/* Soquete do botão Cooperar */}
+          {/* Soquete do botão Silêncio */}
           <div className="deck-button-socket socket-cooperate">
             <div
               className={`deck-button-cap deck-btn-cooperate ${isDisabled ? 'is-disabled' : ''} ${pressedChoice === 'cooperate' ? 'is-pressed' : ''}`}
@@ -65,11 +65,11 @@ export default function DecisionKeyboard({ onCooperate, onDefect, show = false, 
               </span>
               <span className="btn-light" />
               <span className="btn-glass-glare" />
-              <span className="btn-label">Cooperar</span>
+              <span className="btn-label">Silêncio</span>
             </div>
           </div>
 
-          {/* Soquete do botão Delatar */}
+          {/* Soquete do botão Confessar */}
           <div className="deck-button-socket socket-defect">
             <div
               className={`deck-button-cap deck-btn-defect ${isDisabled ? 'is-disabled' : ''} ${pressedChoice === 'defect' ? 'is-pressed' : ''}`}
@@ -82,7 +82,7 @@ export default function DecisionKeyboard({ onCooperate, onDefect, show = false, 
               </span>
               <span className="btn-light" />
               <span className="btn-glass-glare" />
-              <span className="btn-label">Delatar</span>
+              <span className="btn-label">Confessar</span>
             </div>
           </div>
         </div>
@@ -90,8 +90,8 @@ export default function DecisionKeyboard({ onCooperate, onDefect, show = false, 
 
       <div className="decision-keyboard-hit-layer">
         <div className="deck-hitbox-bezel">
-          <button {...getHitboxProps('cooperate', handleCooperate, 'Cooperar')} />
-          <button {...getHitboxProps('defect', handleDefect, 'Delatar')} />
+          <button {...getHitboxProps('cooperate', handleCooperate, 'Silêncio')} />
+          <button {...getHitboxProps('defect', handleDefect, 'Confessar')} />
         </div>
       </div>
     </div>
